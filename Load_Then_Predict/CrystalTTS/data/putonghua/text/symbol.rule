@@ -1,0 +1,330 @@
+﻿
+// Terminator
+TERMINATOR_PARAGRAPH  "[\x19]"
+TERMINATOR_SENTENCE   "[。|．|，|：|？|﹖|！]"
+TERMINATOR            "{TERMINATOR_SENTENCE}"
+                      "{TERMINATOR_PARAGRAPH}"
+TERMINATOR_STRICT     "^{TERMINATOR_SENTENCE}$"
+                      "^{TERMINATOR_PARAGRAPH}$"
+
+
+// Punctiations: [｛｝（）［］【】〖〗《》…。、，：∶；？﹖！＇′ˊ″‘’“”＂]
+PUNCTUATION_SYMBOL    "｛|｝|（|）|［|］|【|】|〖|〗|《|》|…|。|、|，|：|∶|；|？|﹖|！|＇|′|ˊ|″|‘|’|“|”|＂"
+PUNCTUATION           "({PUNCTUATION_SYMBOL})"
+PUNCTUATION_STRICT    "^{PUNCTUATION}$"
+
+
+// All Chinese characters
+// (wchChar >= L'\u4e00' && wchChar <= L'\u9fbb') || // unified area
+// (wchChar >= L'\u3400' && wchChar <= L'\u4db5') || // Ext A
+// (wchChar >= L'\uf900' && wchChar <= L'\ufad9')    // Compatibility
+CHINESE_CHARACTER     "一-龻㐀-䶵豈-龎"
+CHINESE_CHARACTERS    "^[{CHINESE_CHARACTER}]+"
+
+
+// Used to detect all symbols (except Chinese characters)
+SPACE                " \t　"
+ALLSYMBOL            "([^{CHINESE_CHARACTER}])+"
+
+// All continuous same symbols are grouped together
+SYMBOLGROUP          "(＃+|＊+|％+|‰+|！+|．+|、+|，+|。+|∶+|：+|；+|？+|﹖+|＠+|﹫+|＆+|＂+|″+|＇+|′+|ˊ+|‘+|’+|“+|”+)"
+                     "(《+|》+|【+|】+|〖+|〗+|｛+|｝+|（+|）+|［+|］+|•+|•+|／+|＼+|｜+|＾+|…+|～+|–+|—+|＿+)"
+                     "(°+|℃+|℉+|㎎+|㎏+|㎜+|㎝+|㎞+|㎡+|㏄+|㏕+|＄+|￥+|￡+|￠+|€+)"
+                     "(≈+|≌+|≡+|≠+|＝+|≤+|≥+|＜+|＞+|≮+|≯+|±+|＋+|－+|×+|÷+|／+|∞+|∝+|√+|∵+|∴+|∷+|‖+|§+|∪+|∩+|∫+|∑+)"
+SYMBOLGROUP_STRICT   "^{SYMBOLGROUP[0]}$"
+                     "^{SYMBOLGROUP[1]}$"
+                     "^{SYMBOLGROUP[2]}$"
+                     "^{SYMBOLGROUP[3]}$"
+
+// HTML entities
+HTML_ENTITY          "(&lt;|&gt;|&amp;)"
+HTML_ENTITY_STRICT   "^{HTML_ENTITY}$"
+
+// Alphabet & Digital numbers
+ALNUM                "[０-９Ａ-Ｚａ-ｚ]"
+ALNUMS               "{ALNUM}{ALNUM}*"
+ALNUMS_STRICT        "^{ALNUMS}$"
+
+// alnum with minus
+ALNUM_WITH_MINUS     "[０-９Ａ-Ｚａ-ｚ－—]"
+
+// alnum with "."
+ALNUM_WITH_DOT       "[０-９Ａ-Ｚａ-ｚ．]"
+
+// alnum with all "./\?_-"
+ALNUM_WITH_ALL       "[０-９Ａ-Ｚａ-ｚ．／＼？＿－—]"
+
+
+// Web intermedia definition
+WEB_PROTOCOLS   "ｆｔｐ|ｈｔｔｐ|ｈｔｔｐｓ|ｇｏｐｈｅｒ|ｎｅｗｓ|ｎｎｔｐ|ｗａｉｓ|ｆｉｌｅ|ｒｔｓｐ|ｒｔｓｐｕ|ｍｍｓ"
+WEB_EMAILTO     "ｍａｉｌｔｏ"
+WEB_EMAILAT     "[＠﹫]"
+WEB_COLON       "[：]"
+WEB_SLASH       "[／]"
+WEB_DOT         "[．]"
+WEB_PORT        "[：][０-９][０-９]*"
+
+// Generic Top Level Domains
+WEB_GTLDS       "ｃｏｍ|ｎｅｔ|ｏｒｇ|ｂｉｚ|ｉｎｆｏ|ｎａｍｅ|ｐｒｏ|ｅｄｕ|ｇｏｖ|ｉｎｔ|ｍｉｌ|ａｅｒｏ|ｃｏｏｐ|ｍｕｓｅｕｍ|ｔｒａｖｅｌ|ｊｏｂｓ|ｍｏｂｉ"
+
+// Country Code Top Level Domains , total 242, here we just choose a few of them
+WEB_CCTLDS      "ｃｎ|ｈｋ|ｔｗ|ｊｐ|ｕｋ|ｕｓ|ｆｒ"
+
+// IP address digital, 255 is valid while 256 is not valid
+WEB_IP_DIGITAL  "(２５[０-５]|２[０-４][０-９]|[０１]?[０-９][０-９]?)"
+                "[０-９Ａ-Ｆａ-ｆ][０-９Ａ-Ｆａ-ｆ]?[０-９Ａ-Ｆａ-ｆ]?[０-９Ａ-Ｆａ-ｆ]?"
+WEB_IP_ADDRESS  "{WEB_IP_DIGITAL[0]}{WEB_DOT}{WEB_IP_DIGITAL[0]}{WEB_DOT}{WEB_IP_DIGITAL[0]}{WEB_DOT}{WEB_IP_DIGITAL[0]}"
+                "{WEB_IP_DIGITAL[1]}{WEB_COLON}{WEB_IP_DIGITAL[1]}{WEB_COLON}{WEB_IP_DIGITAL[1]}{WEB_COLON}{WEB_IP_DIGITAL[1]}{WEB_COLON}{WEB_IP_DIGITAL[1]}{WEB_COLON}{WEB_IP_DIGITAL[1]}{WEB_COLON}{WEB_IP_DIGITAL[1]}{WEB_COLON}{WEB_IP_DIGITAL[1]}"
+
+// Valid domain names and IP address
+WEB_DOMAINS     "({ALNUM}{ALNUM_WITH_MINUS}*{WEB_DOT})*({ALNUM}{ALNUM_WITH_MINUS}*)({WEB_DOT}({WEB_GTLDS}))({WEB_DOT}({WEB_CCTLDS}))?({WEB_PORT})?"
+                "({ALNUM}{ALNUM_WITH_MINUS}*{WEB_DOT})*({ALNUM}{ALNUM_WITH_MINUS}*)({WEB_DOT}({WEB_GTLDS}))?({WEB_DOT}({WEB_CCTLDS}))({WEB_PORT})?"
+                "{WEB_IP_ADDRESS[0]}({WEB_PORT})?"
+                "{WEB_IP_ADDRESS[1]}({WEB_PORT})?"
+
+// Email
+EMAIL_NAME      "[０-９Ａ-Ｚａ-ｚ][．＿０-９Ａ-Ｚａ-ｚ]*"
+EMAIL           "(({WEB_EMAILTO}){WEB_COLON})?{EMAIL_NAME}{WEB_EMAILAT}({WEB_DOMAINS[0]})"
+                "(({WEB_EMAILTO}){WEB_COLON})?{EMAIL_NAME}{WEB_EMAILAT}({WEB_DOMAINS[1]})"
+                "(({WEB_EMAILTO}){WEB_COLON})?{EMAIL_NAME}{WEB_EMAILAT}({WEB_DOMAINS[2]})"
+                "(({WEB_EMAILTO}){WEB_COLON})?{EMAIL_NAME}{WEB_EMAILAT}({WEB_DOMAINS[3]})"
+EMAIL_STRICT    "^{EMAIL[0]}$"
+                "^{EMAIL[1]}$"
+                "^{EMAIL[2]}$"
+                "^{EMAIL[3]}$"
+
+// URL
+URL             "(({WEB_PROTOCOLS}){WEB_COLON}{WEB_SLASH}{WEB_SLASH})?{WEB_DOMAINS[0]}({WEB_SLASH}{ALNUM_WITH_ALL}*)?"
+                "(({WEB_PROTOCOLS}){WEB_COLON}{WEB_SLASH}{WEB_SLASH})?{WEB_DOMAINS[1]}({WEB_SLASH}{ALNUM_WITH_ALL}*)?"
+                "(({WEB_PROTOCOLS}){WEB_COLON}{WEB_SLASH}{WEB_SLASH})?{WEB_DOMAINS[2]}({WEB_SLASH}{ALNUM_WITH_ALL}*)?"
+                "(({WEB_PROTOCOLS}){WEB_COLON}{WEB_SLASH}{WEB_SLASH})?{WEB_DOMAINS[3]}({WEB_SLASH}{ALNUM_WITH_ALL}*)?"
+URL_STRICT      "^{URL[0]}$"
+                "^{URL[1]}$"
+                "^{URL[2]}$"
+                "^{URL[3]}$"
+
+SIGN_OPTIONAL_SPACE   "[{SPACE}]*"
+SIGN_RANGE            "{SIGN_OPTIONAL_SPACE}[～－—]+{SIGN_OPTIONAL_SPACE}"
+
+// Time intermedia
+TIME_HOUR       "(１[０-９]|２[０-４]|０?[０-９])"
+TIME_MINUTE     "([１-５][０-９]|６０|０?[０-９])"
+TIME_SECOND     "([１-５][０-９]|６０|０?[０-９])"
+TIME_MSECOND    "([０-９][０-９]*)"
+TIME_SEP        "[∶：]"
+TIME_SEP_SECOND "[″＂．]"
+TIME_TAG        "[{SPACE}]*([ａＡｐＰ][．][ｍＭ][．]|[ａＡｐＰ][ｍＭ])"
+
+// Time: 12:34, 00:34
+TIME            "{TIME_HOUR}{TIME_SEP}{TIME_MINUTE}{TIME_SEP}{TIME_SECOND}{TIME_SEP_SECOND}{TIME_MSECOND}?{TIME_TAG}?"
+                "{TIME_HOUR}{TIME_SEP}{TIME_MINUTE}({TIME_SEP}{TIME_SECOND})?{TIME_TAG}?"
+TIME_STRICT     "^{TIME[0]}$"
+                "^{TIME[1]}$"
+                "^{TIME[0]}{SIGN_RANGE}{TIME[0]}$"
+                "^{TIME[0]}{SIGN_RANGE}{TIME[1]}$"
+                "^{TIME[1]}{SIGN_RANGE}{TIME[0]}$"
+                "^{TIME[1]}{SIGN_RANGE}{TIME[1]}$"
+
+
+// Date intermedia
+YEAR            "[１-９][０-９]?[０-９]?[０-９]?"
+MONTH           "(１[０-２]|０?[１-９])"
+DAY             "([１２][０-９]|３[０１]|０?[１-９])"
+DATE_SEP        "[／]"
+                "[—－]"
+                "[．]"
+
+// Date: 2011.12.25, 2011-12-25, 2011/12/25
+YMD             "{YEAR}{DATE_SEP[0]}{MONTH}{DATE_SEP[0]}{DAY}"
+                "{YEAR}{DATE_SEP[1]}{MONTH}{DATE_SEP[1]}{DAY}"
+                "{YEAR}{DATE_SEP[2]}{MONTH}{DATE_SEP[2]}{DAY}"
+YMD_STRICT      "^{YMD[0]}$"
+                "^{YMD[1]}$"
+                "^{YMD[2]}$"
+MDY             "{MONTH}{DATE_SEP[0]}{DAY}{DATE_SEP[0]}{YEAR}"
+                "{MONTH}{DATE_SEP[1]}{DAY}{DATE_SEP[1]}{YEAR}"
+                "{MONTH}{DATE_SEP[2]}{DAY}{DATE_SEP[2]}{YEAR}"
+MDY_STRICT      "^{MDY[0]}$"
+                "^{MDY[1]}$"
+                "^{MDY[2]}$"
+DMY             "{DAY}{DATE_SEP[0]}{MONTH}{DATE_SEP[0]}{YEAR}"
+                "{DAY}{DATE_SEP[1]}{MONTH}{DATE_SEP[1]}{YEAR}"
+                "{DAY}{DATE_SEP[2]}{MONTH}{DATE_SEP[2]}{YEAR}"
+DMY_STRICT      "^{DMY[0]}$"
+                "^{DMY[1]}$"
+                "^{DMY[2]}$"
+
+
+// Number intermedia
+NUMBER_NO_COMMA       "[０-９][０-９]*"
+NUMBER_WITH_COMMA     "[０-９][０-９]?[０-９]?([，][０-９][０-９][０-９])*"
+SIGN_PLUS_MINUS       "[±＋－]"
+SIGN_DECIMAL          "[．·]"
+SIGN_PROPORTION       "{SIGN_OPTIONAL_SPACE}[∶：]{SIGN_OPTIONAL_SPACE}"
+SIGN_FRACTION         "{SIGN_OPTIONAL_SPACE}[／]{SIGN_OPTIONAL_SPACE}"
+SIGN_PERCENTAGE       "{SIGN_OPTIONAL_SPACE}[‰％]"
+SIGN_MONEY            "([￥￡€￠＄]|[Ｈｈ][Ｋｋ][Ｄｄ＄]|[Ｒｒ][Ｍｍ][Ｂｂ]){SIGN_OPTIONAL_SPACE}"
+
+// Number: e.g. 2, 34, 3,456, 2.34
+NUMBER          "{SIGN_PLUS_MINUS}?({NUMBER_WITH_COMMA}|{NUMBER_NO_COMMA})({SIGN_DECIMAL}{NUMBER_NO_COMMA})?"
+NUMBER_STRICT   "^{NUMBER}$"
+                "^{NUMBER}{SIGN_RANGE}{NUMBER}$"
+
+// Percentage e.g. 3%
+PERCENTAGE      "{NUMBER}{SIGN_PERCENTAGE}"
+                "{NUMBER}{SIGN_RANGE}{NUMBER}{SIGN_PERCENTAGE}"
+PERCENT_STRICT  "^{PERCENTAGE[0]}$"
+                "^{PERCENTAGE[1]}$"
+
+// Money: e.g. $34
+MONEY           "{SIGN_MONEY}{NUMBER}"
+MONEY_STRICT    "^{MONEY}$"
+
+// Train: T1, T65, Z59, K201, N2234, L23, A245, Y2, G1024, C2234, 1234
+TRAIN_PREFIX    "[ＺＴＫＮＬＡＹＸＧＤＣ]"
+TRAIN_NUMBER    "[０-９][０-９]*"
+TRAIN           "{TRAIN_PREFIX}{TRAIN_NUMBER}({SIGN_FRACTION}{TRAIN_PREFIX}?{TRAIN_NUMBER})*"
+TRAIN_STRICT    "^{TRAIN}$"
+
+// Model, ISBN numbers
+MODEL_STRICT    "^[０-９Ａ-Ｚａ-ｚ][０-９Ａ-Ｚａ-ｚ－—]*$"
+                "^[－—][０-９Ａ-Ｚａ-ｚ－—]*[Ａ-Ｚａ-ｚ][０-９Ａ-Ｚａ-ｚ－—]*$"
+                "^[０-９Ａ-Ｚａ-ｚ][０-９Ａ-Ｚａ-ｚ·．－—]*[０-９Ａ-Ｚａ-ｚ－—]$"
+                "^[－—][０-９Ａ-Ｚａ-ｚ·．－—]*[Ａ-Ｚａ-ｚ][０-９Ａ-Ｚａ-ｚ·．－—]*[０-９Ａ-Ｚａ-ｚ－—]$"
+
+// Number for measure (with optional space after plus/minus sign)
+MEASURE_NUMBER  "{SIGN_PLUS_MINUS}?{SIGN_OPTIONAL_SPACE}({NUMBER_WITH_COMMA}|{NUMBER_NO_COMMA})({SIGN_DECIMAL}{NUMBER_NO_COMMA})?"
+
+// Measure units: km, ℃
+MEASURE_UNIT    "{SIGN_OPTIONAL_SPACE}([Ｉｉ][Ｐｐ]|[Ｐｐ][Ｖｖ]|＃|[ｋＫｄＤｃＣｍＭｕμｎＮ]?[ｍＭ]|ｍ／ｓ|ｋｍ／ｈ|Ｎ·ｍ|ｍｉｌｅ|ｍｉ|ｆｔ|ｆｏｏｔ|ｆｅｅｔ|ｉｎ|ｉｎｃｈ|μ|Ｔ|ｔ|[Ｋｋｍｕμ]?ｇ|[ｃＣ][ｔＴ]|[ｌＬ][ｂＢ]|[ｏＯ][ｚＺ]|[ｃＣ][ｃＣ]|[ｃＣ][ｍＭ][Ｈｈ][Ｇｇ]|[ｍＭ][ｍＭ][Ｈｈ][Ｇｇ]|ｉｎ[Ｈｈ][Ｇｇ]|[Ｈｈ][Ｇｇ]|[ｍ]?[Ｌｌ]|ｈ|ｍｉｎ|[ｍｕμｎ]?ｓ|ｍｏｌ|ｒ|ｒ／ｈ|ｒ／ｍｉｎ|ｒｅｖ／ｍｉｎ|ｒｐｍ|ＲＰＭ|ｒａｄ|[ｋＫＭＧＴＰＥ]?Ｈ[Ｚｚ]|[ｋＫｍＭ]?[Ｐｐ]ａ|[ｍ]?Ａｈ|[ｍｕμ]?Ａ|[ｋＫｍｕμ]?[Ｖｖ]|[ｍｕμｎｐ]?Ｆ|[ｍｕμ]?Ｈ|[ｋＫｍＭｕμＧＴＰ]?[Ｗｗ]|[ｋＫ]?[Ωω]|[ｋ]?Ｇｙ|Ｗｂ|Ｊ|ｄ[Ｂｂ]|[ＴＧＭＫ]?Ｂｙｔｅ|[ＴＧＭＫ]?[Ｂｂ]|[ＴＧＭＫ]?ｂｉｔ|[ＴＧＭＫ]?ｂｐｓ|Ｍ|ｋｎ|[Ｎｎ]|℃|°Ｃ|℉|°Ｆ|°|￥|￡|€|￠|＄|[Ｈｈ][Ｋｋ][Ｄｄ＄]|[Ｒｒ][Ｍｍ][Ｂｂ]|㏕|㏄|㎡|㎞|㎝|㎜|㎏|㎎)"
+
+MEASURE         "{MEASURE_NUMBER}({MEASURE_UNIT})?{SIGN_FRACTION}({MEASURE_NUMBER})?{MEASURE_UNIT}"
+                "{MEASURE_NUMBER}{MEASURE_UNIT}"
+                "{MEASURE_NUMBER}{SIGN_RANGE}{MEASURE_NUMBER}({MEASURE_UNIT})?{SIGN_FRACTION}({MEASURE_NUMBER})?{MEASURE_UNIT}"
+                "{MEASURE_NUMBER}{SIGN_RANGE}{MEASURE_NUMBER}{MEASURE_UNIT}"
+                "{MEASURE_NUMBER}({MEASURE_UNIT})?{SIGN_FRACTION}({MEASURE_NUMBER})?{MEASURE_UNIT}{SIGN_RANGE}{MEASURE_NUMBER}({MEASURE_UNIT})?{SIGN_FRACTION}({MEASURE_NUMBER})?{MEASURE_UNIT}"
+                "{MEASURE_NUMBER}({MEASURE_UNIT})?{SIGN_FRACTION}({MEASURE_NUMBER})?{MEASURE_UNIT}{SIGN_RANGE}{MEASURE_NUMBER}{MEASURE_UNIT}"
+                "{MEASURE_NUMBER}{MEASURE_UNIT}{SIGN_RANGE}{MEASURE_NUMBER}({MEASURE_UNIT})?{SIGN_FRACTION}({MEASURE_NUMBER})?{MEASURE_UNIT}"
+                "{MEASURE_NUMBER}{MEASURE_UNIT}{SIGN_RANGE}{MEASURE_NUMBER}{MEASURE_UNIT}"
+MEASURE_STRICT  "^{MEASURE[0]}$"
+                "^{MEASURE[1]}$"
+                "^{MEASURE[2]}$"
+                "^{MEASURE[3]}$"
+                "^{MEASURE[4]}$"
+                "^{MEASURE[5]}$"
+                "^{MEASURE[6]}$"
+                "^{MEASURE[7]}$"
+
+// Duration intermedia
+DUR_HOUR        "{SIGN_PLUS_MINUS}?({NUMBER_NO_COMMA}|NUMBER_WITH_COMMA)"
+DUR_MINUTE      "{SIGN_PLUS_MINUS}?({NUMBER_NO_COMMA}|NUMBER_WITH_COMMA)"
+DUR_SECOND      "{SIGN_PLUS_MINUS}?({NUMBER_NO_COMMA}|NUMBER_WITH_COMMA)"
+DUR_MSECOND     "({NUMBER_NO_COMMA})"
+DUR_SEP_HOUR    "([ｈ°])"
+DUR_SEP_MINUTE1 "([’′ˊ＇]|ｍｉｎ)"
+DUR_SEP_MINUTE2 "([∶：])"
+DUR_SEP_SECOND1 "([″＂])"
+DUR_SEP_SECOND2 "([．])"
+DUR_SEP_MINUTE  "({DUR_SEP_MINUTE1}|{DUR_SEP_MINUTE2})"
+DUR_SEP_SECOND  "({DUR_SEP_SECOND1}|{DUR_SEP_SECOND2})"
+
+// Duration
+DURATION        "({DUR_HOUR}{DUR_SEP_HOUR})({DUR_MINUTE}{DUR_SEP_MINUTE}?)?"
+                "({DUR_HOUR}{DUR_SEP_HOUR})({DUR_MINUTE}{DUR_SEP_MINUTE})({DUR_SECOND}{DUR_SEP_SECOND}?)?{DUR_MSECOND}?"
+                "({DUR_MINUTE}{DUR_SEP_MINUTE1})({DUR_SECOND}{DUR_SEP_SECOND}?)?{DUR_MSECOND}?"
+                "({DUR_SECOND}{DUR_SEP_SECOND1}){DUR_MSECOND}?"
+                "({DUR_MINUTE}{DUR_SEP_MINUTE2})({DUR_SECOND}{DUR_SEP_SECOND1}){DUR_MSECOND}?"
+                "({DUR_MINUTE}{DUR_SEP_MINUTE2})({DUR_SECOND}{DUR_SEP_SECOND2}){DUR_MSECOND}"
+DURATION_STRICT "^{DURATION[0]}$"
+                "^{DURATION[1]}$"
+                "^{DURATION[2]}$"
+                "^{DURATION[3]}$"
+                "^{DURATION[4]}$"
+                "^{DURATION[5]}$"
+                "^{DURATION[0]}{SIGN_RANGE}{DURATION[0]}$"
+                "^{DURATION[0]}{SIGN_RANGE}{DURATION[1]}$"
+                "^{DURATION[0]}{SIGN_RANGE}{DURATION[2]}$"
+                "^{DURATION[0]}{SIGN_RANGE}{DURATION[3]}$"
+                "^{DURATION[1]}{SIGN_RANGE}{DURATION[0]}$"
+                "^{DURATION[1]}{SIGN_RANGE}{DURATION[1]}$"
+                "^{DURATION[1]}{SIGN_RANGE}{DURATION[2]}$"
+                "^{DURATION[1]}{SIGN_RANGE}{DURATION[3]}$"
+                "^{DURATION[2]}{SIGN_RANGE}{DURATION[0]}$"
+                "^{DURATION[2]}{SIGN_RANGE}{DURATION[1]}$"
+                "^{DURATION[2]}{SIGN_RANGE}{DURATION[2]}$"
+                "^{DURATION[2]}{SIGN_RANGE}{DURATION[3]}$"
+                "^{DURATION[3]}{SIGN_RANGE}{DURATION[0]}$"
+                "^{DURATION[3]}{SIGN_RANGE}{DURATION[1]}$"
+                "^{DURATION[3]}{SIGN_RANGE}{DURATION[2]}$"
+                "^{DURATION[3]}{SIGN_RANGE}{DURATION[3]}$"
+                "^{DURATION[4]}{SIGN_RANGE}{DURATION[4]}$"
+                "^{DURATION[5]}{SIGN_RANGE}{DURATION[5]}$"
+
+// Proportion (maybe score): e.g. 1:2 1:2:3
+PROPORTION           "{NUMBER}{SIGN_PROPORTION}{NUMBER}({SIGN_PROPORTION}{NUMBER})*"
+PROPORTION_STRICT    "^{PROPORTION}$"
+                     "^{PROPORTION}{SIGN_RANGE}{PROPORTION}$"
+
+// Fraction: e.g. 1/2
+FRACTION             "{NUMBER}{SIGN_FRACTION}{NUMBER_NO_COMMA}"
+FRACTION_STRICT      "^{FRACTION}$"
+
+RANGE           "{PERCENTAGE}{SIGN_RANGE}{PERCENTAGE}"
+                "{MONEY}{SIGN_RANGE}{MONEY}"
+                "{YMD[0]}{SIGN_RANGE}{YMD[0]}"
+                "{YMD[1]}{SIGN_RANGE}{YMD[1]}"
+                "{YMD[2]}{SIGN_RANGE}{YMD[2]}"
+                "{MDY[0]}{SIGN_RANGE}{MDY[0]}"
+                "{MDY[1]}{SIGN_RANGE}{MDY[1]}"
+                "{MDY[2]}{SIGN_RANGE}{MDY[2]}"
+                "{DMY[0]}{SIGN_RANGE}{DMY[0]}"
+                "{DMY[1]}{SIGN_RANGE}{DMY[1]}"
+                "{DMY[2]}{SIGN_RANGE}{DMY[2]}"
+                "[（]{YEAR}{SIGN_RANGE}{YEAR}[）]"
+RANGE_STRICT    "^{RANGE[0]}$"
+                "^{RANGE[1]}$"
+                "^{RANGE[2]}$"
+                "^{RANGE[3]}$"
+                "^{RANGE[4]}$"
+                "^{RANGE[5]}$"
+                "^{RANGE[6]}$"
+                "^{RANGE[7]}$"
+                "^{RANGE[8]}$"
+                "^{RANGE[9]}$"
+                "^{RANGE[10]}$"
+                "^{RANGE[11]}$"
+
+
+////////////////////////////////////////////
+//
+// REGEXP_ALLSYMBOL is used for detecting any symbols (except Chinese characters) in a text string
+// REGEXP_STRICT    is the index for all regular expressions used for symbol detection
+//
+////////////////////////////////////////////
+
+REGEXP_ALLSYMBOL "{ALLSYMBOL}"
+
+REGEXP_STRICT {
+  CHINESE_CHARACTERS ""            ""
+  EMAIL_STRICT       "net"         "email,email,email,email"
+  URL_STRICT         "net"         "url,url,url,url"
+  YMD_STRICT         "date"        "ymd,ymd,ymd"
+  MDY_STRICT         "date"        "mdy,mdy,mdy"
+  DMY_STRICT         "date"        "dmy,dmy,dmy"
+  TIME_STRICT        "time"        ""
+  DURATION_STRICT    "duration"    "duration,duration,duration,duration,duration,duration,duration,duration,duration,duration,duration,duration,duration,duration,duration,duration,duration,duration,duration,duration,duration,duration,duration,duration"
+  MEASURE_STRICT     "measure"     ""
+  PROPORTION_STRICT  "proportion"  "proportion,proportion"
+  RANGE_STRICT       "range"       "percentageRange,moneyRange,ymdRange,ymdRange,ymdRange,mdyRange,mdyRange,mdyRange,dmyRange,dmyRange,dmyRange,yearRange"
+  FRACTION_STRICT    "fraction"    ""
+  PERCENT_STRICT     "percentage"  "percentage,percentage"
+  MONEY_STRICT       "money"       "money"
+  TRAIN_STRICT       "train"       "train"
+  NUMBER_STRICT      "number"      ""
+  MODEL_STRICT       "model"       "model,model,model,model"
+  HTML_ENTITY_STRICT "alnum"       ""
+  TERMINATOR_STRICT  "punctuation" "s,p"
+  PUNCTUATION_STRICT "punctuation" ""
+  ALNUMS_STRICT      "alnum"       ""
+  SYMBOLGROUP_STRICT "symbol"      ""
+}

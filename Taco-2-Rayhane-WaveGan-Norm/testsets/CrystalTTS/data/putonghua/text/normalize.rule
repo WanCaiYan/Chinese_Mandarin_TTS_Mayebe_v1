@@ -1,0 +1,811 @@
+﻿
+////////////////////////////////////////////////////////////////
+//
+// Regular expressions for condition matching
+//
+////////////////////////////////////////////////////////////////
+
+ALGORISM              "[＋－±]?[ \t　]?[０-９，．·]*[０-９]"
+ALGORISM_NO_DOT       "[＋－±]?[ \t　]?[０-９，]*[０-９]"
+ALGORISM_YEAR4DIG     "[１２][０-９][０-９][０-９]"
+NUM_TELEGRAM          "[０-９，．·]*[０-９]"
+SPACE                 " \t　"
+SIGN_OPTIONAL_SPACE   "[{SPACE}]*"
+SIGN_RANGE            "{SIGN_OPTIONAL_SPACE}[～－—]+{SIGN_OPTIONAL_SPACE}"
+SIGN_RANGE_WITH_SLASH "{SIGN_OPTIONAL_SPACE}[／～－—]+{SIGN_OPTIONAL_SPACE}"
+SIGN_RANGE_ONLY_SLASH "{SIGN_OPTIONAL_SPACE}[／]+{SIGN_OPTIONAL_SPACE}"
+SIGN_FRACTION         "{SIGN_OPTIONAL_SPACE}[／]{SIGN_OPTIONAL_SPACE}"
+SIGN_PROPORTION       "{SIGN_OPTIONAL_SPACE}[∶：]{SIGN_OPTIONAL_SPACE}"
+SIGN_PERCENTAGE       "{SIGN_OPTIONAL_SPACE}[‰％]"
+SIGN_MONEY            "[￥￡€￠＄]{SIGN_OPTIONAL_SPACE}"
+SIGN_MONEY_HKD        "[Ｈｈ][Ｋｋ][Ｄｄ＄]{SIGN_OPTIONAL_SPACE}"
+SIGN_MONEY_RMB        "[Ｒｒ][Ｍｍ][Ｂｂ]{SIGN_OPTIONAL_SPACE}"
+SIGN_DATE_SEP         "[／．－—]"
+SIGN_TIME_SEP         "[∶：]"
+SIGN_TIME_TAG         "[ \t　ａｍｐｍＡＭＰＭ．]"
+SIGN_DUR_SEP_HOUR     "[∶：ｈ]"
+SIGN_DUR_SEP_MINUTE1  "[∶：’′ˊ＇]"
+SIGN_DUR_SEP_MINUTE2  "ｍｉｎ"
+SIGN_DUR_SEP_MINUTE   "[’′ˊ＇]"
+SIGN_DUR_SEP_SECOND   "[″＂．]"
+SIGN_DUR_SEP_DEGREE   "[°]"
+TRAIN_NUMBER          "[^ \t　／]+"
+MEASURE_UNIT          "[Ｉｉ][Ｐｐ]|[Ｐｐ][Ｖｖ]|＃|[ｋＫｄＤｃＣｍＭｕμｎＮ]?[ｍＭ]|ｍ／ｓ|ｋｍ／ｈ|Ｎ·ｍ|ｍｉｌｅ|ｍｉ|ｆｔ|ｆｏｏｔ|ｆｅｅｔ|ｉｎ|ｉｎｃｈ|μ|Ｔ|ｔ|[Ｋｋｍｕμ]?ｇ|[ｃＣ][ｔＴ]|[ｌＬ][ｂＢ]|[ｏＯ][ｚＺ]|[ｃＣ][ｃＣ]|[ｃＣ][ｍＭ][Ｈｈ][Ｇｇ]|[ｍＭ][ｍＭ][Ｈｈ][Ｇｇ]|ｉｎ[Ｈｈ][Ｇｇ]|[Ｈｈ][Ｇｇ]|[ｍ]?[Ｌｌ]|ｈ|ｍｉｎ|[ｍｕμｎ]?ｓ|ｍｏｌ|ｒ|ｒ／ｈ|ｒ／ｍｉｎ|ｒｅｖ／ｍｉｎ|ｒｐｍ|ＲＰＭ|ｒａｄ|[ｋＫＭＧＴＰＥ]?Ｈ[Ｚｚ]|[ｋＫｍＭ]?[Ｐｐ]ａ|[ｍ]?Ａｈ|[ｍｕμ]?Ａ|[ｋＫｍｕμ]?[Ｖｖ]|[ｍｕμｎｐ]?Ｆ|[ｍｕμ]?Ｈ|[ｋＫｍＭｕμＧＴＰ]?[Ｗｗ]|[ｋＫ]?[Ωω]|[ｋ]?Ｇｙ|Ｗｂ|Ｊ|ｄ[Ｂｂ]|[ＴＧＭＫ]?Ｂｙｔｅ|[ＴＧＭＫ]?[Ｂｂ]|[ＴＧＭＫ]?ｂｉｔ|[ＴＧＭＫ]?ｂｐｓ|Ｍ|ｋｎ|[Ｎｎ]|℃|°Ｃ|℉|°Ｆ|°|￥|￡|€|￠|＄|[Ｈｈ][Ｋｋ][Ｄｄ＄]|[Ｒｒ][Ｍｍ][Ｂｂ]|㏕|㏄|㎡|㎞|㎝|㎜|㎏|㎎"
+MEASURE_DEGREE        "{SIGN_OPTIONAL_SPACE}(℃|°Ｃ|℉|°Ｆ|°)"
+SYMBOL_NO_RANGE       "[^～－—]"
+
+
+////////////////////////////////////////////////////////////////
+//
+// Interpret-as rules for determing the format
+//
+////////////////////////////////////////////////////////////////
+
+begin interpret number
+MatchChar(-2,-2,"０１２３４５６７８９") & MatchWord(-1,-1,"秒,米") : telegramAsYi
+MatchChar(0,0,"０１２３４５６７８９") & MatchWord(0,0,"～,－,—") & MatchWord(-1,1,"打成,比例,比重,黄金分割,比分,比赛") : proportion
+MatchRegexp(0,0,"[０１２３４５６７８９]") & MatchRegexp(1,1,"[＊×]") & MatchRegexp(2,2,"[０１２３４５６７８９]") & MatchWord(-5,5,"屏,分辨率") : telegram
+MatchRegexp(0,0,"[０１２３４５６７８９]") & MatchRegexp(-1,-1,"[＊×]") & MatchRegexp(-2,-2,"[０１２３４５６７８９]") & MatchWord(-5,5,"屏,分辨率") : telegram
+MatchWord(0,0,"－,—") & WordBeginWith(1,"＋,－,±,＝,＞,＜") : expression
+WordBeginWith(0,"＋,－,±") & WordEndWith(-1,"０,１,２,３,４,５,６,７,８,９") : expression
+MatchWord(1,1,"年代,年前,年后,年中,年来,年以来") : algorism
+MatchWord(-1,-1,"间隔,相隔,中断,经历,历经,延续") & MatchWord(1,1,"年") : algorism
+WordEndWith(-1,"公元前") & MatchWord(1,1,"年") : algorism
+WordBeginWith(1,"年") : year
+MatchWord(1,1,"至,到,、") & WordEndWith(2,"０,１,２,３,４,５,６,７,８,９") & WordBeginWith(3,"年") : year
+MatchWord(-3,3,"日期,时间") & MatchRegexp(0,0,"^(１[０-２]|０?[１-９])[／．－—]([１２][０-９]|３[０１]|０?[１-９])$") : md
+MatchWord(-3,3,"日期,时间") & MatchRegexp(0,0,"^([１２][０-９]|３[０１]|０?[１-９])[／．－—](１[０-２]|０?[１-９])$") : dm
+MatchWord(-3,3,"日期,时间") & MatchRegexp(0,0,"^(１[０-２]|０?[１-９])[／．－—]([１-９][０-９]?[０-９]?[０-９]?)$") : my
+MatchWord(-3,3,"日期,时间") & MatchRegexp(0,0,"^([１-９][０-９]?[０-９]?[０-９]?)[／．－—](１[０-２]|０?[１-９])$") : ymd
+WordBeginWith(1,"万,个,位,家,分钟,元,美元,美分,港币,人民币,英镑,欧元,门,户") : algorism
+MatchChar(1,1,"、") & WordEndWith(2,"０,１,２,３,４,５,６,７,８,９") & WordBeginWith(3,"万,个,位,家,分钟,元,美元,美分,港币,人民币,英镑,欧元,门,户") : algorism
+WordBeginWith(1,"月,日,时") : algorismAsEr
+WordBeginWith(1,"号,＃") & !WordBeginWith(1,"号码") : algorismAsEr
+WordEndWith(-1,"歼,远渔,海丰") | WordBeginWith(1,"强力胶,胶,系,型") : model
+WordEndWith(-1,"桑塔纳,标致,荣威,大众,日产,奥迪,奔驰,本田,丰田,一汽,波音") : model
+WordEndWith(-1,"华为,中兴,联想,方正,紫光,诺基亚,摩托罗拉,索尼,爱立信,索爱") : model
+WordEndWith(-1,"创维,海信,海尔,东芝,日立,长虹,三星,明基,宏基") : model
+MatchWord(-10,3,"代号,刊号,密码,编号") : model
+MatchWord(-3,3,"ＱＱ,Ｑｑ,ｑＱ,ｑｑ") : telegram
+MatchWord(-10,3,"地址,省,使,县,乡,镇,村,区,城,院,园,路,道,弄") & WordLen(0,6) : telegram
+MatchWord(-10,3,"邮编,邮政编码") : telegram
+MatchWord(-10,3,"致电,拨打,发送至,发送到,手机号码,电话号码,序列号,用户名,手机,信箱,电话,号码,热线,拨") : telegram
+MatchWord(-10,3,"火警,水上搜救,森林火警,匪警,急救,交警,联系") : telegram
+MatchWord(-10,10,"列车") & MatchWord(1,10,"次") : train
+WordBeginWith(0,"＋,－,±") | MatchChar(0,16,"·．，") : algorism
+MatchWord(-3,-1,"总和,结果,统计,大约,大概") : algorism
+MatchWord(-1,-1,"达到,超过,总计,共计,大于,多达,小于,接近,少于,为,计,达,共,至,第") : algorism
+true : algorismAsEr
+end
+
+begin interpret time
+WordEndWith(0,"ａｍ,ａ．ｍ．,ＡＭ,Ａ．Ｍ．") : time
+WordEndWith(0,"ｐｍ,ｐ．ｍ．,ＰＭ,Ｐ．Ｍ．") : time
+MatchWord(-5,-1,"时间,上午,中午,下午,晚上") : time
+MatchWord(-5,5,"成绩,记录,纪录,持续") : duration
+MatchWord(-5,-1,"时刻,日") : time
+MatchWord(1,5,"抵达,到,到达") | MatchWord(-5,5,"车") : time
+MatchChar(0,16,"’′ˊ＇″＂") : time
+MatchWord(-1,1,"打成") | MatchWord(-5,5,"比例,比重,黄金分割,比分,比赛,结果,比,队,胜,败,屏,分辨率") : proportion
+true : time
+end
+
+//出版日期：2002/3
+begin interpret fraction
+WordBeginWith(1,"＋,－,±,×,÷,／,＊,＝,＞,＜") : expression
+WordBeginWith(2,"＋,－,±,×,÷,／,＊,＝,＞,＜") : expression
+MatchWord(1,1,"千帕") : range
+MatchWord(1,1,"年") : year
+MatchWord(-10,10,"列车") & MatchWord(1,10,"次") : train
+MatchWord(-3,3,"日期,时间") & MatchRegexp(0,0,"^(１[０-２]|０?[１-９])[／]([１２][０-９]|３[０１]|０?[１-９])$") : md
+MatchWord(-3,3,"日期,时间") & MatchRegexp(0,0,"^([１２][０-９]|３[０１]|０?[１-９])[／](１[０-２]|０?[１-９])$") : dm
+MatchWord(-3,3,"日期,时间") & MatchRegexp(0,0,"^(１[０-２]|０?[１-９])[／]([１-９][０-９]?[０-９]?[０-９]?)$") : my
+MatchWord(-3,3,"日期,时间") & MatchRegexp(0,0,"^([１-９][０-９]?[０-９]?[０-９]?)[／](１[０-２]|０?[１-９])$") : ymd
+true : fraction
+end
+
+//歼11B
+begin interpret measure
+WordEndWith(-1,"歼,远渔,海丰") | WordBeginWith(1,"强力胶,胶,系,型") : model
+WordEndWith(-1,"桑塔纳,标致,荣威,大众,日产,奥迪,奔驰,本田,丰田,一汽,波音") : model
+WordEndWith(-1,"华为,中兴,联想,方正,紫光,诺基亚,摩托罗拉,索尼,爱立信,索爱") : model
+WordEndWith(-1,"创维,海信,海尔,东芝,日立,长虹,三星,明基,宏基") : model
+true : measure
+end
+
+begin interpret symbol
+MatchChar(0,0,"／") & MatchWord(-1,1,"时,分,秒,米,里,尺,寸,吨,斤,克,磅,盎司,西西,汞柱,摩尔,赫兹,戈瑞,分贝,比特,字节,字") : measure
+MatchChar(0,0,"／") & MatchWord(-1,1,"帕,安,伏,法,亨,瓦,欧,焦,牛,元,升,盒,日,转,度,个,十,百,千,万,亿,兆") : measure
+MatchChar(0,0,"·•－—") & MatchRegexp(-1,-1,"[一-龻㐀-䶵豈-龎]$") & MatchRegexp(1,1,"^[一-龻㐀-䶵豈-龎]"): ignore
+WordLenGreaterThan(0,2) : keepone
+true : readout
+end
+
+begin interpret alnum
+true : readout
+end
+
+
+////////////////////////////////////////////////////////////////
+//
+// Format rules for normalization for symbols/numbers from 
+// written-form to pronunciation-form (to get Chinese characters)
+//
+////////////////////////////////////////////////////////////////
+
+begin format ignore ".*"
+end
+
+begin format keepone "(.).*"
+true : {1,readOne,0}
+end
+
+begin format readout "[－—]"
+true : 到
+end
+
+begin format readout "[＊×]"
+MatchRegexp(1,1,"[０１２３４５６７８９]") & MatchRegexp(1,1,"[０１２３４５６７８９]") : 乘
+true : {0,readOneByOne,0}
+end
+
+begin format readout ".*"
+true : {0,readOneByOne,0}
+end
+
+begin format expression "({ALGORISM})[－—]({ALGORISM})"
+MatchWord(0,0,"－,—") : {1,readAlgorism,1}减{2,readAlgorism,1}
+end
+
+begin format expression "({ALGORISM}){SIGN_FRACTION}({ALGORISM})"
+true : {1,readAlgorism,1}除以{2,readAlgorism,1}
+end
+
+begin format expression "[＝＞＜±＋－]({ALGORISM})"
+WordBeginWith(0,"±")  : 加减{1,readAlgorism,1}
+WordBeginWith(0,"＋") : 加{1,readAlgorism,1}
+WordBeginWith(0,"－") : 减{1,readAlgorism,1}
+WordBeginWith(0,"＝") : 等于{1,readAlgorism,1}
+WordBeginWith(0,"＞") : 大于{1,readAlgorism,1}
+WordBeginWith(0,"＜") : 小于{1,readAlgorism,1}
+end
+
+begin format model ".*"
+true : {0,readOneByOne,9}
+end
+
+begin format telegram "({NUM_TELEGRAM}){SIGN_OPTIONAL_SPACE}"
+true : {1,readOneByOne,1}
+end
+
+// Used for continus telgram with "-", e.g. "010-6278-5001"
+begin format telegram "({NUM_TELEGRAM})({SIGN_RANGE}{NUM_TELEGRAM})+{SIGN_OPTIONAL_SPACE}"
+true : {1,readOneByOne,1}{2,telegram,0}
+end
+
+// Used for the above continuous telgram, e.g. "-(6278-5001-509)"
+begin format telegram "{SIGN_RANGE}({NUM_TELEGRAM}({SIGN_RANGE}{NUM_TELEGRAM})*){SIGN_OPTIONAL_SPACE}"
+true : 、{1,telegram,0}
+end
+
+begin format telegramAsYi "({ALGORISM}){SIGN_RANGE}({ALGORISM})"
+true : {1,readOneByOne,0}到{2,readOneByOne,0}
+end
+
+begin format telegramAsYi ".*"
+true : {0,readOneByOne,0}
+end
+
+begin format year "{ALGORISM_YEAR4DIG}"
+true : {0,readOneByOne,0}
+end
+
+begin format year "{ALGORISM}"
+true : {0,readAlgorism,2}
+end
+
+begin format year "({ALGORISM}){SIGN_RANGE_WITH_SLASH}({ALGORISM})"
+true : {1,year,0}到{2,year,0}
+end
+
+begin format year "{SIGN_RANGE_WITH_SLASH}({ALGORISM})"
+true : 到{1,year,0}
+end
+
+begin format email ".*"
+true : {0,readOneByOne,1}
+end
+
+begin format url ".*"
+true : {0,readOneByOne,1}
+end
+
+begin format punctuation ".*"
+true : {0,readOneByOne,0}
+end
+
+begin format algorismAsEr "[２]"
+true : 二
+end
+
+begin format algorismAsEr "({ALGORISM}){SIGN_RANGE}({ALGORISM})"
+true : {1,readAlgorism,0}到{2,readAlgorism,0}
+end
+
+begin format algorismAsEr "({ALGORISM})"
+true : {1,readAlgorism,0}
+end
+
+begin format algorism "({ALGORISM}){SIGN_RANGE}({ALGORISM})"
+true : {1,readAlgorism,2}到{2,readAlgorism,2}
+end
+
+begin format algorism "({ALGORISM})"
+true : {1,readAlgorism,2}
+end
+
+begin format range "({ALGORISM}){SIGN_RANGE_ONLY_SLASH}({ALGORISM})"
+true : {1,readAlgorism,2}到{2,readAlgorism,2}
+end
+
+begin format fraction "({ALGORISM}){SIGN_FRACTION}({ALGORISM})"
+true : {2,readAlgorism,1}分之{1,readAlgorism,1}
+end
+
+begin format money "{SIGN_MONEY}({ALGORISM})"
+WordBeginWith(0, "￥")   : 人民币{1,readAlgorism,6}元
+WordBeginWith(0, "￡")   : {1,readAlgorism,6}英镑
+WordBeginWith(0, "€")    : {1,readAlgorism,6}欧元
+WordBeginWith(0, "￠")   : {1,readAlgorism,6}美分
+WordBeginWith(0, "＄,$") : {1,readAlgorism,6}美元
+end
+
+begin format money "{SIGN_MONEY_HKD}({ALGORISM})"
+true : 港币{1,readAlgorism,6}元
+end
+
+begin format money "{SIGN_MONEY_RMB}({ALGORISM})"
+true : 人民币{1,readAlgorism,6}元
+end
+
+begin format money "({ALGORISM})"
+true : {1,readAlgorism,6}
+end
+
+begin format train "({TRAIN_NUMBER})"
+true : {1,readOneByOne,1}
+end
+
+begin format train "({TRAIN_NUMBER}){SIGN_FRACTION}({TRAIN_NUMBER})"
+true : {1,readOneByOne,1}、{2,readOneByOne,1}
+end
+
+begin format train "({TRAIN_NUMBER}){SIGN_FRACTION}({TRAIN_NUMBER}){SIGN_FRACTION}({TRAIN_NUMBER})"
+true : {1,readOneByOne,1}、{2,readOneByOne,1}、{3,readOneByOne,1}
+end
+
+begin format train "({TRAIN_NUMBER}){SIGN_FRACTION}({TRAIN_NUMBER}){SIGN_FRACTION}({TRAIN_NUMBER}){SIGN_FRACTION}({TRAIN_NUMBER})"
+true : {1,readOneByOne,1}、{2,readOneByOne,1}、{3,readOneByOne,1}、{4,readOneByOne,1}
+end
+
+begin format train ".*"
+true : {0,readOneByOne,1}
+end
+
+begin format percentage "({ALGORISM}){SIGN_PERCENTAGE}"
+WordEndWith(0, "％") : 百分之{1,readAlgorism,1}
+WordEndWith(0, "‰")  : 千分之{1,readAlgorism,1}
+end
+
+begin format percentage "({ALGORISM}){SIGN_RANGE}({ALGORISM}){SIGN_PERCENTAGE}"
+WordEndWith(0, "％") : 百分之{1,readAlgorism,1}到{2,readAlgorism,1}
+WordEndWith(0, "‰")  : 千分之{1,readAlgorism,1}到{2,readAlgorism,1}
+end
+
+begin format proportion "({ALGORISM}){SIGN_PROPORTION}({ALGORISM}){SIGN_OPTIONAL_SPACE}"
+true : {1,readAlgorism,1}比{2,readAlgorism,1}
+end
+
+begin format proportion "({ALGORISM}){SIGN_RANGE}({ALGORISM}){SIGN_OPTIONAL_SPACE}"
+true : {1,readAlgorism,1}比{2,readAlgorism,1}
+end
+
+// Used for continuous proportion, e.g. "2(:3:4:5:6)"
+begin format proportion "({ALGORISM})({SIGN_PROPORTION}{ALGORISM})+{SIGN_OPTIONAL_SPACE}"
+true : {1,readAlgorism,1}{2,proportion,0}
+end
+
+// Used for the above continuous proportion, e.g. ":(2:3:4)"
+begin format proportion "{SIGN_PROPORTION}({ALGORISM}({SIGN_PROPORTION}{ALGORISM})+){SIGN_OPTIONAL_SPACE}"
+true : 比{1,proportion,0}
+end
+
+begin format proportion "({SYMBOL_NO_RANGE}+){SIGN_RANGE}({SYMBOL_NO_RANGE}+)"
+true : {1,proportion,0}到{2,proportion,0}
+end
+
+begin format duration "({ALGORISM_NO_DOT}){SIGN_DUR_SEP_DEGREE}({ALGORISM_NO_DOT}){SIGN_DUR_SEP_MINUTE}({ALGORISM_NO_DOT}){SIGN_DUR_SEP_SECOND}?({ALGORISM})?"
+true : {1,readAlgorism,2}度{2,readAlgorism,10}分{3,readAlgorism,10}秒{4,readOneByOne,0}
+end
+
+begin format duration "({ALGORISM_NO_DOT}){SIGN_DUR_SEP_DEGREE}({ALGORISM_NO_DOT}){SIGN_DUR_SEP_MINUTE}?"
+true : {1,readAlgorism,2}度{2,readAlgorism,10}分
+end
+
+begin format duration "({ALGORISM_NO_DOT}){SIGN_DUR_SEP_DEGREE}"
+true : {1,readAlgorism,2}度
+end
+
+begin format duration "({ALGORISM_NO_DOT}){SIGN_DUR_SEP_HOUR}({ALGORISM_NO_DOT})({SIGN_DUR_SEP_MINUTE1}|{SIGN_DUR_SEP_MINUTE2})({ALGORISM_NO_DOT}){SIGN_DUR_SEP_SECOND}?({ALGORISM})?"
+true : {1,readAlgorism,2}小时{2,readAlgorism,10}分{4,readAlgorism,10}秒{5,readOneByOne,0}
+end
+
+begin format duration "({ALGORISM_NO_DOT}){SIGN_DUR_SEP_HOUR}({ALGORISM_NO_DOT})({SIGN_DUR_SEP_MINUTE1}|{SIGN_DUR_SEP_MINUTE2})?"
+true : {1,readAlgorism,2}小时{2,readAlgorism,10}分钟
+end
+
+begin format duration "({ALGORISM_NO_DOT}){SIGN_DUR_SEP_HOUR}"
+true : {1,readAlgorism,2}小时
+end
+
+begin format duration "({ALGORISM_NO_DOT})({SIGN_DUR_SEP_MINUTE1}|{SIGN_DUR_SEP_MINUTE2})({ALGORISM_NO_DOT}){SIGN_DUR_SEP_SECOND}?({ALGORISM})?"
+true : {1,readAlgorism,2}分{3,readAlgorism,10}秒{4,readOneByOne,0}
+end
+
+begin format duration "({ALGORISM_NO_DOT}){SIGN_DUR_SEP_MINUTE1}"
+true : {1,readAlgorism,2}分
+end
+
+begin format duration "({ALGORISM_NO_DOT}){SIGN_DUR_SEP_SECOND}({ALGORISM})?"
+true : {1,readAlgorism,2}秒{2,readOneByOne,0}
+end
+
+begin format duration "({SYMBOL_NO_RANGE}+){SIGN_RANGE}({SYMBOL_NO_RANGE}+)"
+true : {1,duration,0}到{2,duration,0}
+end
+
+begin format time "({ALGORISM}){SIGN_TIME_SEP}(００|０){SIGN_TIME_SEP}?(００|０)?{SIGN_TIME_TAG}*"
+MatchWord(0, 0, "ａ,Ａ") : 上午{1,readAlgorism,2}点整
+MatchWord(0, 0, "ｐ,Ｐ") : 下午{1,readAlgorism,2}点整
+true : {1,readAlgorism,2}点整
+end
+
+begin format time "({ALGORISM_NO_DOT}){SIGN_TIME_SEP}({ALGORISM_NO_DOT}){SIGN_TIME_SEP}(００|０){SIGN_TIME_TAG}*"
+MatchWord(0, 0, "ａ,Ａ") : 上午{1,readAlgorism,2}点{2,readAlgorism,10}分
+MatchWord(0, 0, "ｐ,Ｐ") : 下午{1,readAlgorism,2}点{2,readAlgorism,10}分
+true : {1,readAlgorism,2}点{2,readAlgorism,10}分
+end
+
+begin format time "({ALGORISM_NO_DOT}){SIGN_TIME_SEP}(００|０){SIGN_TIME_SEP}({ALGORISM_NO_DOT}){SIGN_DUR_SEP_SECOND}?({ALGORISM})?{SIGN_TIME_TAG}*"
+MatchWord(0, 0, "ａ,Ａ") : 上午{1,readAlgorism,2}点过{3,readAlgorism,2}秒{4,readOneByOne,0}
+MatchWord(0, 0, "ｐ,Ｐ") : 下午{1,readAlgorism,2}点过{3,readAlgorism,2}秒{4,readOneByOne,0}
+true : {1,readAlgorism,2}点过{3,readAlgorism,2}秒{4,readOneByOne,0}
+end
+
+begin format time "({ALGORISM_NO_DOT}){SIGN_TIME_SEP}({ALGORISM_NO_DOT}){SIGN_TIME_SEP}?(({ALGORISM_NO_DOT})?){SIGN_DUR_SEP_SECOND}?({ALGORISM})?{SIGN_TIME_TAG}*"
+MatchWord(0, 0, "ａ,Ａ") : 上午{1,readAlgorism,2}点{2,readAlgorism,10}分{3,readAlgorism,10}秒{4,readOneByOne,0}
+MatchWord(0, 0, "ｐ,Ｐ") : 下午{1,readAlgorism,2}点{2,readAlgorism,10}分{3,readAlgorism,10}秒{4,readOneByOne,0}
+true : {1,readAlgorism,2}点{2,readAlgorism,10}分{3,readAlgorism,10}秒{4,readOneByOne,0}
+end
+
+begin format time "({SYMBOL_NO_RANGE}+){SIGN_RANGE}({SYMBOL_NO_RANGE}+)"
+true : {1,time,0}到{2,time,0}
+end
+
+begin format mdy "({ALGORISM_NO_DOT}){SIGN_DATE_SEP}({ALGORISM_NO_DOT}){SIGN_DATE_SEP}({ALGORISM_NO_DOT})"
+true : {3,readOneByOne,0}年{1,readAlgorism,0}月{2,readAlgorism,0}日
+end
+
+begin format md "({ALGORISM_NO_DOT}){SIGN_DATE_SEP}({ALGORISM_NO_DOT})"
+true : {1,readAlgorism,0}月{2,readAlgorism,0}日
+end
+
+begin format ymd "({ALGORISM_NO_DOT}){SIGN_DATE_SEP}({ALGORISM_NO_DOT}){SIGN_DATE_SEP}({ALGORISM_NO_DOT})"
+true : {1,readOneByOne,0}年{2,readAlgorism,0}月{3,readAlgorism,0}日
+end
+
+begin format ymd "({ALGORISM_NO_DOT}){SIGN_DATE_SEP}({ALGORISM_NO_DOT})"
+true : {1,readOneByOne,0}年{2,readAlgorism,0}月
+end
+
+begin format dmy "({ALGORISM_NO_DOT}){SIGN_DATE_SEP}({ALGORISM_NO_DOT}){SIGN_DATE_SEP}({ALGORISM_NO_DOT})"
+true : {3,readOneByOne,0}年{2,readAlgorism,0}月{1,readAlgorism,0}日
+end
+
+begin format dm "({ALGORISM_NO_DOT}){SIGN_DATE_SEP}({ALGORISM_NO_DOT})"
+true : {2,readAlgorism,0}月{1,readAlgorism,0}日
+end
+
+begin format my "({ALGORISM_NO_DOT}){SIGN_DATE_SEP}({ALGORISM_NO_DOT})"
+true : {2,readOneByOne,0}年{1,readAlgorism,0}月
+end
+
+begin format percentageRange "({ALGORISM}{SIGN_PERCENTAGE}){SIGN_RANGE}({ALGORISM}{SIGN_PERCENTAGE})"
+true : {1,percentage,0}到{2,percentage,0}
+end
+
+begin format moneyRange "({SIGN_MONEY}{ALGORISM}){SIGN_RANGE}({SIGN_MONEY}{ALGORISM})"
+true : {1,money,0}到{2,money,0}
+end
+
+begin format moneyRange "({SIGN_MONEY_HKD}{ALGORISM}){SIGN_RANGE}({SIGN_MONEY_HKD}{ALGORISM})"
+true: {1,money,0}到{2,money,0}
+end
+
+begin format moneyRange "({SIGN_MONEY_RMB}{ALGORISM}){SIGN_RANGE}({SIGN_MONEY_RMB}{ALGORISM})"
+true : {1,money,0}到{2,money,0}
+end
+
+begin format ymdRange "({ALGORISM_NO_DOT}{SIGN_DATE_SEP}{ALGORISM_NO_DOT}{SIGN_DATE_SEP}{ALGORISM_NO_DOT}){SIGN_RANGE}({ALGORISM_NO_DOT}{SIGN_DATE_SEP}{ALGORISM_NO_DOT}{SIGN_DATE_SEP}{ALGORISM_NO_DOT})"
+true : {1,ymd,0}到{2,ymd,0}
+end
+
+begin format mdyRange "({ALGORISM_NO_DOT}{SIGN_DATE_SEP}{ALGORISM_NO_DOT}{SIGN_DATE_SEP}{ALGORISM_NO_DOT}){SIGN_RANGE}({ALGORISM_NO_DOT}{SIGN_DATE_SEP}{ALGORISM_NO_DOT}{SIGN_DATE_SEP}{ALGORISM_NO_DOT})"
+true : {1,mdy,0}到{2,mdy,0}
+end
+
+begin format dmyRange "({ALGORISM_NO_DOT}{SIGN_DATE_SEP}{ALGORISM_NO_DOT}{SIGN_DATE_SEP}{ALGORISM_NO_DOT}){SIGN_RANGE}({ALGORISM_NO_DOT}{SIGN_DATE_SEP}{ALGORISM_NO_DOT}{SIGN_DATE_SEP}{ALGORISM_NO_DOT})"
+true : {1,dmy,0}到{2,dmy,0}
+end
+
+begin format yearRange "[（]({ALGORISM_NO_DOT}){SIGN_RANGE}({ALGORISM_NO_DOT})[）]"
+true : {1,readOneByOne,0}到{2,readOneByOne,0}
+end
+
+begin format measure "[＋]({ALGORISM}){MEASURE_DEGREE}"
+true : {1,readAlgorism,2}{2,measure,0}
+end
+
+begin format measure "[－—]({ALGORISM}){MEASURE_DEGREE}"
+true : 零下{1,readAlgorism,2}{2,measure,0}
+end
+
+begin format measure "({ALGORISM}){MEASURE_DEGREE}"
+true : {1,readAlgorism,2}{2,measure,0}
+end
+
+begin format measure "([＋－—]?({ALGORISM}){MEASURE_DEGREE}?){SIGN_RANGE_WITH_SLASH}([＋－—]({ALGORISM}){MEASURE_DEGREE})"
+true : {1,measure,0}到{2,measure,0}
+end
+
+begin format measure "([＋－—]?({ALGORISM}){MEASURE_DEGREE}?){SIGN_RANGE_WITH_SLASH}(({ALGORISM}){MEASURE_DEGREE})"
+true : {1,measure,0}到{2,measure,0}
+end
+
+begin format measure "(／)"
+true : 每
+end
+
+begin format measure "({ALGORISM}){SIGN_OPTIONAL_SPACE}({MEASURE_UNIT}){SIGN_FRACTION}({ALGORISM})?{SIGN_OPTIONAL_SPACE}({MEASURE_UNIT})"
+true : {1,readAlgorism,2}{2,measure,0}每{3,readAlgorism,2}{4,measure,0}
+end
+
+begin format measure "({ALGORISM}){SIGN_FRACTION}({ALGORISM}){SIGN_OPTIONAL_SPACE}([ｃＣ][ｃＣ]|[ｃＣ][ｍＭ][Ｈｈ][Ｇｇ]|[ｍＭ][ｍＭ][Ｈｈ][Ｇｇ]|ｉｎ[Ｈｈ][Ｇｇ]|[Ｈｈ][Ｇｇ])"
+true : {1,readAlgorism,2}到{2,readAlgorism,2}{3,measure,0}
+end
+
+begin format measure "({ALGORISM}){SIGN_FRACTION}({ALGORISM}){SIGN_OPTIONAL_SPACE}({MEASURE_UNIT})"
+true : {2,readAlgorism,1}分之{1,readAlgorism,1}{3,measure,0}
+end
+
+begin format measure "({ALGORISM}){SIGN_FRACTION}({ALGORISM})?{SIGN_OPTIONAL_SPACE}({MEASURE_UNIT})"
+true : {1,readAlgorism,2}每{2,readAlgorism,2}{3,measure,0}
+end
+
+begin format measure "({ALGORISM}){SIGN_OPTIONAL_SPACE}({MEASURE_UNIT})"
+WordEndWith(0, "ＲＭＢ,ＲＭｂ,ＲｍＢ,Ｒｍｂ,ｒＭＢ,ｒＭｂ,ｒｍＢ,ｒｍｂ") : 人民币{1,readAlgorism,6}元
+WordEndWith(0, "ＨＫＤ,ＨＫｄ,ＨＫ＄,ＨｋＤ,Ｈｋｄ,Ｈｋ＄,ｈＫＤ,ｈＫｄ,ｈＫ＄,ｈｋＤ,ｈｋｄ,ｈｋ＄") : 港币{1,readAlgorism,6}元
+WordEndWith(0, "￥") : 人民币{1,readAlgorism,6}元
+WordEndWith(0, "￡") : {1,readAlgorism,6}英镑
+WordEndWith(0, "€") : {1,readAlgorism,6}欧元
+WordEndWith(0, "￠") : {1,readAlgorism,6}美分
+WordEndWith(0, "＄") : {1,readAlgorism,6}美元
+WordEndWith(0, "＃") : {1,readAlgorism,1}号
+true : {1,readAlgorism,2}{2,measure,0}
+end
+
+begin format measure "({ALGORISM}){SIGN_RANGE}({ALGORISM}){SIGN_OPTIONAL_SPACE}({MEASURE_UNIT}){SIGN_FRACTION}({ALGORISM})?{SIGN_OPTIONAL_SPACE}({MEASURE_UNIT})"
+true : {1,readAlgorism,2}到{2,readAlgorism,2}{3,measure,0}每{4,readAlgorism,2}{5,measure,0}
+end
+
+begin format measure "({ALGORISM}){SIGN_RANGE}({ALGORISM}){SIGN_FRACTION}({ALGORISM})?{SIGN_OPTIONAL_SPACE}({MEASURE_UNIT})"
+true : {1,readAlgorism,2}到{2,readAlgorism,2}每{3,readAlgorism,2}{4,measure,0}
+end
+
+begin format measure "({ALGORISM}){SIGN_RANGE}({ALGORISM}){SIGN_OPTIONAL_SPACE}({MEASURE_UNIT})"
+WordEndWith(0, "ＲＭＢ,ＲＭｂ,ＲｍＢ,Ｒｍｂ,ｒＭＢ,ｒＭｂ,ｒｍＢ,ｒｍｂ") : 人民币{1,readAlgorism,6}到{2,readAlgorism,6}元
+WordEndWith(0, "ＨＫＤ,ＨＫｄ,ＨＫ＄,ＨｋＤ,Ｈｋｄ,Ｈｋ＄,ｈＫＤ,ｈＫｄ,ｈＫ＄,ｈｋＤ,ｈｋｄ,ｈｋ＄") : 港币{1,readAlgorism,6}到{2,readAlgorism,6}元
+WordEndWith(0, "￥") : {1,readAlgorism,6}到{2,readAlgorism,6}人民币
+WordEndWith(0, "￡") : {1,readAlgorism,6}到{2,readAlgorism,6}英镑
+WordEndWith(0, "€") : {1,readAlgorism,6}到{2,readAlgorism,6}欧元
+WordEndWith(0, "￠") : {1,readAlgorism,6}到{2,readAlgorism,6}美分
+WordEndWith(0, "＄") : {1,readAlgorism,6}到{2,readAlgorism,6}美元
+true : {1,readAlgorism,2}到{2,readAlgorism,2}{3,measure,0}
+end
+
+begin format measure "({ALGORISM}){SIGN_OPTIONAL_SPACE}({MEASURE_UNIT}){SIGN_FRACTION}({ALGORISM})?{SIGN_OPTIONAL_SPACE}({MEASURE_UNIT}){SIGN_RANGE}({ALGORISM}){SIGN_OPTIONAL_SPACE}({MEASURE_UNIT}){SIGN_FRACTION}({ALGORISM})?{SIGN_OPTIONAL_SPACE}({MEASURE_UNIT})"
+true : {1,readAlgorism,2}{2,measure,0}每{3,readAlgorism,2}{4,measure,0}到{5,readAlgorism,2}{6,measure,0}每{7,readAlgorism,2}{8,measure,0}
+end
+
+begin format measure "({ALGORISM}){SIGN_OPTIONAL_SPACE}({MEASURE_UNIT}){SIGN_FRACTION}({ALGORISM})?{SIGN_OPTIONAL_SPACE}({MEASURE_UNIT}){SIGN_RANGE}({ALGORISM}){SIGN_FRACTION}({ALGORISM})?{SIGN_OPTIONAL_SPACE}({MEASURE_UNIT})"
+true : {1,readAlgorism,2}{2,measure,0}每{3,readAlgorism,2}{4,measure,0}到{5,readAlgorism,2}每{6,readAlgorism,2}{7,measure,0}
+end
+
+begin format measure "({ALGORISM}){SIGN_FRACTION}({ALGORISM})?{SIGN_OPTIONAL_SPACE}({MEASURE_UNIT}){SIGN_RANGE}({ALGORISM}){SIGN_OPTIONAL_SPACE}({MEASURE_UNIT}){SIGN_FRACTION}({ALGORISM})?{SIGN_OPTIONAL_SPACE}({MEASURE_UNIT})"
+true : {1,readAlgorism,2}每{2,readAlgorism,2}{3,measure,0}到{4,readAlgorism,2}{5,measure,0}每{6,readAlgorism,2}{7,measure,0}
+end
+
+begin format measure "({ALGORISM}){SIGN_FRACTION}({ALGORISM})?{SIGN_OPTIONAL_SPACE}({MEASURE_UNIT}){SIGN_RANGE}({ALGORISM}){SIGN_FRACTION}({ALGORISM})?{SIGN_OPTIONAL_SPACE}({MEASURE_UNIT})"
+true : {1,readAlgorism,2}每{2,readAlgorism,2}{3,measure,0}到{4,readAlgorism,2}每{5,readAlgorism,2}{6,measure,0}
+end
+
+begin format measure "({ALGORISM}){SIGN_OPTIONAL_SPACE}({MEASURE_UNIT}){SIGN_FRACTION}({ALGORISM})?{SIGN_OPTIONAL_SPACE}({MEASURE_UNIT}){SIGN_RANGE}({ALGORISM}){SIGN_OPTIONAL_SPACE}({MEASURE_UNIT})"
+true : {1,readAlgorism,2}{2,measure,0}每{3,readAlgorism,2}{4,measure,0}到{5,readAlgorism,2}{6,measure,0}
+end
+
+begin format measure "({ALGORISM}){SIGN_FRACTION}({ALGORISM})?{SIGN_OPTIONAL_SPACE}({MEASURE_UNIT}){SIGN_RANGE}({ALGORISM}){SIGN_OPTIONAL_SPACE}({MEASURE_UNIT})"
+true : {1,readAlgorism,2}每{2,readAlgorism,2}{3,measure,0}到{4,readAlgorism,2}{5,measure,0}
+end
+
+begin format measure "({ALGORISM}){SIGN_OPTIONAL_SPACE}({MEASURE_UNIT}){SIGN_RANGE}({ALGORISM}){SIGN_OPTIONAL_SPACE}({MEASURE_UNIT}){SIGN_FRACTION}({ALGORISM})?{SIGN_OPTIONAL_SPACE}({MEASURE_UNIT})"
+true : {1,readAlgorism,2}{2,measure,0}到{3,readAlgorism,2}{4,measure,0}每{5,readAlgorism,2}{6,measure,0}
+end
+
+begin format measure "({ALGORISM}){SIGN_OPTIONAL_SPACE}({MEASURE_UNIT}){SIGN_RANGE}({ALGORISM}){SIGN_FRACTION}({ALGORISM})?{SIGN_OPTIONAL_SPACE}({MEASURE_UNIT})"
+true : {1,readAlgorism,2}{2,measure,0}到{3,readAlgorism,2}每{4,readAlgorism,2}{5,measure,0}
+end
+
+begin format measure "({ALGORISM}){SIGN_OPTIONAL_SPACE}({MEASURE_UNIT}){SIGN_RANGE}({ALGORISM}){SIGN_OPTIONAL_SPACE}({MEASURE_UNIT})"
+true : {1,readAlgorism,2}{2,measure,0}到{3,readAlgorism,2}{4,measure,0}
+end
+
+begin format measure "({MEASURE_UNIT})"
+WordEndWith(0, "ＩＰ,Ｉｐ,ｉＰ,ｉｐ") : ＩＰ
+WordEndWith(0, "ＰＶ,Ｐｖ,ｐＶ,ｐｖ") : ＰＶ
+WordEndWith(0, "ｒ／ｈ") : 转每小时
+WordEndWith(0, "ｒ／ｍｉｎ,ｒｅｖ／ｍｉｎ,ｒｐｍ,ＲＰＭ") : 转每分钟
+WordEndWith(0, "ｒ") : 转
+WordEndWith(0, "Ｔｂｐｓ") : Ｔ比特每秒
+WordEndWith(0, "Ｇｂｐｓ") : Ｇ比特每秒
+WordEndWith(0, "Ｍｂｐｓ") : 兆比特每秒
+WordEndWith(0, "Ｋｂｐｓ") : 千比特每秒
+WordEndWith(0, "ｂｐｓ") : 比特每秒
+WordEndWith(0, "ｒａｄ") : 弧度
+WordEndWith(0, "℃,°Ｃ") : 摄氏度
+WordEndWith(0, "℉,°Ｆ") : 华氏度
+WordEndWith(0, "°") : 度
+WordEndWith(0, "㎡") : 平方米
+WordEndWith(0, "Ｋｍ,ＫＭ") : 公里
+WordEndWith(0, "㎞,ｋｍ,ｋＭ") : 公里
+WordEndWith(0, "ｄｍ,ｄＭ,Ｄｍ,ＤＭ") : 分米
+WordEndWith(0, "㎝,ｃｍ,ｃＭ,Ｃｍ,ＣＭ") : 厘米
+WordEndWith(0, "㎜,ｍｍ,ｍＭ,Ｍｍ,ＭＭ") : 毫米
+WordEndWith(0, "μｍ,μＭ,ｕｍ,ｕＭ") : 微米
+WordEndWith(0, "ｎｍ,ｎＭ,Ｎｍ,ＮＭ") : 纳米
+WordEndWith(0, "Ｎ·ｍ") : 牛米
+WordEndWith(0, "ｍ,Ｍ") : 米
+WordEndWith(0, "㏕,ｍｉｌｅ,ｍｉ") : 英里
+WordEndWith(0, "ｆｔ,ｆｏｏｔ,ｆｅｅｔ") : 英尺
+WordEndWith(0, "μ") : 微
+WordEndWith(0, "ｃｔ,Ｃｔ,ｃＴ,ＣＴ") : 克拉
+WordEndWith(0, "ｌｂ,Ｌｂ,ｌＢ,ＬＢ") : 磅
+WordEndWith(0, "ｏｚ,Ｏｚ,ｏＺ,ＯＺ") : 盎司
+WordEndWith(0, "㏄,ｃｃ,Ｃｃ,ｃＣ,ＣＣ") : 西西
+WordEndWith(0, "ｃｍＨｇ,ｃＭＨｇ,ＣｍＨｇ,ＣＭＨｇ,ｃｍＨＧ,ｃＭＨＧ,ＣｍＨＧ,ＣＭＨＧ") : 厘米汞柱
+WordEndWith(0, "ｃｍｈｇ,ｃＭｈｇ,Ｃｍｈｇ,ＣＭｈｇ,ｃｍｈＧ,ｃＭｈＧ,ＣｍｈＧ,ＣＭｈＧ") : 厘米汞柱
+WordEndWith(0, "ｍｍＨｇ,ｍＭＨｇ,ＭｍＨｇ,ＭＭＨｇ,ｍｍＨＧ,ｍＭＨＧ,ＭｍＨＧ,ＭＭＨＧ") : 毫米汞柱
+WordEndWith(0, "ｍｍｈｇ,ｍＭｈｇ,Ｍｍｈｇ,ＭＭｈｇ,ｍｍｈＧ,ｍＭｈＧ,ＭｍｈＧ,ＭＭｈＧ") : 毫米汞柱
+WordEndWith(0, "ｉｎＨｇ,ｉｎＨＧ,ｉｎｈｇ,ｉｎｈＧ") : 英寸汞柱
+WordEndWith(0, "Ｈｇ,ＨＧ,ｈｇ,ｈＧ") : 汞柱
+WordEndWith(0, "Ｔ,ｔ") : 吨
+WordEndWith(0, "Ｋｇ") : 公斤
+WordEndWith(0, "㎏,ｋｇ") : 公斤
+WordEndWith(0, "㎎,ｍｇ") : 毫克
+WordEndWith(0, "μｇ,ｕｇ") : 微克
+WordEndWith(0, "ｇ") : 克
+WordEndWith(0, "ｍｏｌ") : 摩尔
+WordEndWith(0, "ｍｌ,ｍＬ") : 毫升
+WordEndWith(0, "Ｌ,ｌ") : 升
+WordEndWith(0, "ｍｉｎ") : 分钟
+WordEndWith(0, "ｍｓ") : 毫秒
+WordEndWith(0, "μｓ,ｕｓ") : 微秒
+WordEndWith(0, "ｎｓ") : 纳秒
+WordEndWith(0, "ｓ") : 秒
+WordEndWith(0, "ｉｎ,ｉｎｃｈ") : 英寸
+WordEndWith(0, "ｋＨｚ,ｋＨＺ,ＫＨｚ,ＫＨＺ") : 千赫兹
+WordEndWith(0, "ＭＨｚ,ＭＨＺ") : 兆赫兹
+WordEndWith(0, "ＧＨｚ,ＧＨＺ") : Ｇ赫兹
+WordEndWith(0, "ＴＨｚ,ＴＨＺ") : Ｔ赫兹
+WordEndWith(0, "ＰＨｚ,ＰＨＺ") : Ｐ赫兹
+WordEndWith(0, "ＥＨｚ,ＥＨＺ") : Ｅ赫兹
+WordEndWith(0, "Ｈｚ,ＨＺ") : 赫兹
+WordEndWith(0, "ＭＰａ,Ｍｐａ,ｍＰａ,ｍｐａ") : 兆帕
+WordEndWith(0, "ＫＰａ,Ｋｐａ,ｋＰａ,ｋｐａ") : 千帕
+WordEndWith(0, "Ｐａ,ｐａ") : 帕
+WordEndWith(0, "ｍＡｈ") : 毫安时
+WordEndWith(0, "Ａｈ") : 安时
+WordEndWith(0, "ｈ") : 小时
+WordEndWith(0, "μＡ,ｕＡ") : 微安
+WordEndWith(0, "ｍＡ") : 毫安
+WordEndWith(0, "Ａ") : 安
+WordEndWith(0, "μＶ,μｖ,ｕＶ,ｕｖ") : 微伏
+WordEndWith(0, "ｍＶ,ｍｖ") : 毫伏
+WordEndWith(0, "ＫＶ,Ｋｖ,ｋＶ,ｋｖ") : 千伏
+WordEndWith(0, "Ｖ,ｖ") : 伏
+WordEndWith(0, "ｍＦ") : 毫法
+WordEndWith(0, "μＦ,ｕＦ") : 微法
+WordEndWith(0, "ｎＦ") : 纳法
+WordEndWith(0, "ｐＦ") : 皮法
+WordEndWith(0, "Ｆ") : 法拉
+WordEndWith(0, "ｍＨ") : 毫亨
+WordEndWith(0, "μＨ,ｕＨ") : 微亨
+WordEndWith(0, "Ｈ") : 亨利
+WordEndWith(0, "μＷ,μｗ,ｕＷ,ｕｗ") : 微瓦
+WordEndWith(0, "ｍＷ,ｍｗ") : 毫瓦
+WordEndWith(0, "ＫＷ,Ｋｗ,ｋＷ,ｋｗ") : 千瓦
+WordEndWith(0, "ＭＷ,Ｍｗ") : 兆瓦
+WordEndWith(0, "ＧＷ,Ｇｗ") : Ｇ瓦
+WordEndWith(0, "ＴＷ,Ｔｗ") : Ｔ瓦
+WordEndWith(0, "ＰＷ,Ｐｗ") : Ｐ瓦
+WordEndWith(0, "Ｗ,ｗ") : 瓦
+WordEndWith(0, "ｋΩ,ＫΩ,ｋω,Ｋω") : 千欧
+WordEndWith(0, "Ω,ω") : 欧
+WordEndWith(0, "ｋＧｙ") : 千戈瑞
+WordEndWith(0, "Ｇｙ") : 戈瑞
+WordEndWith(0, "Ｗｂ") : 韦伯
+WordEndWith(0, "Ｊ") : 焦
+WordEndWith(0, "ｄＢ,ｄｂ") : 分贝
+WordEndWith(0, "ｋｎ") : 节
+WordEndWith(0, "Ｎ,ｎ") : 牛
+WordEndWith(0, "ＲＭＢ,ＲＭｂ,ＲｍＢ,Ｒｍｂ,ｒＭＢ,ｒＭｂ,ｒｍＢ,ｒｍｂ") : 人民币
+WordEndWith(0, "ＨＫＤ,ＨＫｄ,ＨＫ＄,ＨｋＤ,Ｈｋｄ,Ｈｋ＄,ｈＫＤ,ｈＫｄ,ｈＫ＄,ｈｋＤ,ｈｋｄ,ｈｋ＄") : 港币
+WordEndWith(0, "￥") : 人民币
+WordEndWith(0, "￡") : 英镑
+WordEndWith(0, "€") : 欧元
+WordEndWith(0, "￠") : 美分
+WordEndWith(0, "＄") : 美元
+WordEndWith(0, "ＴＢｙｔｅ,ＴＢ") : Ｔ字节
+WordEndWith(0, "ＧＢｙｔｅ,ＧＢ") : Ｇ字节
+WordEndWith(0, "ＭＢｙｔｅ,ＭＢ") : 兆字节
+WordEndWith(0, "ＫＢｙｔｅ,ＫＢ") : 千字节
+WordEndWith(0, "Ｔｂｉｔ,Ｔｂ") : Ｔ比特
+WordEndWith(0, "Ｇｂｉｔ,Ｇｂ") : Ｇ比特
+WordEndWith(0, "Ｍｂｉｔ,Ｍｂ") : 兆比特
+WordEndWith(0, "Ｋｂｉｔ,Ｋｂ") : 千比特
+WordEndWith(0, "Ｂｙｔｅ,Ｂ") : 字节
+WordEndWith(0, "ｂｉｔ,ｂ") : 比特
+WordEndWith(0, "Ｍ") : 兆
+WordEndWith(0, "＃") : 井号
+end
+
+begin format readOne "."
+MatchChar(0,0,"0０〇") : 零
+MatchChar(0,0,"1１Ⅰⅰ㈠①⑴⒈") : 一
+MatchChar(0,0,"2２Ⅱⅱ㈡②⑵⒉") : 二
+MatchChar(0,0,"3３Ⅲⅲ㈢③⑶⒊") : 三
+MatchChar(0,0,"4４Ⅳⅳ㈣④⑷⒋") : 四
+MatchChar(0,0,"5５Ⅴⅴ㈤⑤⑸⒌") : 五
+MatchChar(0,0,"6６Ⅵⅵ㈥⑥⑹⒍") : 六
+MatchChar(0,0,"7７Ⅶⅶ㈦⑦⑺⒎") : 七
+MatchChar(0,0,"8８Ⅷⅷ㈧⑧⑻⒏") : 八
+MatchChar(0,0,"9９Ⅸⅸ㈨⑨⑼⒐") : 九
+MatchChar(0,0,"Ⅹⅹ㈩⑩⑽⒑") : 十
+MatchChar(0,0,"Ⅺ⑾⒒") : 十一
+MatchChar(0,0,"Ⅻ⑿⒓") : 十二
+MatchChar(0,0,"⒀⒔") : 十三
+MatchChar(0,0,"⒁⒕") : 十四
+MatchChar(0,0,"⒂⒖") : 十五
+MatchChar(0,0,"⒃⒗") : 十六
+MatchChar(0,0,"⒄⒘") : 十七
+MatchChar(0,0,"⒅⒙") : 十八
+MatchChar(0,0,"⒆⒚") : 十九
+MatchChar(0,0,"⒇⒛") : 二十
+MatchChar(0,0,"aAａＡ") : Ａ
+MatchChar(0,0,"bBｂＢ") : Ｂ
+MatchChar(0,0,"cCｃＣ") : Ｃ
+MatchChar(0,0,"dDｄＤ") : Ｄ
+MatchChar(0,0,"eEｅＥ") : Ｅ
+MatchChar(0,0,"fFｆＦ") : Ｆ
+MatchChar(0,0,"gGｇＧ") : Ｇ
+MatchChar(0,0,"hHｈＨ") : Ｈ
+MatchChar(0,0,"iIｉＩ") : Ｉ
+MatchChar(0,0,"jJｊＪ") : Ｊ
+MatchChar(0,0,"kKｋＫ") : Ｋ
+MatchChar(0,0,"lLｌＬ") : Ｌ
+MatchChar(0,0,"mMｍＭ") : Ｍ
+MatchChar(0,0,"nNｎＮ") : Ｎ
+MatchChar(0,0,"oOｏＯ") : Ｏ
+MatchChar(0,0,"pPｐＰ") : Ｐ
+MatchChar(0,0,"qQｑＱ") : Ｑ
+MatchChar(0,0,"rRｒＲ") : Ｒ
+MatchChar(0,0,"sSｓＳ") : Ｓ
+MatchChar(0,0,"tTｔＴ") : Ｔ
+MatchChar(0,0,"uUｕＵ") : Ｕ
+MatchChar(0,0,"vVｖＶ") : Ｖ
+MatchChar(0,0,"wWｗＷ") : Ｗ
+MatchChar(0,0,"xXｘＸ") : Ｘ
+MatchChar(0,0,"yYｙＹ") : Ｙ
+MatchChar(0,0,"zZｚＺ") : Ｚ
+MatchChar(0,0,"+＋") : 加
+MatchChar(0,0,"－–—") : 杠
+MatchChar(0,0,"~～") : 到
+MatchChar(0,0,"±") : 加减
+MatchChar(0,0,"×") : 乘
+MatchChar(0,0,"÷") : 除以
+MatchChar(0,0,"=＝") : 等于
+MatchChar(0,0,"≠") : 不等于
+MatchChar(0,0,"≡") : 恒等于
+MatchChar(0,0,"≌") : 全等于
+MatchChar(0,0,"≈") : 约等于
+MatchChar(0,0,"<＜") : 小于
+MatchChar(0,0,">＞") : 大于
+MatchChar(0,0,"≮") : 不小于
+MatchChar(0,0,"≯") : 不大于
+MatchChar(0,0,"≤") : 小于等于
+MatchChar(0,0,"≥") : 大于等于
+MatchChar(0,0,"％%") : 百分号
+MatchChar(0,0,"‰") : 千分号
+MatchChar(0,0,"∞") : 无穷大
+MatchChar(0,0,"∝") : 正比于
+MatchChar(0,0,"√") : 根号
+MatchChar(0,0,"∵") : 因为
+MatchChar(0,0,"∴") : 所以
+MatchChar(0,0,"∷") : 等于
+MatchChar(0,0,".．") : 点
+MatchChar(0,0,"|｜") : 竖线
+MatchChar(0,0,"&＆") : 引用
+MatchChar(0,0,"*＊") : 星号
+MatchChar(0,0,"/／") : 斜杠
+MatchChar(0,0,"#＃") : 井号
+MatchChar(0,0,"\＼") : 反斜杠
+MatchChar(0,0,"。") : 句号
+MatchChar(0,0,"、") : 顿号
+MatchChar(0,0,"，,") : 逗号
+MatchChar(0,0,"：:∶") : 冒号
+MatchChar(0,0,"；;") : 分号
+MatchChar(0,0,"？?﹖") : 问号
+MatchChar(0,0,"！!") : 感叹号
+MatchChar(0,0,"＇′ˊ") : 撇
+MatchChar(0,0,"″") : 两撇
+MatchChar(0,0,"'") : 单引号
+MatchChar(0,0,"\u0022") : 双引号
+MatchChar(0,0,"‘") : 左单引号
+MatchChar(0,0,"“") : 左双引号
+MatchChar(0,0,"’") : 右单引号
+MatchChar(0,0,"”") : 右双引号
+MatchChar(0,0,"‖") : 双线号
+MatchChar(0,0,"§") : 分节号
+MatchChar(0,0,"《") : 左书名号
+MatchChar(0,0,"》") : 右书名号
+MatchChar(0,0,"∪") : 并集
+MatchChar(0,0,"∩") : 交集
+MatchChar(0,0,"∫") : 积分
+MatchChar(0,0,"∑") : 总和
+MatchChar(0,0,"°") : 度
+MatchChar(0,0,"℃") : 摄氏度
+MatchChar(0,0,"℉") : 华氏度
+MatchChar(0,0,"㎎") : 毫克
+MatchChar(0,0,"㎏") : 公斤
+MatchChar(0,0,"㎜") : 毫米
+MatchChar(0,0,"㎝") : 厘米
+MatchChar(0,0,"㎞") : 公里
+MatchChar(0,0,"㎡") : 平方米
+MatchChar(0,0,"㏄") : 西西
+MatchChar(0,0,"㏕") : 英里
+MatchChar(0,0,"·") : 乘
+MatchChar(0,0,"{｛") : 左花括号
+MatchChar(0,0,"}｝") : 右花括号
+MatchChar(0,0,"（(") : 左圆括号
+MatchChar(0,0,"）)") : 右圆括号
+MatchChar(0,0,"[［【〖") : 左方括号
+MatchChar(0,0,"］]】〗") : 右方括号
+MatchChar(0,0,"＠﹫@") : ＠
+MatchChar(0,0,"_＿") : 下划线
+MatchChar(0,0,"＂") : 双引号
+MatchChar(0,0,"$＄") : 美元
+MatchChar(0,0,"…") : 省略号
+MatchChar(0,0,"￥") : 人民币
+MatchChar(0,0,"￡") : 英镑
+MatchChar(0,0,"￠") : 美分
+MatchChar(0,0,"€") : 欧元
+end

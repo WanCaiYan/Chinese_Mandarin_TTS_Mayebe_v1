@@ -1,0 +1,1813 @@
+﻿begin word "嚷"
+MatchWord(1,1,"嚷") : rang1
+MatchWord(-1,-1,"嚷") : rang5
+end
+
+begin word "几"
+POS(1,"m,q,t") : ji3
+end
+
+begin word "和"
+MatchWord(-3,4,"诗,词,曲") : he4
+MatchWord(-3,4,"泥,面") : huo2
+MatchWord(-3,4,"麻将,麻,牌") : hu2
+(MatchWord(-3,4,"药,盐,糖") & (MatchWord(1,1,"上") | POS(1,"u") | POS(2,"u"))) | (MatchWord(-3,4,"洗") & (POS(1,"u") | POS(2,"u"))) : huo4
+MatchChar(1,3,"泥") : huo4
+end
+
+begin word "一"
+MatchWord(1,1,"地") : yi2
+end
+
+begin word "地"
+MatchWord(-1,-1,"占,掷,洒,撒,泄,泻,对") | MatchChar(-1,-1,"上") : di4
+MatchWord(1,1,"县") : di4 ;check the previous character's exsitence
+MatchWord(-1,-1,"一") : di4
+(POS(-1,"a,v") | MatchChar(-1,-1,"然")) & (POS(1,"v") | SucceedNoun(0)) : de5
+RealEnd(0) : di4
+POS(1,"p") | PrecedeVerb(0) | POS(1,"v") | POS(-1,"a") : de5
+end
+
+begin word "打"
+POS(-1,"m") & POS(1,"n") : da2 / da3
+end
+
+begin word "兴"
+WordBeginWith(1,"高") : xing4
+MatchWord(-1,-1,"兴") : xing1
+WordLen(-1,1) & POS(1,"a,v") : xing4 / xing1
+end
+
+begin word "处"
+MatchWord(1,1,"不来,得") | MatchWord(-1,-1,"自") : chu3
+MatchWord(-1,-1,"之") | POS(-1,"m") : chu4
+WordLen(-1,2) & (POS(-1,"n,v")) : chu4
+MatchWord(2,5,"罚,金,禁,刑") : chu3 / chu4
+end
+
+begin word "发"
+MatchChar(-1,-1,"首") : fa1
+MatchChar(1,1,"屋质") : fa4
+MatchChar(-1,-1,"的") | MatchChar(-2,-2,"头") | (POS(-1,"v") & POS(1,"n") & WordLen(1,1)) | (POS(2,"v") & WordLen(-1,1) & POS(-1,"n")) : fa4
+POS(0,"v") : fa1
+end
+
+begin word "校"
+MatchChar(-5,5,"仪表器计量度秤准") : jiao4
+POS(-1,"v,u") | MatchWord(1,1,"的") : xiao4
+POS(-1,"m") | MatchWord(1,1,"得") : jiao4
+end
+
+begin word "把"
+MatchWord(-1,-1,"刀,话") | MatchWord(1,1,"了,儿") : ba4
+end
+
+begin word "家"
+MatchWord(-1,-1,"整天,成天") : jie5
+end
+
+begin word "价"
+MatchWord(-1,-1,"整天,成天") : jie5
+end
+
+begin word "夹"
+MatchChar(1,1,"肢") & MatchChar(2,2,"窝") : ga1
+end
+
+begin word "假"
+MatchChar(-10,5,"给放长天短") : jia4
+MatchChar(-10,5,"掺使作售制贩") : jia3
+end
+
+begin word "度"
+MatchChar(-1,-1,"心") | MatchChar(-2,-2,"心") : duo2 / du4
+end
+
+begin word "哪"
+MatchChar(1,1,"吒") : ne2
+POS(1,"w") : na5 / na3
+end
+
+begin word "粘"
+MatchChar(1,1,"膜") : nian2
+end
+
+begin word "场"
+MatchChar(-1,1,"麦稻谷晒碾院圃") : chang2 / chang3
+end
+
+begin word "传"
+LastPunc("《") | LastPunc("<<") | NextPunc(">>") | NextPunc("》") : zhuan4
+POS(0,"v") & MatchChar(1,1,"下上过来了到完给") : chuan2
+end
+
+begin word "教"
+MatchWord(-1,-1,"不") & MatchWord(-1,-1,"子") : jiao4
+end
+
+begin word "将"
+MatchWord(1,1,"在") & MatchWord(2,2,"外") & (MatchWord(3,3,"君") | MatchChar(3,3,"不")) : jiang4
+end
+
+begin word "混"
+MatchChar(-4,-1,"水液") : hun2
+end
+
+begin word "有"
+POS(-1,"m") & POS(1,"m") : you4
+end
+
+begin word "漂"
+RealEnd(0) : piao1
+end
+
+begin word "臂"
+MatchWord(-1,-1,"剁") : bei5
+end
+
+begin char "夫"
+MatchWord(0,0,"南斯拉夫,高尔夫,高尔夫球") : fu1
+MatchChar(-1,-1,"丈") : fu5
+POS(0,"nr") & WordLenLessThan(0,4) : fu1
+WordLen(0,1) : fu2
+end
+
+begin char "岗"
+POS(0,"nr") : gang1
+WordLen(0,1) & MatchWord(1,1,"儿,子") : gang1
+WordLen(0,1) & !MatchWord(1,1,"儿,子") : gang3
+end
+
+begin char "巷"
+MatchChar(1,1,"道") | MatchChar(-1,-1,"平") : hang4
+MatchChar(-2,2,"煤矿") : hang4 / xiang4
+end
+
+begin char "父"
+MatchChar(-1,-1,"渔田") : fu3 / fu4
+end
+
+begin char "塞"
+POS(0,"n") : sai4
+POS(1,"n") | POS(2,"n") : sai1
+end
+
+begin char "丽"
+MatchChar(-1,-1,"高") | MatchChar(1,1,"水") | MatchWord(1,1,"江") : li2 / li4
+end
+
+begin char "刺"
+MatchWord(1,1,"的,地") | MatchWord(1,2,"一声") : ci1 / ci4
+end
+
+begin char "迫"
+MatchWord(0,0,"迫击炮") : pai3 / po4
+end
+
+begin char "正"
+MatchWord(-1,-1,"农历") | MatchWord(1,1,"月") | MatchChar(1,1,"旦朔") : zheng1 / zheng4
+end
+
+begin char "什"
+POS(0,"nr,ns") : shi2 / shen2
+end
+
+begin char "提"
+POS(0,"nr,ns") : ti2
+WordLen(0,1) & MatchChar(1,1,"溜") : di1
+WordLen(0,1) & !MatchChar(1,1,"溜") : ti2
+end
+;if(prev_seg_cx(rec,0,"nr") || prev_seg_cx(rec,0,"ns"))
+;     put_pinyin(rec,pinyin,"ti2",4,n);
+;else if(strlen(rec->Piece) == 2)
+;{
+;    if(next_ch_word(rec,1,"溜",n))
+;    {
+;        put_pinyin(rec,pinyin,"di1",3,n);
+;        put_pinyin(rec->Next,pinyin,"liu5",4,n);
+;    }
+;    else
+;        put_pinyin(rec,pinyin,"ti2",3,n);
+;}
+
+begin char "区"
+(POS(0,"nr") | MatchWord(1,1,"楚良")) & WordBeginWith(0,"区") : ou1 / qu1
+end
+
+begin char "切"
+WordLen(0,1) & (PrecedeNoun(1) | POS(1,"v")) : qie4
+WordLen(0,1) & !(PrecedeNoun(1) | POS(1,"v")) : qie1
+WordLenGreaterThan(0,2) : qie4
+;                    if( strlen(rec->Piece) == 2)
+;                    {
+;                        if(prev_none_cx(rec,1) || IsVerb_seg(rec,1))
+;                            put_pinyin(rec,pinyin,"qie4",4,n);
+;                        else
+;                            put_pinyin(rec,pinyin,"qie1",4,n);
+;                    }
+;                    else if(strlen(rec->Piece) > 4)
+;                        put_pinyin(rec,pinyin,"qie4",4,n);
+end
+
+begin char "伯"
+WordBeginWith(0,"伯") & MatchWord(1,1,"子") : bai3 / bo2
+end
+
+begin char "冠"
+MatchChar(-1,-1,"正") & WordLen(0,1) : guan1
+POS(0,"nr") & WordBeginWith(0,"冠") : guan1
+POS(0,"nr") : guan4
+end
+
+begin char "格"
+MatchWord(1,1,"登,支") | MatchWord(2,2,"子") : ge1 / ge2
+end
+
+begin char "隆"
+MatchWord(1,1,"咚") : long1 / long2
+end
+
+begin char "陆"
+POS(1,"m,q") | MatchChar(1,1,"元") : liu4 / lu4
+end
+
+begin char "与"
+MatchWord(0,0,"参与") | MatchChar(1,1,"会") | MatchWord(1,1,"闻") : yu4 / yu3
+end
+
+begin char "朴"
+POS(0,"nr") : piao2
+WordBeginWith(0,"朴") & MatchChar(1,1,"刀") : po1
+WordBeginWith(0,"朴") & MatchChar(1,1,"树硝") : po4
+end
+
+begin char "症"
+MatchWord(0,0,"症结") : zheng1 / zheng4
+end
+
+begin char "候"
+MatchWord(0,0,"症候") : hou5
+end
+
+begin char "车"
+MatchWord(-5,5,"棋,马,炮,象") : ju1 / che1
+end
+
+begin char "汤"
+MatchChar(-1,-1,"汤") | MatchChar(1,1,"汤") : shang1 / tang1
+end
+
+begin char "暴"
+MatchChar(-1,-1,"一") : pu4
+end
+
+begin char "号"
+MatchChar(1,1,"丧叫啕") | MatchChar(-1,-1,"哀呼怒") : hao2 / hao4
+end
+
+begin word "丧"
+MatchChar(-1,-1,"丧") : sang1
+end
+
+begin char "济"
+WordLen(0,1) : ji4
+MatchWord(0,0,"济南") : ji3
+MatchWord(1,1,"济,楚") | MatchWord(-1,-1,"济") : ji3
+MatchWord(1,5,"铁路,公路,之间") | MatchChar(1,5,"线") : ji3
+end
+
+begin char "燕"
+WordBeginWith(0,"燕") & (POS(0,"nr") | MatchChar(1,1,"国韩") | MatchChar(2,2,"都")) : yan1
+!WordBeginWith(0,"燕") : yan4
+end
+
+begin char "呀"
+WordEndWith(0,"呀") & WordLenGreaterThan(-1,0) & RealEnd(0) : ya1
+WordEndWith(0,"呀") : ya5
+;                    if(!rec->Prev->Piece && RealEnd(rec))
+;                        put_pinyin(rec,pinyin,"ya1",3,n);
+;                    else
+;                        put_pinyin(rec,pinyin,"ya5",3,n);
+end
+
+begin char "薄"
+PrecedeVerb(-1) & WordLen(0,1) : bo2
+WordEndWith(0,"薄") & MatchWord(-1,-1,"不") & POS(-2,"n") & WordBeginWith(-3,"待") : bo2
+WordEndWith(0,"薄") & MatchWord(-1,-1,"不") : bo2
+WordEndWith(0,"薄") & RealEnd(0) : bao2
+WordBeginWith(0,"薄") & POS(0,"nr") : bo2
+end
+
+begin char "差"
+WordEndWith(0,"差") & MatchChar(1,1,"错") : cha1
+WordEndWith(0,"差") & MatchChar(-1,-1,"出错") : chai1
+WordEndWith(0,"差") & MatchWord(-1,-1,"之") & POS(2,"n") & MatchWord(-3,-3,"和") & POS(4,"n") : cha1
+WordEndWith(0,"差") & MatchWord(-1,-1,"之") : cha4
+WordLen(0,1) & ((POS(-2,"v") & POS(-1,"n")) | (POS(-1,"n") & POS(1,"v")) | (POS(-1,"n") & POS(1,"a")) | MatchChar(1,1,"的")) : cha1
+WordLen(0,1) & (RealEnd(0) | MatchChar(1,1,"的,得") | POS(-1,"v")) : cha4
+WordLen(0,1) & (POS(-2,"v") | POS(1,"v") | POS(2,"v")) & !POS(-1,"v") : cha1
+WordBeginWith(0,"差") & MatchWord(-8,-1,"比") : cha4
+WordBeginWith(0,"差") & MatchWord(-1,-1,"美") : chai1
+WordBeginWith(0,"差") & MatchChar(-5,1,"出当") : chai1
+WordBeginWith(0,"差") & MatchChar(-5,5,"算数额级剪贸色求") : cha1
+end
+
+begin word "长"
+WordBeginWith(0,"长") & POS(1,"m") & MatchWord(2,2,"辈,岁") : zhang3
+WordBeginWith(0,"长") & POS(1,"m") : chang2
+
+WordBeginWith(0,"长") & MatchChar(1,1,"长") & MatchChar(2,2,"的") : chang2
+WordBeginWith(0,"长") & MatchChar(1,1,"长") : zhang3
+WordBeginWith(0,"长") & MatchChar(-1,-1,"长") : chang2
+WordBeginWith(0,"长") & MatchChar(1,1,"短") : chang2
+WordBeginWith(0,"长") & WordEndWith(-1,"楼,狱") : zhang3
+WordBeginWith(0,"长") & !POS(-1,"v") & !POS(-2,"v") & RealEnd(0) : chang2
+WordBeginWith(0,"长") & MatchWord(1,1,"得") : zhang3
+WordBeginWith(0,"长") & (MatchWord(1,1,"时间,臂,达") | POS(0,"nr")) : chang2
+
+WordBeginWith(0,"长") & WordLenGreaterThan(-1,1) & WordEndWith(-1,"部,局,处,科,院,厂,场,所") : zhang3
+
+WordBeginWith(0,"长") & MatchChar(1,8,"满肉骨额毛指胡鼻眼嘴眉孔疮瘩膜胞菌岁辈人好难漂丑智志识记锈虱足脚尾虫高快肺胃肠肾背肚胸子儿女花草树根茎叶孩耳高低胖瘦肥风") : zhang3
+
+WordLen(0,1) & MatchChar(-3,5,"文词语音时影剧会期距车宽短厚钱货帐库") : chang2
+
+WordLen(0,1) & POS(0,"v") : zhang3
+WordLen(0,1) & POS(0,"a") : chang2
+
+WordEndWith(0,"长") & MatchWord(-1,-1,"之") & ((SucceedNoun(-2) | POS(-2,"n") | PrecedeNoun(-2)) & MatchChar(-3,-3,"一")) : zhang3
+WordEndWith(0,"长") & MatchWord(-1,-1,"之") : chang2
+MatchWord(0,0,"行长") & MatchChar(1,3,"增减加等？") : chang2
+MatchWord(0,0,"见长") & MatchChar(-5,-2,"以") : chang2
+MatchWord(0,0,"见长") :zhang3
+WordEndWith(0,"长") & MatchWord(-1,-1,"不") & MatchChar(1,8,"肉骨额毛发胡指头鼻眼嘴眉孔疮瘩胞膜菌岁辈人好难漂丑智志记识锈虱足脚尾虫高快肺胃肠肾背肚胸子儿女花树根茎叶孩脸耳高低胖瘦肥风") : zhang3
+WordEndWith(0,"长") & MatchWord(-1,-1,"不") & (POS(-2,"v") | POS(-3,"v")) : chang2
+WordEndWith(0,"长") & MatchWord(-1,-1,"不") & MatchChar(-3,5,"文词语音时距车宽短厚钱货帐库") : chang2
+
+WordEndWith(0,"长") & POS(0,"nr") : chang2
+end
+
+begin char "朝"
+MatchWord(0,0,"明朝") & MatchChar(-5,5,"看待") : zhao1
+WordBeginWith(0,"朝") & MatchChar(1,10,"夕暮") : zhao1
+WordLen(0,1) : chao2
+end
+
+begin char "当"
+MatchWord(0,0,"不当") & POS(-1,"v") : dang4
+MatchWord(0,0,"当晚,当日,当天") : dang4
+end
+
+begin char "倒"
+WordEndWith(0,"倒") & MatchWord(1,1,"把") & WordLenGreaterThan(-1,0) & WordLenGreaterThan(-2,0) : dao4
+WordEndWith(0,"倒") & MatchChar(1,1,"了") & POS(2,"w") : dao3
+WordEndWith(0,"倒") & MatchChar(-1,-1,"不") & (POS(-2,"v") | MatchChar(-2,-2,"永")) : dao3
+WordEndWith(0,"倒") & MatchChar(-1,-1,"不") : dao4
+MatchWord(0,0,"倾倒") & (RealEnd(0) | MatchWord(1,1,"在") | MatchWord(-2,-2,"为")) : dao3
+WordEndWith(0,"倒") & (POS(1,"q") | MatchWord(2,2,"车")) : dao3
+MatchWord(0,0,"倒车") & MatchChar(-5,-1,"站在") : dao3
+MatchWord(0,0,"倒车") : dao4
+WordBeginWith(0,"倒") & MatchWord(1,1,"在") & (MatchWord(-7,-1,"把将") | MatchChar(2,8,"里")) : dao4
+WordBeginWith(0,"倒") & MatchWord(1,1,"在") : dao4
+WordBeginWith(0,"倒") & MatchWord(1,1,"了") & (MatchWord(-1,-1,"装按") | MatchWord(-4,-3,"把")) : dao4
+WordBeginWith(0,"倒") & MatchWord(1,1,"了") : dao3
+WordBeginWith(0,"倒") & MatchWord(1,1,"把") & POS(1,"n") : dao4
+WordLen(0,1) & MatchWord(2,2,"倒") & POS(1,"v") : dao3
+WordLen(0,1) & MatchWord(-2,-2,"倒") & POS(-1,"v") : dao3
+WordLen(0,1) & ((POS(-1,"v") & POS(1,"a")) | PrecedeNoun(1) | PrecedeVerb(1)) : dao4
+WordLen(0,1) & POS(1,"v") & MatchWord(1,1,"扣") : dao4
+WordLen(0,1) & POS(1,"v") & MatchWord(1,8,"了") : dao4
+WordLen(0,1) & POS(1,"v") : dao3
+WordLen(0,1) & (POS(1,"n") | MatchChar(-2,-1,"车") | SucceedVerb(1)) : dao4
+end
+
+begin char "干"
+WordLen(0,1) & MatchChar(-5,5,"水乳液衣服漆气汽果地鞋皮壳爹娘儿孙嘴口") : gan1
+WordLen(0,1) & MatchChar(-5,5,"工作事行出成到至") : gan4
+WordEndWith(0,"干") & MatchWord(-1,-1,"若干,拧,晒,挤,烘") : gan1
+WordEndWith(0,"干") & MatchWord(-1,-1,"不") : gan4
+WordLen(0,1) & POS(-1,"n") & (POS(-2,"v") | POS(1,"v") | POS(2,"v")) : gan1
+WordLen(0,1) & (MatchChar(-1,-1,"很") | MatchChar(2,2,"很") | MatchWord(1,1,"细胞")) : gan1
+WordBeginWith(0,"干") & (MatchChar(2,2,"垒,雷") | MatchChar(1,1,"枯")) : gan1
+WordBeginWith(0,"干") & MatchWord(-1,-1,"拧,晒,挤,烘") : gan1
+WordBeginWith(0,"干") & MatchWord(-1,-1,"罗") : gan4
+WordLen(0,1) & MatchChar(-20,5,"水乳液衣服漆气汽果地鞋皮壳爹娘儿孙嘴口") : gan1
+WordLen(0,1) & MatchChar(-5,10,"工作事行出成到至活") : gan4
+WordLen(0,1) & POS(-1,"n") & (POS(-2,"v") | POS(1,"v") | POS(2,"v")) : gan1
+WordLen(0,1) & (MatchChar(-1,-1,"很") | MatchChar(2,2,"很")) : gan1
+WordLen(0,1) : gan4
+end
+
+begin word "相称"
+WordBeginWith(-1,"以") & (POS(-1,"n") | SucceedNoun(-1)) : xiang1 cheng1 / xiang1 chen4
+end
+
+begin char "称"
+WordBeginWith(0,"称") & ((MatchChar(2,2,"钱身意心愿") & !MatchChar(1,1,"为作")) | (MatchChar(3,3,"钱身意心愿") & !MatchChar(2,2,"为作")) | (MatchChar(4,4,"钱身意心愿") & !MatchChar(3,3,"为作")) | (MatchChar(5,5,"钱身意心愿") & !MatchChar(4,4,"为作")) | (MatchChar(6,6,"钱身意心愿") & !MatchChar(5,5,"为作")) | (MatchChar(7,7,"钱身意心愿") & !MatchChar(6,6,"为作")) | (MatchChar(8,8,"钱身意心愿") & !MatchChar(7,7,"为作"))) : chen4
+end
+
+begin char "调"
+WordEndWith(0,"调") & MatchChar(-5,5,"费率税资金额") : tiao2
+WordBeginWith(0,"调") & MatchWord(1,1,"来,去") : diao4
+WordLen(0,1) & MatchChar(-5,5,"减高低大小费率税资金额仪表钟器音级量度秤准液漆口味") : tiao2
+WordLen(0,1) : diao4
+end
+
+begin char "晃"
+WordEndWith(0,"晃") & (MatchWord(-1,-1,"来,来回,上下,左右,前后") | MatchChar(1,1,"去脑")) : huang4
+WordEndWith(0,"晃") & MatchWord(1,1,"呀,啊,吗,嘛,啥") : huang4
+MatchWord(0,0,"一晃") & MatchChar(-3,7,"船树车机") : huang4
+WordBeginWith(0,"晃") & MatchChar(-3,7,"船树车机") : huang4
+WordLen(0,1) : huang3
+end
+
+begin char "禁"
+MatchWord(0,0,"不禁") & POS(1,"v") : jin1
+WordBeginWith(0,"禁") & (POS(1,"v") | (MatchWord(1,1,"得") & MatchWord(2,2,"住"))) : jin1
+WordBeginWith(0,"禁") : jin4
+WordLen(0,1) : jin4
+end
+
+begin char "省"
+MatchWord(0,0,"不省") & MatchWord(1,1,"人事") : xiang3
+WordLen(0,1) : sheng3
+end
+
+begin word "好"
+!POS(-1,"v") & POS(1,"v") & !MatchChar(2,2,"的") & !MatchChar(-1,-1,"很要") & !MatchChar(-2,-2,"很") & !MatchChar(1,1,"不") & !WordEndWith(-1,"做") : hao4
+!POS(-1,"v") & !MatchWord(1,1,"的") & (MatchChar(1,1,"这那") | POS(1,"v")) : hao4
+MatchChar(1,1,"好") : hao3
+end
+
+begin char "数"
+WordEndWith(0,"数") & MatchWord(-1,-1,"没") & (WordLenGreaterThan(-1,0) | PrecedeVerb(-2) | SucceedVerb(1) | POS(1,"a")) : shu3
+WordEndWith(0,"数") & MatchWord(-1,-1,"没") : shu4
+MatchWord(0,0,"倒数") & MatchChar(-1,-1,"的") : shu4
+WordBeginWith(0,"数") & MatchChar(-1,-1,"均理方员达") : shu4
+WordLen(0,1) & WordLen(-1,2) & POS(-1,"a,n,v") & (POS(-2,"v") | POS(-3,"v") | POS(1,"v") | RealEnd(0) | MatchChar(1,1,"的") | MatchChar(3,3,"的比") | POS(2,"a") | POS(3,"a")) : shu4
+WordBeginWith(0,"数") & (POS(-1,"v") | PrecedeVerb(-1)) & ( POS(-2,"v") | POS(1,"v,a")) : shu4
+WordBeginWith(0,"数") & POS(1,"q,m") : shu4
+WordBeginWith(0,"数") & (MatchChar(1,1,"一也错了") | MatchChar(-1,-1,"一白的了") | MatchChar(2,2,"遍") | MatchWord(1,1,"对") | SucceedVerb(1) | POS(1,"a") | (POS(1,"n") & POS(2,"a")) | PrecedeVerb(-1) | (POS(-2,"a") & MatchChar(-1,-1,"地"))) : shu3
+WordLen(0,1) : shu4
+end
+
+begin char "为"
+WordEndWith(0,"为") & (MatchWord(1,1,"了,把,啥") | MatchChar(1,1,"这那") | WordEndWith(1,"民") | MatchWord(-1,-1,"能") ) : wei4
+WordEndWith(0,"为") & (MatchWord(-1,-1,"诊断,以此,升级,归结,图") | MatchWord(1,1,"一体")) : wei2
+WordEndWith(0,"为") & MatchWord(1,1,"培养") : wei4
+
+WordLen(0,1) & (MatchChar(-1,-1,"甘名题互图最大之被以视聘选变转评化称") | MatchWord(-8,-1,"选举")) : wei2
+
+WordLen(0,1) & ((MatchWord(2,2,"所") & POS(3,"v")) | (MatchWord(3,3,"所") & POS(4,"v")) | (MatchWord(4,4,"所") & POS(5,"v")) | (MatchWord(5,5,"所") & POS(6,"v")) | (MatchWord(6,6,"所") & POS(7,"v")) | (MatchWord(7,7,"所") & POS(8,"v")) | (MatchWord(8,8,"所") & POS(9,"v"))) : wei2
+WordLen(0,1) & ((MatchWord(2,2,"而") & WordEndWith(3,"干")) | (MatchWord(3,3,"而") & WordEndWith(4,"干")) | (MatchWord(4,4,"而") & WordEndWith(5,"干")) | (MatchWord(5,5,"而") & WordEndWith(6,"干")) | (MatchWord(6,6,"而") & WordEndWith(7,"干")) | (MatchWord(7,7,"而") & WordEndWith(8,"干")) | (MatchWord(8,8,"而") & WordEndWith(9,"干"))) : wei4
+WordLen(0,1) & ((MatchWord(2,2,"而") & POS(3,"v")) | (MatchWord(3,3,"而") & POS(4,"v")) | (MatchWord(4,4,"而") & POS(5,"v")) | (MatchWord(5,5,"而") & POS(6,"v")) | (MatchWord(6,6,"而") & POS(7,"v")) | (MatchWord(7,7,"而") & POS(8,"v")) | (MatchWord(8,8,"而") & POS(9,"v"))) : wei4
+WordLen(0,1) & MatchWord(1,10,"创造,生产,设计,服务,牺牲,贡献") : wei4
+
+WordLen(0,1) & (MatchWord(1,1,"代表") | MatchWord(-8,-1,"由,被,以") | MatchWord(-8,-1,"以此")) : wei2
+;WordLen(0,1) & MatchWord(2,2,"的") : wei2
+;WordLne(0,1) & WordLenGreaterThan(1,0) & MatchWord(-8,-1,1) : wei2
+
+WordLen(0,1) & POS(0,"v") & (POS(1,"v") | POS(2,"v") | POS(3,"v") | POS(4,"v") | POS(5,"v") | POS(6,"v")) : wei4
+WordLen(0,1) & (POSEnd("m") | POS(1,"m,q,t")) : wei2
+WordLen(0,1) & POS(0,"v") : wei2
+WordLen(0,1) & POS(0,"p") : wei4
+
+end
+
+begin char "片"
+WordEndWith(0,"片") & MatchChar(1,1,"儿子头") : pian1 / pian4
+end
+
+begin char "行"
+WordEndWith(0,"行") & POS(-1,"m") : hang2
+WordEndWith(0,"行") & MatchWord(-1,-1,"之") : xing2
+MatchWord(0,0,"建行") & MatchWord(-1,-1,"尉") : xing2
+MatchWord(0,0,"一行") & POS(0,"nr") : xing2
+MatchWord(0,0,"一行") & ((POS(1,"m") & MatchWord(2,2,"人")) | MatchWord(1,1,"人")) : xing2
+MatchWord(0,0,"成行") & MatchChar(-6,-1,"在于") : xing2
+MatchWord(0,0,"成行") & MatchChar(-1,-1,"日期月初末底内前后年周能望始得未") : xing2
+WordEndWith(0,"行") & MatchChar(-1,-1,"人") & ((MatchChar(1,1,"之") & MatchChar(2,2,"用")) | POS(-1,"m") | WordEndWith(1,"走,道")) : xing2
+MatchWord(0,0,"同行") & POS(-1,"n") & MatchChar(-5,-2,"或与和") & !MatchChar(1,1,"相") : xing2
+WordLen(0,1) & (MatchChar(-1,-1,"里") | (WordLen(-1,2) & POS(-1,"n"))) : xing2
+WordBeginWith(0,"行") & MatchChar(-3,3,"腿脚走") : xing2
+WordBeginWith(0,"行") & MatchChar(1,1,"的") & (MatchChar(-1,-1,"一") | POS(1,"m")) : hang2
+WordBeginWith(0,"行") & MatchChar(1,1,"的") : xing2
+WordBeginWith(0,"行") & POS(-1,"nr") : xing2
+MatchWord(0,0,"行业") : hang2
+WordBeginWith(0,"行") & (MatchWord(-1,-1,"能") | MatchChar(-1,-1,"车") | MatchChar(2,3,"路") | MatchWord(2,2,"里") | (MatchWord(0,0,"行车") & !MatchWord(-1,-1,"台用"))) : xing2
+WordLen(0,1) & POS(-1,"n") & POS(1,"m") : hang2
+WordLen(0,1) & (POS(1,"m,v") | MatchChar(-1,-1,"的") | (POS(1,"a") & WordLenGreaterThan(2,0)) | POS(-2,"v")) : hang2
+end
+
+begin char "应"
+WordEndWith(0,"应") & MatchWord(-1,-1,"应") & POS(1,"n") : ying4
+MatchWord(0,0,"答应") : ying5
+WordBeginWith(0,"应") & MatchWord(-1,-1,"回") : ying4
+WordBeginWith(0,"应") & (MatchChar(-1,-1,"来去") | NextPunc(":") | NextPunc("：")) : ying4
+WordBeginWith(0,"应") & POS(0,"nr") : ying1
+WordBeginWith(0,"应") & (POS(1,"v,m") | POS(2,"m") | POS(3,"m") | (WordEndWith(0,"付") & (WordBeginWith(1,"款") | WordBeginWith(2,"款") | WordBeginWith(3,"款") | WordEndWith(1,"款") | WordEndWith(2,"款") | WordEndWith(3,"款")))) : ying1
+WordBeginWith(0,"应") & MatchChar(1,10,"邀请") : ying4
+WordBeginWith(0,"应") & POS(1,"v") :ying1
+WordLen(0,1) : ying1
+end
+
+begin char "着"
+WordEndWith(0,"着") & MatchWord(-1,-1,"得") & POS(-2,"v") : zhao2
+;                            put_pinyin(rec->Prev,pinyin,"de5",3,n);
+WordEndWith(0,"着") & MatchWord(-1,-1,"不") & (POS(-2,"v") | MatchWord(1,1,"天,地")) : zhao2
+WordEndWith(0,"着") & MatchWord(-1,-1,"不") : zhuo2
+MatchWord(0,0,"穿着") & (POS(-1,"v") | WordEndWith(-1,"的") | (!POS(1,"n") & !POS(2,"n") & !POS(3,"n"))) : zhuo2
+MatchWord(0,0,"穿着") : zhe5
+MatchWord(-1,-1,"高") : zhao1
+WordLen(0,1) & (MatchChar(-1,-1,"没,一") | POS(1,"m")) : zhao1
+WordLen(0,1) & (MatchChar(1,1,"了") | (RealEnd(0) & MatchChar(-1,-1,"么") & MatchChar(-2,-2,"怎"))) : zhao2
+WordLen(0,1) : zhe5
+end
+
+begin char "茜"
+WordEndWith(0,"茜") & POS(0,"nr") : qian4
+WordEndWith(0,"茜") : xi1
+end
+
+begin char "传"
+WordEndWith(0,"传") & (LastPunc("《") | NextPunc("》")) : zhuan4
+WordEndWith(0,"传") & (MatchWord(1,1,"等,略,记") | MatchWord(-1,-1,"易")) : zhuan4
+WordEndWith(0,"传") & ((POS(-1,"n") & MatchWord(1,1,"的") & POS(1,"v")) | POS(-2,"nr") | POS(-1,"nr")) : zhuan4
+end
+
+begin char "撮"
+WordEndWith(0,"撮") & (POS(-1,"m") | POS(0,"q,m")) : zuo3
+end
+
+begin char "据"
+MatchWord(0,0,"拮据") : ju1
+WordEndWith(0,"据") : ju4
+end
+
+begin char "强"
+POS(0,"nr") : qiang2
+WordBeginWith(0,"强") & POS(-1,"m") : qiang2
+WordLen(0,1) & (POS(1,"v") | MatchChar(1,1,"辞")) : qiang3
+WordLen(0,1) : qiang2
+end
+
+begin char "都"
+MatchChar(-1,-1,"大国建立京首") : du1
+WordBeginWith(0,"都") & (RealEnd(0) | (WordLen(-1,1) & POS(-1,"v")) | (WordLen(-1,1) & POS(-2,"v") & POS(-1,"n"))) : du1
+WordBeginWith(0,"都") & POS(0,"nr") : du1
+WordLen(0,1) : dou1
+end
+
+begin char "呵"
+WordEndWith(0,"呵") & MatchChar(-1,-1,"呵") : he5
+end
+
+begin char "了"
+WordEndWith(0,"了") & (MatchWord(-1,-1,"何时,能") | (MatchWord(-1,-1,"不") & POS(-2,"v"))) : liao3
+WordLen(0,1) : le5
+end
+
+begin char "啊"
+WordBeginWith(0,"啊") & !WordLenGreaterThan(-1,0) & !WordLenGreaterThan(1,0) : a1
+WordBeginWith(0,"啊") & WordLenGreaterThan(-1,0) & POS(1,"wt,wd") : a1
+WordBeginWith(0,"啊") & WordLenGreaterThan(-1,0) & POS(1,"ww") : a2
+WordBeginWith(0,"啊") & WordLenGreaterThan(-1,0) & POS(1,"w") : a5
+end
+
+begin char "挨"
+WordBeginWith(0,"挨") & (POS(1,"v,a") | POS(0,"n")) : ai2
+WordLen(0,1) : ai1
+end
+
+begin char "过"
+WordBeginWith(0,"过") & POS(0,"nr") & !POS(-1,"v") : guo1
+WordLen(0,1) : guo4
+end
+
+begin char "咱"
+WordBeginWith(0,"咱") & MatchChar(1,1,"家") : za2
+WordLen(0,1) : zan2
+end
+
+begin char "背"
+(WordEndWith(2,"去") | WordEndWith(2,"干")) & MatchWord(0,0,"背着") : bei4
+MatchChar(-7,-1,"背") & !MatchWord(1,1,"在") : bei4
+MatchChar(-3,16,"爬走行包机粮斤重米筐袋囊物东铺锅孩儿女父母爷奶孙爹妈老妻") : bei1
+POS(0,"n") | POS(1,"p") : bei4
+POS(0,"v") : bei1
+end
+
+begin char "绷"
+WordBeginWith(0,"绷") & MatchChar(-1,2,"脸") : beng3
+WordBeginWith(0,"绷") : beng1
+end
+
+begin char "个"
+WordBeginWith(0,"个") & POS(-1,"v") : ge5
+WordBeginWith(0,"个") : ge4
+end
+
+begin char "藏"
+MatchChar(-1,-1,"馆") : cang2
+WordLen(0,1) & (MatchWord(1,1,"王,羚羊") | MatchWord(1,2,"江")) : zang4
+WordLen(0,1) : cang2
+end
+
+begin char "叉"
+WordBeginWith(0,"叉") & (POS(-1,"n") | POS(-1,"v") | POS(1,"v") | POS(1,"n")) : cha1
+WordBeginWith(0,"叉") & MatchWord(1,1,"着,住,在") : cha2
+WordBeginWith(0,"叉") & (MatchWord(-1,-1,"分") | MatchWord(1,1,"开,到") | MatchChar(-1,-1,"劈")) : cha4
+WordBeginWith(0,"叉") & MatchChar(-5,5,"门,路") : cha2
+WordBeginWith(0,"叉") & MatchChar(-5,5,"脚") : cha3
+end
+
+begin char "查"
+WordBeginWith(0,"查") & POS(0,"nr") & !POS(1,"nr") : zha1
+WordBeginWith(0,"查") & MatchChar(1,1,"滓浦山") : zha1
+WordBeginWith(0,"查") : cha2
+end
+
+begin char "乘"
+WordBeginWith(0,"乘") & MatchWord(-3,5,"骑,马") & POS(1,"m") : sheng4
+MatchWord(0,0,"乘机") : cheng4
+end
+
+begin char "冲"
+WordLen(0,1) & MatchWord(1,1,"着,劲") : chong4
+WordLen(0,1) & MatchWord(1,1,"绳") : chong1
+WordLen(0,1) & (RealEnd(0) | (POS(1,"n") & POS(2,"v"))) : chong4
+WordLen(0,1) : chong1
+end
+
+begin char "仇"
+WordBeginWith(0,"仇") & POS(0,"nr") : qiu2
+end
+
+begin word "朝阳"
+MatchWord(1,1,"产业") : zhao1 yang2
+MatchChar(-6,-1,"一") : zhao1 yang2
+end
+
+begin char "待"
+WordBeginWith(0,"待") & MatchWord(-1,-1,"急") : dai4
+WordBeginWith(0,"待") & MatchWord(1,1,"在,到") & (POS(1,"m") | PrecedeNoun(-1) | PrecedeVerb(-1) | SucceedNoun(1)) : dai1
+WordBeginWith(0,"待") & (MatchWord(1,1,"一会儿,了") | POS(1,"m,a") | MatchChar(1,1,"半") | PrecedeVerb(-1)) : dai1
+WordBeginWith(0,"待") : dai4
+end
+
+begin char "大"
+MatchWord(0,0,"大夫") & ((MatchWord(-2,-2,"不") & MatchWord(-1,-1,"上")) | MatchChar(-1,-1,"士")) : da4
+MatchWord(0,0,"大夫") : dai4
+end
+
+begin char "单"
+WordBeginWith(0,"单") & MatchChar(1,1,"于") : chan2
+WordBeginWith(0,"单") & POS(0,"nr") : chan2
+WordLen(0,1) & WordLen(1,2) & POS(1,"n") : shan4
+end
+
+begin char "担"
+WordBeginWith(0,"担") & POS(-1,"m") : dan4
+WordLen(0,1) : dan1
+end
+
+begin char "弹"
+WordLen(0,1) & POS(-1,"m") : dan4
+WordLen(0,1) & (POS(-1,"v") | POS(1,"n") | SucceedVerb(1) | MatchChar(-1,-1,"轻") | MatchChar(1,1,"指")) : tan2
+WordLen(0,1) : dan4
+end
+
+begin word "当"
+POS(-1,"n") & POS(1,"n") &(POS(2,"v") | MatchWord(2,2,"来")) : dang4
+MatchChar(1,4,"时家权官") : dang1
+MatchChar(-4,-1,"把以去") : dang4
+MatchWord(-4,-1,"典当,当铺") : dang4
+MatchChar(-1,10,"事") : dang4
+MatchWord(1,1,"百,十,歌,哭") | MatchChar(-1,-1,"事") : dang4
+WordEnd("不当") & POS(-1,"v") : dang4
+POS(-1,"n") & POS(1,"n") & POS(2,"v") : dang4
+MatchChar(2,8,"事") : dang4
+MatchChar(1,4,"时") : dang1
+MatchWord(1,4,"家,权,官") : dang1
+MatchChar(-4,-1,"把,以") : dang4
+MatchWord(-4,-1,"典当,当铺") : dang4
+(WordBeginWith(-1,"上") | WordBeginWith(-2,"上") | WordBeginWith(-3,"上") | WordBeginWith(-4,"上")) & MatchChar(1,1,"的") : dang4 / dang1
+end
+
+
+
+begin char "阿"
+WordBeginWith(0,"阿") & (MatchWord(1,1,"房宫") | MatchWord(-1,-1,"东")) :e1
+end
+
+begin char "得"
+WordLen(0,1) & POS(-1,"v") & (POS(1,"v,a") | POS(2,"a")) : de5
+WordBeginWith(0,"得") & !POS(-1,"m,v") & MatchChar(1,1,"再过等") : dei3
+WordBeginWith(0,"得") & MatchWord(1,1,"亏,和,不,把") : dei3
+WordBeginWith(0,"得") & MatchChar(-5,5,"失") : de2
+WordBeginWith(0,"得") & MatchChar(1,1,"乃是为") : de2
+WordBeginWith(0,"得") & MatchChar(1,8,"才时") : dei3
+WordBeginWith(0,"得") : de2
+end
+
+begin char "的"
+MatchWord(-1,-1,"打") & POS(1,"v") : di2
+MatchChar(-2,-2,"项") & MatchChar(-1,-1,"目") : de5
+WordBeginWith(1,"确") & WordLen(2,1) : di2
+WordBeginWith(1,"确") & POS(-1,"v,a") : de5
+WordLen(0,1) : de5
+end
+
+begin char "底"
+WordBeginWith(0,"底") & POS(-1,"n") & POS(1,"n") : de5 / di3
+end
+
+begin char "钉"
+WordBeginWith(0,"钉") & (MatchChar(1,1,"钉死") | MatchWord(-2,-1,"钉子")) : ding4
+WordBeginWith(0,"钉") & MatchChar(1,2,"桌椅板凳鞋扣座坐") : ding4
+WordBeginWith(0,"钉") : ding1
+end
+
+begin char "斗"
+WordBeginWith(0,"斗") & (PrecedeVerb(-1) | POS(-1,"m,v")) : dou3
+end
+
+begin char "盖"
+WordBeginWith(1,"盖") & POS(0,"nr") : ge3
+end
+
+begin word "分子"
+WordEndWith(-1,"级,义,派,进,险,凑,团,帮,事,窃,污,间,后,罪,一,坏,裂,独,氓,败,叛,武,装") | MatchWord(-1,-1,"不法") : fen4 zi3
+end
+
+begin word "分"
+MatchChar(-2,-2,"的含") | POS(1,"a") : fen4 / fen1
+end
+
+begin word "缝"
+MatchWord(1,1,"的") & !WordBeginWith(1,"度") : feng2
+POS(-1,"v") | POS(-2,"v") | POS(1,"v,q") | MatchChar(-1,-1,"道,个") : feng4
+end
+
+begin char "服"
+(POS(-1,"q,m") | MatchWord(-1,-1,"这,两")) & (WordEndWith(1,"药") | MatchChar(1,1,"药")) : fu4
+end
+
+begin char "杆"
+WordBeginWith(0,"杆") & ((MatchChar(-1,-1,"立") | POS(-1,"n")) & !POS(1,"n")) : gan1
+WordLen(0,1) : gan3
+end
+
+begin char "钢"
+WordBeginWith(0,"钢") & MatchChar(-1,-1,"刀") : gang4
+end
+
+begin word "更新"
+MatchWord(-2,3,"设备,观念,知识,工艺") : geng1 xin1
+(POS(-1,"v") & POS(1,"n")) | RealEnd(0) | WordBeginWith(2,"才") : geng1 xin1 / geng4 xin1
+end
+
+begin word "更"
+POS(1,"n") & WordLen(1,1) : geng1
+POS(-1,"m") & (MatchChar(1,1,"天时") | MatchChar(-2,-2,"已近")) : geng1
+end
+
+begin char "喝"
+WordBeginWith(0,"喝") & (MatchWord(1,5,"倒彩") | MatchChar(1,5,"声")) : he4
+WordLen(0,1) : he1
+end
+
+begin char "哄"
+WordBeginWith(0,"哄") & MatchWord(1,1,"的") : hong1
+end
+
+begin char "虹"
+WordBeginWith(0,"虹") & MatchWord(-1,-1,"道,出") : jiang4 / hong2
+end
+
+begin word "糊糊"
+POS(-1,"a") : hu1 hu1 / hu2 hu5
+end
+
+begin char "糊"
+WordBeginWith(0,"糊") & MatchWord(1,4,"泥,药") : hu1
+WordBeginWith(0,"糊") & (PrecedeVerb(-1) | SucceedVerb(1)) : hu1
+WordBeginWith(0,"糊") & POS(-1,"n") : hu4
+WordLen(0,1) : hu2
+end
+
+begin word "划"
+MatchWord(-3,5,"玻璃,口子") | MatchChar(-3,5,"皮火") : hua2
+end
+
+begin char "还"
+WordLen(0,1) & MatchChar(-10,5,"款钱品借退债东") & WordLenGreaterThan(-1,0) : huan2
+MatchWord(0,0,"还给") & POS(1,"v") : hai2
+WordBeginWith(0,"还") & MatchChar(1,1,"了") & !MatchWord(2,2,"得") : huan2
+WordBeginWith(0,"还") & MatchWord(1,1,"不够") : hai2
+WordBeginWith(0,"还") & !MatchWord(0,0,"还给") & (POS(1,"v") | PrecedeVerb(1)) : hai2
+WordBeginWith(0,"还") & !MatchWord(0,0,"还给") & WordBeginWith(1,"可,能,愿,想,希,是") : hai2
+WordLen(0,1) & (POS(1,"n") | MatchWord(1,1,"的")) : huan2
+WordLen(0,1) : hai2
+end
+
+begin char "混"
+WordBeginWith(0,"混") & POS(-1,"v") & RealEnd(0) : hun2
+end
+
+begin char "裨"
+WordEndWith(0,"裨") & MatchChar(1,1,"将") : pi2
+end
+
+begin char "将"
+WordBeginWith(0,"将") & (MatchChar(-1,-1,"末爱") | (MatchWord(1,1,"门") & MatchWord(2,2,"之后")) | (MatchWord(1,1,"门") & MatchWord(2,2,"虎"))) : jiang4
+WordBeginWith(0,"将") & MatchChar(-1,-1,"裨") : jiang4
+WordBeginWith(0,"将") & !POS(1,"v") & POS(1,"n") & WordLen(-1,1) & (PrecedeNoun(-1) | POS(-1,"a")) : jiang4
+WordBeginWith(0,"将") & !POS(1,"v") & !POS(1,"n") & MatchChar(-10,10,"兵帅") : jiang4
+end
+
+begin char "降"
+WordBeginWith(0,"降") & MatchChar(-2,-2,"一") & MatchChar(-1,-1,"物") : xiang2
+end
+
+begin char "解"
+POS(0,"nr") : xie4
+MatchWord(0,0,"小解") & POS(1,"v") : xie4
+end
+
+begin char "教"
+WordBeginWith(0,"教") & (RealEnd(0) | (MatchChar(-2,-2,"子") & MatchChar(-1,-1,"不"))) : jiao4
+WordBeginWith(0,"教") & MatchChar(1,1,"规义") : jiao4
+MatchWord(0,0,"教学") & WordLenGreaterThan(1,1) : jiao4
+WordLen(0,1) & POS(1,"n") & !RealEnd(0) : jiao1
+MatchWord(0,0,"教会") & (PrecedeVerb(-1) | MatchWord(1,1,"了") | POS(1,"n")) : jiao1
+MatchWord(0,0,"教授") & WordBeginWith(1,"课,知识") : jiao1
+WordLen(0,1) & MatchWord(-3,4,"书,课") : jiao1
+WordLen(0,1) : jiao4
+end
+
+begin char "结"
+WordBeginWith(0,"结") & MatchChar(-5,5,"花树果") : jie1
+WordBeginWith(0,"结") & MatchWord(-5,5,"打") : jie2
+WordBeginWith(0,"结") : jie2
+end
+
+begin char "刨"
+WordBeginWith(0,"刨") & MatchChar(1,1,"刀木床花工子光") : bao4
+WordBeginWith(0,"刨") : pao2
+;WordBeginWith(0,"刨") & MatchcChar(1,2,"去除根坑个土") : pao2
+WordLen(0,1) : bao4
+end
+
+begin char "尽"
+WordBeginWith(0,"尽") & (MatchWord(-1,-1,"先") | (POS(1,"n") & POS(2,"v"))) : jin3
+WordBeginWith(0,"尽") & MatchChar(1,2,"边头面") : jin3
+WordBeginWith(0,"尽") & POS(-1,"v") : jin4
+WordLen(0,1) : jin4
+end
+
+begin char "卷"
+WordBeginWith(0,"卷") & (MatchWord(-1,-1,"铺盖") | MatchChar(-1,-1,"蛋纸")) : juan3
+WordBeginWith(0,"卷") & (MatchWord(-2,-2,"第") & POS(-1,"m")) : juan4
+WordBeginWith(0,"卷") & (MatchWord(-1,-1,"余") | MatchWord(1,1,"考试")) : juan4
+WordBeginWith(0,"卷") & (MatchWord(1,1,"铺盖") | MatchChar(1,1,"帘纸")) : juan3
+WordLen(0,1) : juan4
+WordBeginWith(0,"卷") & MatchWord(-5,-1,"把") : juan3
+end
+
+begin char "觉"
+WordBeginWith(0,"觉") & POS(-1,"m") : jiao4
+WordBeginWith(0,"觉") & MatchChar(-8,5,"睡醒") : jiao4
+end
+
+begin char "咯"
+WordBeginWith(0,"咯") & RealEnd(0) : luo5
+WordBeginWith(0,"咯") & (SucceedVerb(1) | (MatchChar(-1,-1,"咯") & PrecedeVerb(1))) : ka3
+WordBeginWith(0,"咯") : ge1
+end
+
+begin char "看"
+MatchChar(1,1,"看") : kan4
+MatchChar(-1,-1,"看") : kan5
+WordLen(0,1) & MatchChar(1,1,"着") & (MatchChar(1,5,"别") | MatchWord(1,5,"以防")) : kan1
+WordLen(0,1) & (MatchChar(-1,3,"家门") | MatchWord(-1,3,"东西")) : kan1
+WordLen(0,1) : kan4
+end
+
+begin char "壳"
+WordBeginWith(0,"壳") & MatchChar(-1,-1,"脱地") : qiao4
+end
+
+begin char "咳"
+WordBeginWith(0,"咳") & (RealEnd(0) | MatchChar(-1,-1,"儿")) : hai1
+end
+
+begin word "空"
+PrecedeVerb(-1) | SucceedVerb(1) : kong4
+MatchChar(1,1,"有") | POS(1,"m") : kong4 / kong1
+end
+
+begin char "拉"
+WordBeginWith(0,"拉") & MatchWord(1,5,"口,缝") : la2
+WordBeginWith(0,"拉") & MatchWord(-3,4,"皮,肉") : la2 / la1
+end
+
+begin word "乐"
+MatchChar(-5,-2,"演奏声听曲") | MatchChar(1,5,"演奏声听曲") : yue4
+POS(-1,"v") | POS(1,"v") : yue4 / le4
+end
+
+begin char "累"
+WordBeginWith(0,"累") & MatchWord(1,1,"万,日") : lei3
+end
+
+begin char "凉"
+WordBeginWith(0,"凉") & ((MatchChar(1,1,"一") & MatchChar(2,2,"会凉下")) | MatchChar(1,1,"凉") | MatchChar(-1,-1,"凉") | (MatchChar(-2,-2,"凉") & MatchChar(-1,-1,"一"))) : liang4
+WordLen(0,1) : liang2
+end
+
+begin word "量"
+(POS(-1,"v") & WordLen(-1,2)) | (POS(-1,"n") & WordLen(-1,2) & MatchChar(3,3,"的")) : liang4
+MatchChar(1,1,"你他她") : liang4
+MatchChar(1,1,"角") | MatchWord(-2,-2,"用") | POS(-1,"n") : liang2
+PrecedeVerb(-1) | SucceedVerb(1) | (MatchChar(1,1,"一") & MatchChar(1,1,"下")) | POS(1,"n") | MatchChar(1,1,"出不") | MatchWord(1,1,"得") : liang2 / liang4
+end
+
+begin char "淋"
+WordBeginWith(0,"淋") & (MatchChar(-1,-1,"过") | MatchChar(1,1,"盐") | MatchChar(1,1,"一下")) : lin4
+WordLen(0,1) : lin2
+end
+
+begin char "令"
+WordBeginWith(0,"令") & POS(-1,"m") & WordEndWith(1,"纸") : lin3
+end
+
+begin char "溜"
+WordBeginWith(0,"溜") & (POS(-1,"m") | MatchWord(-1,-1,"冰") | MatchChar(1,1,"儿水")) : liu4
+WordLen(0,1) : liu1
+end
+
+begin char "搂"
+WordBeginWith(0,"搂") & ((MatchWord(-2,-2,"用") & POS(-1,"n")) | (MatchWord(1,1,"的") & POS(2,"n"))) : lou1
+WordBeginWith(0,"搂") & (MatchChar(-3,3,"钱帐袖点") | MatchWord(-3,3,"扳机")) : lou1
+end
+
+begin word "率"
+MatchChar(1,10,"由") | POS(1,"m") | (MatchWord(1,1,"了") & POS(1,"m")) : shuai4
+MatchChar(1,8,"军队团军群") : shuai4 / lv4
+end
+
+begin char "落"
+WordBeginWith(0,"落") & (MatchWord(-5,5,"忘记,东西,距离") | MatchChar(-5,5,"字远") | (MatchChar(-5,5,"在") & MatchChar(-5,5,"后尾"))) : la4
+;                            (zz_ch_word(rec,b,"在",n) && zz_ch_word(rec,b+1,"后",n)) ||
+;                            (zz_ch_word(rec,b,"在",n) && zz_ch_word(rec,b+2,"后",n)) ||
+;                            (zz_ch_word(rec,b,"在",n) && zz_ch_word(rec,b+2,"尾",n)) ||
+WordLen(0,1) : luo4
+end
+
+begin char "吗"
+WordBeginWith(0,"吗") & MatchChar(-1,-1,"要") & MatchChar(1,1,"有") & MatchChar(2,2,"吗") : ma2
+WordBeginWith(0,"吗") & MatchChar(-3,-3,"要") & MatchChar(-2,-2,"吗") & MatchChar(-1,-1,"有") : ma2
+WordBeginWith(0,"吗") & POS(1,"n") &(NextPunc("？") | NextPunc("?") | POS(2,"v")) : ma2
+WordBeginWith(0,"吗") : ma5
+end
+
+begin word "蒙"
+MatchWord(1,1,"头") : meng2
+MatchWord(-3,-3,"蒙") | MatchWord(-1,-1,"给") | PrecedeVerb(-1) | POS(-1,"v") | MatchWord(1,1,"人") : meng1
+(POS(1,"n") & WordLen(1,1)) | (WordLen(-1,1) & (PrecedeNoun(-1) | POS(-1,"n"))) : meng3
+!WordLenGreaterThan(-1,0) & RealEnd(1) : meng3
+SucceedNoun(1) | SucceedNoun(2) | MatchChar(1,1,"派") : meng3 / meng2
+end
+
+begin char "眯"
+WordBeginWith(0,"眯") & MatchChar(-1,2,"眼") : mi2
+WordBeginWith(0,"眯") : mi1
+end
+
+begin char "磨"
+WordBeginWith(0,"磨") & MatchChar(-5,5,"面粉末豆油") : mo4
+WordBeginWith(0,"磨") & (POS(1,"n") | POS(2,"n")) : mo2
+WordBeginWith(0,"磨") & (PrecedeVerb(-1) | SucceedVerb(1) | POS(1,"v")) & !(MatchChar(1,1,"不") & MatchChar(2,2,"开")) : mo2
+WordLen(0,1) : mo4
+end
+
+begin word "难"
+(WordLenGreaterThan(-1,1) & POS(-1,"v")) | POS(1,"v") : nan2
+MatchWord(-2,-1,"面临") : nan2
+MatchChar(-1,-1,"有") | PrecedeNoun(-1) | (POS(-2,"v") & WordLenGreaterThan(-1,1)) : nan4 / nan2
+end
+
+begin char "呢"
+WordBeginWith(0,"呢") & RealEnd(0) : ne5
+WordLen(0,1) : ni2
+end
+
+begin char "宁"
+WordBeginWith(0,"宁") & POS(1,"v") & MatchChar(2,2,"不毋") : ning4
+WordBeginWith(0,"宁") & POS(1,"nr,ns") : ning2
+WordLen(0,1) : ning2
+end
+
+begin char "拧"
+WordBeginWith(0,"拧") & (WordEndWith(1,"动,开,上") | (MatchChar(1,1,"了") & POS(-1,"v")) | MatchWord(1,1,"螺丝")) : ning3
+WordBeginWith(0,"拧") & (MatchChar(-1,-1,"真") | MatchWord(-2,1,"脾气")) : ning4
+WordLen(0,1) : ning2
+end
+
+begin char "弄"
+WordBeginWith(0,"弄") & POS(-1,"m") : long4
+WordLen(0,1) & POS(0, "ng"): long4
+end
+
+begin char "哦"
+WordBeginWith(0,"哦") & (LastPunc("?") | LastPunc("？")) & RealEnd(0) & (!WordLenGreaterThan(-1,0) | RealEnd(-1)) : o2
+WordBeginWith(0,"哦") : o4
+end
+
+begin char "胖"
+WordBeginWith(0,"胖") & (MatchChar(-5,-1,"脸") | MatchChar(1,1,"有点")) : pang1
+end
+
+begin char "炮"
+WordBeginWith(0,"炮") & MatchChar(-2,2,"肉") : bao4
+WordBeginWith(0,"炮") & MatchWord(1,1,"烙") : pao2
+WordBeginWith(0,"炮") & MatchChar(1,1,"格炼炙") : pao2
+end
+
+begin word "烙"
+MatchWord(-1,-1,"炮") : luo4
+end
+
+begin char "铺"
+WordBeginWith(0,"铺") & (PrecedeVerb(-1) | SucceedVerb(1) | (!POS(-2,"v") & POS(-1,"v") & POS(1,"v"))) : pu1
+WordLen(0,1) :pu4
+end
+
+begin char "抢"
+WordBeginWith(0,"抢") & MatchChar(1,1,"着") & MatchChar(2,5,"风水向") : qiang1
+WordBeginWith(0,"抢") : qiang3
+end
+
+begin char "曲"
+WordBeginWith(0,"曲") & MatchChar(1,1,"曲") : qu1
+WordBeginWith(0,"曲") & MatchChar(-1,-1,"曲") : qu5
+WordBeginWith(0,"曲") & (POS(-1,"m") | POS(-2,"m")) : qu3
+WordLen(0,1) & POS(1,"n") & WordLen(1,1) & (POS(1,"v") | POS(-1,"v")) : qu1
+WordLen(0,1) & POS(0,"nr") : qu1
+WordLen(0,1) & (POS(-1,"a") | POS(1,"v,a")) : qu3
+MatchChar(-3,1,"粮酒面麸酿酵") : qu1
+end
+
+begin char "圈"
+MatchChar(-3,3,"牛羊猪养") : juan4
+WordBeginWith(0,"圈") & MatchWord(1,1,"起来,住,在") : quan1
+WordBeginWith(0,"圈") & POS(-1,"n") & MatchWord(-4,-2,"把") : quan1
+WordLen(0,1) : quan1
+end
+
+begin char "撒"
+WordBeginWith(0,"撒") & (MatchWord(-1,3,"传单,拉,尿") | (MatchWord(1,1,"酒") & MatchWord(2,2,"疯")) | (MatchWord(1,1,"酒") & MatchWord(2,2,"疯"))) : sa1
+WordLen(0,1) : sa3
+end
+
+begin char "散"
+WordBeginWith(0,"散") & (MatchWord(-5,5,"传单") | MatchChar(-5,5,"会人席戏场俩")) : san4
+end
+
+begin char "丧"
+WordBeginWith(0,"丧") & MatchChar(1,8,"父母子女妻夫友志") : sang4
+WordLen(0,1) : sang1
+end
+
+;begin char "捎"
+;                if(cc == _lPeekChar( &pieceword ) && Left_seg(rec,0,1,"捎"))
+;                {
+;                    if(prev_ch_word(rec,1,"后",n) || prev_seg_word(rec,2,"马") || prev_seg_word(rec,2,"骡"))
+;                        put_pinyin(rec,pinyin,"shao4",5,n);
+;                    else
+;                        put_pinyin(rec,pinyin,"shao1",5,n);
+;                };
+;end
+
+begin char "少"
+WordBeginWith(0,"少") & (MatchChar(1,1,"奶壮") | MatchWord(1,1,"东家,掌柜") | POS(1,"nr")) : shao4
+WordLen(0,1) : shao3
+end
+
+begin char "舍"
+WordBeginWith(0,"舍") & (POS(1,"m") | MatchWord(-1,-1,"一,两") | (SucceedNoun(1) & WordLen(1,1))) : she4
+WordBeginWith(0,"舍") & MatchChar(-1,-1,"馆") : she4
+WordLen(0,1) : she3
+end
+
+begin char "盛"
+WordBeginWith(0,"盛") & POS(0,"nr") : sheng4
+WordLen(0,1) & ((POS(-1,"n") & MatchWord(-2,-2,"用") & POS(1,"n")) | (POS(-1,"n") | MatchWord(-2,-2,"使用"))) : cheng2
+WordLen(0,1) & MatchWord(1,5,"饭水汤") : cheng2
+WordLen(0,1) : sheng4
+end
+
+begin char "石"
+WordBeginWith(0,"石") & POS(-1,"m") & (MatchChar(1,1,"粮谷麦") | MatchChar(-2,-2,"粮谷麦")) : dan4
+WordBeginWith(0,"石") : shi2
+end
+
+begin char "熟"
+WordLen(0,1) & POS(0,"a") : shou2
+WordBeginWith(0,"熟") : shu2
+end
+
+begin char "吐"
+WordBeginWith(0,"吐") & (MatchChar(-3,-1,"被迫口食饭") | MatchWord(-3,-1,"不得不,防止") | MatchWord(1,3,"血")) : tu4
+WordLen(0,1) : tu3
+end
+
+begin char "挑"
+WordBeginWith(0,"挑") & MatchChar(-3,5,"针竿火笔灯字帘") : tiao3
+WordBeginWith(0,"挑") & (MatchWord(1,1,"是非") | (MatchChar(-1,-1,"一") & MatchChar(-2,-2,"上"))) : tiao3
+WordLen(0,1) : tiao1
+end
+
+begin char "通"
+WordBeginWith(0,"通") & MatchChar(-1,-1,"一") & MatchChar(-3,5,"打骂鼓") : tong4
+WordBeginWith(0,"通") : tong1
+end
+
+begin char "系"
+WordBeginWith(0,"系") & MatchChar(-4,6,"扣带绳巾") : ji4
+WordBeginWith(0,"系") : xi4
+end
+
+begin char "厦"
+WordBeginWith(0,"厦") & (MatchWord(1,2,"铁路,公路") | (POS(-1,"n") & WordLen(-1,1)) | (POS(1,"n") & WordLen(1,1))) : xia4
+WordLen(0,1) : sha4
+end
+
+begin char "鲜"
+WordBeginWith(0,"鲜") & (MatchWord(1,1,"见") | MatchChar(1,1,"族") | POS(0,"nr")) : xian3
+WordLen(0,1) : xian1
+end
+
+begin word "相"
+WordLenGreaterThan(-1,0) | MatchChar(1,1,"夹") | MatchChar(-1,-1,"藏务产") : xiang4
+POS(-1,"a") | POS(0,"nr") : xiang4
+!POS(1,"a,v") : xiang4 / xiang1
+end
+
+begin char "血"
+MatchWord(-1,-1,"一点") : xie3
+MatchWord(0,0,"流血") : xie3
+WordLen(0,1) : xie3
+end
+
+begin char "咽"
+WordBeginWith(0,"咽") & (MatchChar(-1,1,"下") | (MatchChar(1,1,"不") & MatchChar(2,2,"下"))) : yan4
+MatchChar(1,4,"气") | MatchWord(1,4,"唾沫") : yan4
+WordLen(0,1) : yan1
+end
+
+begin word "应用"
+MatchWord(1,7,"技术,领域,科学,范围,临床,实践,实际") : ying4 yong4
+MatchWord(-2,-2,"在") | MatchWord(1,1,"上") : ying4 yong4
+MatchChar(2,2,"在") | (POS(1,"v") & POS(2,"v")) : ying1 yong4 / ying4 yong4
+;           if((next_ch_word(rec,2,"在",n) && rec->PWORD == 0) || (IsVerb_seg(rec,1) && IsVerb_seg(rec,2)))
+end
+
+begin char "哟"
+WordBeginWith(0,"哟") & RealEnd(0) & WordLenGreaterThan(-1,0) : yo1
+WordBeginWith(0,"哟") : yo5
+end
+
+begin char "曾"
+WordBeginWith(0,"曾") & MatchChar(-1,-1,"老小") : zeng1
+WordBeginWith(0,"曾") & MatchChar(1,3,"爷奶孙祖父母员长老") : zeng1
+WordBeginWith(0,"曾") & POS(0,"nr") : zeng1
+WordLen(0,1) : ceng2
+end
+
+begin char "扎"
+WordBeginWith(0,"扎") & POS(-1,"m") : zha1
+WordLen(0,1) : za1
+end
+
+begin char "轧"
+WordBeginWith(0,"轧") & MatchWord(-3,3,"花") : ya4
+WordLen(0,1) : zha2
+end
+
+begin char "咋"
+WordBeginWith(0,"咋") & (POS(1,"v") | POS(2,"v") | MatchWord(1,1,"样") | MatchChar(1,1,"回")) : za3
+WordBeginWith(0,"咋") : zha1
+end
+
+begin char "炸"
+WordBeginWith(0,"炸") & MatchChar(1,3,"油鱼肉肝猪蟹肚鸡鸭牛羊") : zha2
+WordLen(0,1) : zha4
+end
+
+begin char "只"
+WordBeginWith(0,"只") & (MatchChar(1,1,"字") | MatchChar(-1,-1,"一两") | (POS(1,"n") & PrecedeNoun(-1)) | (POS(1,"n") & POS(-1,"m"))) : zhi1
+WordBeginWith(0,"只") : zhi3
+end
+
+begin char "种"
+WordBeginWith(0,"种") & MatchChar(-1,2,"树花果粮谷麦稻米瓜菜棉豆棵稼土地么") : zhong4
+WordBeginWith(0,"种") & POS(0,"nr") : chong2
+MatchWord(0,0,"种种") | MatchChar(-1,-1,"那这品交") | RealEnd(0) : zhong3
+WordLen(0,1) & (POS(-1,"m") | PrecedeNoun(-1) | MatchWord(-1,-1,"何,哪")) : zhong3
+WordLen(0,1) & POS(1,"n") & POS(-1,"n") & !POS(-2,"v") & !POS(2,"v") : zhong4
+WordLen(0,1) & (POS(-1,"q,m,v") | POS(-2,"v")) : zhong3
+WordLen(0,1) & (POS(1,"n,u,f,p") | POS(2,"n")) : zhong4
+WordLen(0,1) : zhong3
+end
+
+begin word "重重"
+WordLenGreaterThan(-1,0) | POS(1,"n") | MatchWord(-1,-1,"困难") | MatchWord(1,1,"困难,包围") : chong2 chong2 / zhong4 zhong4
+end
+
+begin word "重"
+(!POS(-1,"v") & POS(1,"v")) | (POS(-1,"m") & POS(1,"m")) : chong2
+MatchWord(-1,-1,"应") : chong2
+(POS(-1,"q") & POS(-2,"m")) | MatchChar(-1,-1,"任") : zhong4
+POS(1,"n") | PrecedeNoun(-1) | POS(-1,"n") : zhong4
+MatchChar(-10,10,"轻") : zhong4
+end
+
+;begin char "筑"
+;                if(cc == _lPeekChar( &pieceword ) && Left_seg(rec,0,1,"筑"))
+;                {
+;                    if(next_seg_word(rec,1,"铁路") || next_seg_word(rec,1,"公路") || Next_punc(rec,"、") || next_ch_word(rec,1,"等",n))
+;                        put_pinyin(rec,pinyin,"zhu2",4,n);
+;                    else if(strlen(rec->Piece) == 2)
+;                        put_pinyin(rec,pinyin,"zhu4",4,n);
+;                }
+;end
+
+begin char "中"
+MatchWord(-1,-1,"言") & !MatchWord(-2,-2,"不") : zhong4  ; 言中，一切尽在不言中
+WordBeginWith(0,"中") & MatchWord(1,1,"了") : zhong4
+WordBeginWith(0,"中") & WordLen(1,1) & (POS(2,"n") | SucceedNoun(2) | NextPunc("、")) : zhong1
+WordBeginWith(0,"中") & WordLen(-1,1) & POS(-1,"v") & MatchWord(-2,-1,"击发射猜") : zhong4
+WordBeginWith(0,"中") & MatchWord(1,1,"意") & MatchChar(2,2,"两人合之") : zhong1
+WordBeginWith(0,"中") & WordLen(0,1) & POS(-1,"m") & !(MatchWord(-8,-2,"在") | POS(1,"v") | POS(2,"v") | POS(3,"v") | POS(4,"v")) : zhong4  ; 三发三中, 在数字2003中有两个零
+WordBeginWith(0,"中") & MatchChar(1,8,"奖计靶") : zhong4
+WordLen(0,1) : zhong1
+end
+
+begin char "爪"
+WordBeginWith(0,"爪") & (POS(-1,"m") | MatchChar(-1,-1,"磷")) : zhao3
+WordLen(0,1) : zhua3
+end
+
+begin char "转"
+MatchWord(0,0,"转向") & !POS(1,"n") : zhuan4
+MatchWord(0,0,"转向") : zhuan3
+WordBeginWith(0,"转") & MatchWord(-1,-1,"不") & !POS(1,"n") : zhuan4
+WordBeginWith(0,"转") & MatchWord(-1,-1,"不") : zhuan3
+WordBeginWith(0,"转") & POS(-1,"m") : zhuan4
+WordBeginWith(0,"转") & MatchChar(1,1,"悠") : zhuan4
+MatchChar(1,1,"转") | MatchChar(-1,-1,"转") : zhuan4
+WordLen(0,1) & ((WordLen(-1,1) & PrecedeVerb(-1)) | (WordLen(-1,1) & POS(-1,"a")) | MatchChar(1,1,"炉头")) : zhuan4
+WordLen(0,1) & (MatchChar(-1,-1,"风") | WordEndWith(1,"风")) : zhuan3
+WordLen(0,1) : zhuan3
+end
+
+begin char "悠"
+MatchChar(-1,-1,"转") : you5
+end
+
+begin char "钻"
+MatchChar(-6,6,"地层油矿口井气米车爆法探") | POS(1,"m") : zuan4
+WordBeginWith(0,"钻") & MatchWord(-1,-1,"开停") : zuan4
+WordLen(0,1) : zuan1
+end
+
+begin char "唉"
+WordBeginWith(0,"唉") & (NextPunc("!") | NextPunc("！")) : ai4
+WordLen(0,1) : ai1
+end
+
+begin char "馏"
+WordBeginWith(0,"馏") & SucceedVerb(1) : liu4
+WordLen(0,1) : liu2
+end
+
+begin char "笼"
+WordBeginWith(0,"笼") & (PrecedeVerb(-1) | SucceedVerb(1) | MatchChar(1,1,"烟")) : long3
+WordLen(0,1) : long2
+end
+
+begin char "蔓"
+WordBeginWith(0,"蔓") & (MatchChar(-1,-1,"豆") | MatchChar(1,1,"爬攀")) : wan4
+WordLen(0,1) : man4
+end
+
+begin char "闷"
+WordBeginWith(0,"闷") & (PrecedeVerb(-1) | PrecedeNoun(-1) | SucceedVerb(1) | MatchWord(1,1,"一会儿")) : men1
+WordLen(0,1) : men4
+end
+
+begin char "抹"
+WordBeginWith(0,"抹") & (WordEndWith(1,"下") | MatchWord(1,1,"下来,桌子")) : ma1
+WordLen(0,1) : mo3
+end
+
+begin char "泡"
+WordBeginWith(0,"泡") & (POS(-1,"m") | MatchChar(1,1,"屎尿")) : pao1
+WordLen(0,1) : pao4
+end
+
+begin char "撇"
+WordBeginWith(0,"撇") & (MatchWord(1,1,"一下") | WordEndWith(1,"来") | MatchChar(-1,1,"油")) : pie1
+WordLen(0,1) : pie3
+end
+
+begin char "呛"
+WordBeginWith(0,"呛") & MatchChar(-1,-1,"吃喝") : qiang1
+WordLen(0,1) : qiang4
+end
+
+begin char "苫"
+WordBeginWith(0,"苫") & (PrecedeVerb(-1) | SucceedVerb(1)) : shan4
+WordLen(0,1) : shan1
+end
+
+begin char "扇"
+WordBeginWith(0,"扇") & (PrecedeVerb(-1) | SucceedVerb(1) | MatchWord(1,1,"扇子") | MatchChar(1,1,"风")) : shan1
+WordLen(0,1) : shan4
+end
+
+begin char "擞"
+WordBeginWith(0,"擞") & (SucceedVerb(1) | MatchWord(-1,1,"炉子")) : sou4
+WordLen(0,1) : sou3
+end
+
+begin char "宿"
+WordBeginWith(0,"宿") & POS(-1,"m") : xiu3
+WordLen(0,1) : su4
+end
+
+begin char "拓"
+WordBeginWith(0,"拓") & MatchWord(1,1,"下来") : ta4
+WordLen(0,1) : tuo4
+end
+
+begin char "哇"
+WordBeginWith(0,"哇") & !WordLenGreaterThan(-1,0) & RealEnd(0) : wa1
+WordBeginWith(0,"哇") : wa5
+end
+
+begin char "瓦"
+WordBeginWith(0,"瓦") & MatchChar(1,1,"瓦") : wa4
+WordBeginWith(0,"瓦") : wa3
+end
+
+begin char "萎"
+WordBeginWith(0,"萎") & SucceedVerb(1) : wei1
+WordLen(0,1) : wei3
+end
+
+begin char "耶"
+WordBeginWith(0,"耶") & RealEnd(0) : ye2
+WordBeginWith(0,"耶") : ye1
+end
+
+begin char "掖"
+WordBeginWith(0,"掖") & (PrecedeVerb(-1) | SucceedVerb(1) | (MatchWord(-2,-2,"把") & POS(-1,"n"))) : ye1
+WordLen(0,1) : ye4
+end
+
+begin char "荫"
+WordBeginWith(0,"荫") & (MatchChar(-1,-1,"很") | MatchWord(-1,-1,"有点") | (MatchChar(1,1,"得") & MatchChar(2,2,"很"))) : yin4
+WordLen(0,1) :yin1
+end
+
+begin char "捋"
+WordBeginWith(0,"捋") & MatchChar(-2,1,"胡") : lv3
+WordLen(0,1) : luo1
+end
+
+begin char "咧"
+WordBeginWith(0,"咧") & RealEnd(0) : lie5
+WordBeginWith(0,"咧") : lie3
+end
+
+begin char "崴"
+WordBeginWith(0,"崴") & MatchChar(-2,2,"脚") : wai3
+WordLen(0,1) : wei1
+end
+
+begin char "迤"
+WordBeginWith(0,"迤") & POS(-1,"n") & PrecedeNoun(1) : yi3
+WordLen(0,1) : yi2
+end
+
+begin char "戗"
+WordBeginWith(0,"戗") & MatchChar(-3,3,"墙木房屋") : qiang4
+WordLen(0,1) : qiang1
+end
+
+begin char "焯"
+WordBeginWith(0,"焯") & (MatchWord(1,1,"一下") | MatchChar(-1,-1,"菜")) : chao1
+WordLen(0,1) : zhuo1
+end
+
+begin char "锔"
+WordBeginWith(0,"锔") & MatchChar(1,1,"碗锅缸") : ju1
+WordLen(0,1) : ju2
+end
+
+begin char "簸"
+WordBeginWith(0,"簸") & (PrecedeVerb(-1) | SucceedVerb(1) | MatchWord(1,1,"一下")) : bo3
+WordLen(0,1) : bo4
+end
+
+begin char "糁"
+WordBeginWith(0,"糁") & MatchWord(-1,-1,"玉米") : shen1
+WordLen(0,1) : san3
+end
+
+begin char "喏"
+WordBeginWith(0,"喏") & MatchChar(-1,-1,"唱大") : re3
+WordLen(0,1) : nuo4
+end
+
+begin char "帱"
+WordBeginWith(0,"帱") & (PrecedeVerb(-1) | SucceedVerb(1)) : dao4
+WordLen(0,1) : chou2
+end
+
+begin char "馕"
+WordBeginWith(0,"馕") & (PrecedeVerb(-1) | SucceedVerb(1)) : nang3
+WordLen(0,1) : nang2
+end
+
+begin char "漯"
+WordBeginWith(0,"漯") & (MatchWord(1,1,"山东") | MatchChar(1,1,"水")) : ta4
+WordLen(0,1) : luo4
+end
+
+begin char "缯"
+WordBeginWith(0,"缯") & !SucceedVerb(1) & !PrecedeVerb(-1) : zeng1
+WordLen(0,1) : zeng4
+end
+
+begin char "钐"
+WordBeginWith(0,"钐") & MatchChar(1,1,"草麦") : shan4
+WordLen(0,1) : shan1
+end
+
+begin char "钿"
+WordBeginWith(0,"钿") & (MatchChar(-1,-1,"铜车") | POS(1,"m")) : tian3
+WordLen(0,1) : dian4
+end
+
+begin char "哎"
+WordBeginWith(0,"哎") & !WordLenGreaterThan(-1,0) & (NextPunc("!") | NextPunc("！")) : ai4
+WordLen(0,1) : ai1
+end
+
+begin char "扒"
+WordBeginWith(0,"扒") & MatchChar(1,1,"牛羊猪鸡") : pa2
+WordLen(0,1) : ba1
+end
+
+begin char "膀"
+WordBeginWith(0,"膀") & MatchChar(-1,-1,"有点") : pang1
+WordLen(0,1) : bang3
+end
+
+begin char "堡"
+WordBeginWith(0,"堡") & (POS(-1,"n") | MatchChar(1,1,"子")) : bu3
+WordBeginWith(0,"堡") & MatchChar(-1,-1,"里") : pu4
+WordLen(0,1) : bao3
+end
+
+begin char "澄"
+WordBeginWith(0,"澄") & (MatchWord(1,1,"泥浆") | (MatchChar(1,1,"清") & MatchChar(-1,-1,"水")) | MatchChar(1,1,"沙")) : deng4
+WordLen(0,1) : cheng2
+end
+
+begin char "肚"
+WordBeginWith(0,"肚") & MatchChar(-1,-1,"牛羊猪") : du3
+WordLen(0,1) : du4
+end
+
+begin char "蹲"
+WordBeginWith(0,"蹲") & MatchChar(1,2,"腿") : cun2
+WordLen(0,1) : dun1
+end
+
+begin char "囤"
+WordBeginWith(0,"囤") & POS(1,"n") & (POS(2,"v") | MatchWord(2,2,"以")) : tun2
+WordLen(0,1) : dun4
+end
+
+begin char "坊"
+WordBeginWith(0,"坊") & ((WordLen(-1,2) & POS(-1,"n")) | MatchChar(1,1,"本")) : fang1
+WordLen(0,1) : fang2
+end
+
+begin char "膏"
+WordBeginWith(0,"膏") & MatchChar(-2,5,"油墨") : gao4
+WordBeginWith(0,"膏") & (SucceedVerb(1) | PrecedeVerb(-1)) : gao4
+WordLen(0,1) : gao1
+end
+
+begin char "镐"
+WordBeginWith(0,"镐") & (MatchChar(-1,-1,"都") | MatchWord(-2,-1,"国都")) : hao4
+WordLen(0,1) : gao3
+end
+
+begin char "胳"
+WordBeginWith(0,"胳") & MatchChar(1,1,"肢") : ge2
+WordBeginWith(0,"胳") : ge1
+end
+
+begin char "缉"
+WordBeginWith(0,"缉") & MatchChar(-3,5,"针线") : qi1
+end
+
+begin char "槛"
+WordBeginWith(0,"槛") & MatchChar(-1,-1,"门") : kan3
+WordLen(0,1) : jian4
+end
+
+begin char "勒"
+WordBeginWith(0,"勒") & (PrecedeVerb(-1) | SucceedVerb(1)) : lei1
+WordLen(0,1) : le4
+;                    else if(prev_seg_cx(rec,0,"ns") )
+;                        put_pinyin(rec,pinyin,"liao1",5,n);
+end
+
+begin char "撩"
+WordBeginWith(0,"撩") & (SucceedVerb(1) | POS(1,"n") | SucceedNoun(1)) & !MatchWord(1,1,"人") : liao1
+WordLen(0,1) : liao2
+end
+
+begin char "燎"
+WordBeginWith(0,"燎") & (MatchChar(-1,-1,"毛发") | MatchChar(1,1,"着")) : liao3
+WordLen(0,1) : liao2
+end
+
+begin char "铣"
+WordBeginWith(0,"铣") & MatchWord(-5,5,"零件") : xi3
+WordBeginWith(0,"铣") & (PrecedeVerb(-1) | SucceedVerb(1) | MatchChar(-1,-1,"钻")) : xi3
+WordLen(0,1) : xian1
+end
+
+begin char "吁"
+WordBeginWith(0,"吁") & !WordLenGreaterThan(-1,0) & RealEnd(0) : yu1
+WordLen(0,1) : yu4
+end
+
+begin char "择"
+WordBeginWith(0,"择") & (MatchChar(-1,-1,"菜") | MatchChar(2,2,"菜") | MatchChar(1,1,"出") | MatchWord(1,1,"一下")) : zhai2
+WordLen(0,1) : ze2
+end
+
+begin char "拽"
+WordBeginWith(0,"拽") & (MatchChar(-5,-1,"往") | MatchChar(1,5,"远")) : zhuai1
+WordLen(0,1) : zhuai4
+end
+
+begin char "贾"
+WordBeginWith(0,"贾") & MatchChar(1,1,"祸人国田马官誉诚利息害用勇资道贸贷") : gu3
+WordBeginWith(0,"贾") : jia3
+end
+
+begin char "模"
+MatchWord(0,0,"模样") : mu2
+end
+
+begin char "化"
+WordBeginWith(0,"化") & MatchWord(1,1,"钱,工夫") : hua1
+WordBeginWith(0,"化") : hua4
+end
+
+begin char "上"
+WordBeginWith(0,"上") & MatchChar(1,1,"声") : shang3
+WordBeginWith(0,"上") & MatchChar(-1,-1,"山") : shang5
+;                    else if(prev_ch_word(rec,1,"山",n) && rec->PHRASE != 1)
+;                        put_pinyin(rec,pinyin,"shang5",6,n);
+WordBeginWith(0,"上") : shang4
+end
+
+begin char "卡"
+WordBeginWith(0,"卡") & MatchChar(1,1,"在脖") : qia3
+WordLen(0,1) : ka3
+end
+
+begin char "瞿"
+WordBeginWith(0,"瞿") & POS(0,"nr") : qu2
+WordBeginWith(0,"瞿") & MatchChar(1,1,"然") : ju4
+end
+
+begin char "肖"
+WordBeginWith(0,"肖") & POS(0,"nr") : xiao1
+WordLen(0,1) : xiao4
+end
+
+begin word "供养"
+MatchChar(-6,8,"神佛祭") : gong4 yang3 / gong1 yang3
+end
+
+begin char "占"
+WordBeginWith(0,"占") & MatchChar(1,3,"卜卦星术梦") : zhan1
+WordBeginWith(0,"占") : zhan4
+end
+
+begin word "奇"
+MatchChar(-5,5,"偶") : ji1 / qi2
+end
+
+; error in word segmentation
+;                //"地带"
+;                if(!strcmp(rec->Piece,"地带"))
+;                {
+;                    if(next_seg_word(rec,1,"着"))
+;                        put_pinyin(rec,pinyin,"de5",3,0);
+;                }
+; should be put in lexicon
+;                //"少不了"
+;                if(!strcmp(rec->Piece,"少不了"))
+;                {
+;                    put_pinyin(rec,pinyin,"liao3",5,2);
+;                }
+
+begin word "处之"
+!WordLenGreaterThan(-1,0) | MatchWord(1,1,"以") : chu4 zhi1
+end
+
+begin word "所长"
+WordEndWith(-1,"以,用") : suo3 cahng2
+end
+
+begin word "总长"
+POS(-1,"nr") | MatchChar(-1,-1,"任") | MatchWord(-1,-1,"警察") : zong3 zhang3 / zong3 chang2
+end
+
+begin word "要求"
+MatchWord(1,1,"得") & POS(2,"n,v,r") : yao4 qiu2
+end
+;                else if(!strcmp(rec->Piece,"要求"))
+;                {
+;                    if(next_seg_word(rec,1,"得") && (IsNone_seg(rec,2) || IsVerb_seg(rec,2) || next_seg_cx(rec,2,"r")))
+;                        put_pinyin(rec,pinyin,"yao4",4,n);
+;                    else if(prev_seg_word(rec,1,"不"))
+;                    {
+;                        if(Right_seg(rec,1,1,"快"))
+;                        {
+;                            put_pinyin(rec->Prev,pinyin,"bu2",3,n);
+;                            put_pinyin(rec,pinyin,"yao4",4,n);
+;                        }
+;                        else
+;                        {
+;                            put_pinyin(rec,pinyin,"bu4",3,n+1);
+;                            put_pinyin(rec,pinyin,"yao1",4,n+2);
+;                        }
+;                    }
+;                }
+
+begin word "正中"
+!POS(-1,"v") & (POS(2,"n") | POS(2,"v")) : zheng4 zhong4
+end
+
+;                //"处处"
+;                else if(!strcmp(rec->Piece,"处处"))
+;                {
+;                    if(next_seg_word(rec,1,"长") && (IsNone_seg(rec,-1) || IsVerb_seg(rec,-1)))
+;                        put_pinyin(rec->Next,pinyin,"zhang3",6,n);
+;                }
+
+;                //"为了"
+;                else if(!strcmp(rec->Piece,"为了"))
+;                {
+;                    if(next_seg_word(rec,1,"解") && IsNone_seg(rec,2))
+;                        put_pinyin(rec,pinyin,"liao3",5,n+1);
+;                }
+
+begin word "得了"
+MatchChar(-1,-1,"不") : de2 liao3
+MatchWord(1,2,"吗嘛么呀啦") : de2 liao3
+POS(-1,"a") : de5 liao3 / de2 le5
+end
+
+begin word "数数"
+POS(-1,"v") | POS(-2,"v") | WordEndWith(-1,"会,能") | MatchWord(1,1,"了") : shu3 shu4
+end
+
+begin word "家长"
+MatchChar(-1,-1,"拉扯话") : jia1 chang2
+MatchChar(2,2,"家") & MatchChar(3,3,"短") : jia1 chang2
+end
+
+;begin word "一来"
+;                else if(!strcmp(rec->Piece,"一来"))
+;                {
+;                    if(!rec->Prev->Piece || strlen(rec->Prev->Piece) == 0 || prev_seg_cx(rec,1,"w") )
+;                        put_pinyin(rec,pinyin,"yi1",3,n);
+;                }
+
+;                //“教学”
+;                else if(!strcmp(rec->Piece,"教学"))
+;                {
+;                    if(next_seg_word(rec,1,"生"))
+;                        put_pinyin(rec,pinyin,"jiao1",5,n);
+;                }
+
+;                //"中将", "上将"
+;                else if(!strcmp(rec->Piece,"中将") || !strcmp(rec->Piece,"中将"))
+;                {
+;                    if(!rec->Prev->Piece || prev_seg_cx(rec,1,"nr"))
+;                        put_pinyin(rec,pinyin,"jiang4",6,1);
+;                    else
+;                        put_pinyin(rec,pinyin,"jiang1",6,1);
+;                }
+
+;                //“没收”
+;                else if(!strcmp(rec->Piece,"没收"))
+;                {
+;                    if(Left_seg(rec,1,1,"回") || Left_seg(rec,1,1,"紧") || Left_seg(rec,1,1,"藏") || Left_seg(rec,1,1,"到"))
+;                        put_pinyin(rec,pinyin,"mei2",4,n);
+;                }
+
+;                //“觉醒”
+;                else if(!strcmp(rec->Piece,"觉醒"))
+;                {
+;                    if(prev_seg_word(rec,1,"一") && next_seg_word(rec,1,"来"))
+;                        put_pinyin(rec,pinyin,"jiao4",5,n);
+;                }
+
+begin word "东西"
+MatchChar(2,2,"长") | MatchChar(-1,-1,"向自") | MatchWord(-1,2,"南北") | MatchChar(3,3,"向") : dong1 xi1
+(PrecedeNoun(-1) | SucceedNoun(-1)) & (PrecedeVerb(1) | POS(1,"v")) : dong1 xi5
+(SucceedNoun(1) & !MatchChar(2,2,"的")) | POS(1,"n,m") : dong1 xi1 / dong1 xi5
+end
+
+;                //“要冲”
+;                else if(!strcmp(rec->Piece,"要冲"))
+;                {
+;                    if(next_seg_word(rec,1,"着") || IsVerb_seg(rec,2) || prev_verb_cx(rec,-1))
+;                        put_pinyin(rec,pinyin,"chong4",6,n+1);
+;                }
+
+;                //“一发”
+;                else if(!strcmp(rec->Piece,"一发"))
+;                {
+;                    if(next_seg_word(rec,1,"系") || prev_seg_word(rec,1,"牵"))
+;                    {
+;                        put_pinyin(rec,pinyin,"yi2",3,n);
+;                        put_pinyin(rec,pinyin,"fa4",3,n+1);
+;                    }
+;                }
+
+;                //“好吃”、“好学”、“好玩”、“好动”、“好说”
+;                else if(!strcmp(rec->Piece,"好吃") || !strcmp(rec->Piece,"好说") || !strcmp(rec->Piece,"好学")
+;                    || !strcmp(rec->Piece,"好动") || !strcmp(rec->Piece,"好玩"))
+;                {
+;                    if(!next_ch_word(rec,2,"的",n) && !prev_ch_word(rec,1,"很",n) && !prev_ch_word(rec,2,"很",n))
+;                        put_pinyin(rec,pinyin,"hao4",4,n);
+;                    else
+;                        put_pinyin(rec,pinyin,"hao3",4,n);
+;                }
+
+;                //“爱好”
+;                else if(!strcmp(rec->Piece,"爱好"))
+;                {
+;                    if(next_seg_word(rec,1,"宝宝") || next_seg_word(rec,1,"孩子") || next_seg_word(rec,1,"学生"))
+;                        put_pinyin(rec,pinyin,"hao3",4,n+1);
+;                    else
+;                        put_pinyin(rec,pinyin,"hao4",4,n+1);
+;                }
+
+;                //“少有”
+;                else if(!strcmp(rec->Piece,"少有"))
+;                {
+;                    if(next_ch_word(rec,2,"志",n) || next_seg_word(rec,1,"所长"))
+;                        put_pinyin(rec,pinyin,"shao4",5,n+1);
+;                    else
+;                        put_pinyin(rec,pinyin,"shao3",5,n+1);
+;                }
+
+begin word "结果"
+MatchChar(-4,-1,"树") : jie1 guo3
+MatchChar(1,1,"子") : jie1 guo3 / jie2 guo3
+end
+;                else if(!strcmp(rec->Piece,"结果"))
+;                {
+;                    for(a=1;a<=4;a++)
+;                        if(prev_ch_word(rec,a,"树",n))
+;                        {
+;                            put_pinyin(rec,pinyin,"jie1",4,n);
+;                            break;
+;                        }
+;                    if(next_ch_word(rec,1,"子",n))
+;                        put_pinyin(rec,pinyin,"jie1",4,n);
+;                    else
+;                        put_pinyin(rec,pinyin,"jie2",4,0);
+;                }
+
+;begin char "十"
+;POS(0,"m") & MatchChar(-1,-1,"一二三四五六七八九") & MatchChar(1,1,"一二三四五六七八九") : shi5
+;end

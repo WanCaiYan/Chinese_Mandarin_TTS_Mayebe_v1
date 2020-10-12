@@ -1,0 +1,1917 @@
+﻿
+C4.5 [release 8] production rule interpreter	Sun May 18 22:24:36 2003
+--------------------------------------------
+
+This rule file is learnt from the database using C4.5 decition tree.
+It was first developped by Zhao Sheng.
+
+--------------------------------------------
+
+Parameter explaination:
+a1: the POS of the left word, "BOS" for sentence beginning
+a2: the normalized length of the left word, i.e. min(#Characters / 1, 5)
+a3: the POS of the current word
+a4: the normalized length of the current word
+a5: the POS of the right word, "EOS" for sentence ending
+a6: the normalized length of the right word
+a7: the normalized character offset from sentence beginning, i.e. min(#Characters / 4, 3)
+a8: the normalized character offset to sentence ending
+a9: the character offset to previous prosodic phrase boundary (B2)
+a10:the character offset to previous prosodic word boundary (B1)
+a11:the immediate left boundary type (2: sentence beginning, prosodic phrase, 1: prosodic word, 0: none)
+
+--------------------------------------------
+
+Rule 1:
+    	a5 = '了'
+	->  class B0  [99.6%]
+
+Rule 2:
+    	a5 = '的'
+	->  class B0  [98.4%]
+
+Rule 3:
+    	a3 = '不'
+    	a6 <= 1
+	->  class B0  [97.3%]
+
+Rule 4:
+    	a3 = d
+    	a5 = a
+    	a6 <= 1
+    	a7 > 2
+	->  class B0  [97.2%]
+
+Rule 5:
+    	a3 = '不'
+    	a8 > 0
+	->  class B0  [96.5%]
+
+Rule 6:
+    	a3 = a
+    	a6 <= 1
+    	a10 <= 1
+	->  class B0  [95.8%]
+
+Rule 7:
+    	a5 = y
+	->  class B0  [95.6%]
+
+Rule 8:
+    	a3 = n
+    	a5 = '中'
+	->  class B0  [95.4%]
+
+Rule 9:
+    	a3 = d
+    	a4 <= 1
+    	a5 = a
+    	a6 <= 1
+	->  class B0  [94.7%]
+
+Rule 10:
+    	a5 = k
+	->  class B0  [94.7%]
+
+Rule 11:
+    	a5 = '中'
+    	a10 <= 1
+	->  class B0  [94.4%]
+
+Rule 12:
+    	a4 > 2
+    	a5 = q
+    	a6 <= 1
+	->  class B0  [94.3%]
+
+Rule 13:
+    	a6 <= 3
+    	a10 <= 1
+    	a11 > 0
+    	a11 <= 1
+	->  class B0  [92.9%]
+
+Rule 14:
+    	a3 = b
+    	a10 <= 1
+	->  class B0  [92.4%]
+
+Rule 15:
+    	a1 = p
+    	a3 = n
+    	a10 <= 1
+	->  class B0  [91.2%]
+
+Rule 16:
+    	a1 = n
+    	a2 > 1
+    	a3 = d
+    	a4 <= 2
+    	a5 = v
+    	a6 <= 1
+    	a9 > 2
+	->  class B0  [90.9%]
+
+Rule 17:
+    	a5 = p
+    	a6 <= 1
+    	a7 > 2
+    	a11 > 1
+	->  class B0  [90.9%]
+
+Rule 18:
+    	a4 > 1
+    	a5 = '中'
+	->  class B0  [90.7%]
+
+Rule 19:
+    	a3 = t
+    	a6 <= 1
+    	a10 <= 1
+	->  class B0  [90.5%]
+
+Rule 20:
+    	a3 = q
+    	a10 <= 1
+    	a11 > 0
+	->  class B0  [90.1%]
+
+Rule 21:
+    	a5 = '上'
+	->  class B0  [90.1%]
+
+Rule 22:
+    	a1 = d
+    	a5 = v
+    	a6 <= 1
+    	a8 <= 0
+    	a9 > 2
+	->  class B0  [89.9%]
+
+Rule 23:
+    	a3 = u
+    	a6 <= 1
+    	a8 <= 0
+    	a9 > 2
+    	a10 <= 2
+	->  class B0  [89.8%]
+
+Rule 24:
+    	a6 <= 2
+    	a10 <= 1
+    	a11 > 0
+	->  class B0  [86.9%]
+
+Rule 25:
+    	a3 = g
+    	a6 <= 1
+	->  class B0  [86.6%]
+
+Rule 26:
+    	a5 = q
+    	a6 <= 1
+    	a10 <= 2
+	->  class B0  [86.0%]
+
+Rule 27:
+    	a5 = u
+    	a6 <= 1
+	->  class B0  [85.6%]
+
+Rule 28:
+    	a1 = '和'
+    	a4 <= 1
+    	a6 <= 1
+    	a8 > 0
+    	a10 > 1
+	->  class B0  [85.2%]
+
+Rule 29:
+    	a3 = d
+    	a5 = '在'
+    	a11 <= 1
+	->  class B0  [85.2%]
+
+Rule 30:
+    	a2 > 1
+    	a3 = v
+    	a5 = '在'
+    	a11 > 0
+	->  class B0  [84.3%]
+
+Rule 31:
+    	a1 = n
+    	a3 = v
+    	a5 = v
+    	a6 <= 1
+    	a7 > 1
+    	a8 > 1
+    	a9 <= 2
+	->  class B0  [84.1%]
+
+Rule 32:
+    	a1 = a
+    	a3 = n
+    	a5 = a
+    	a6 <= 1
+    	a11 > 0
+	->  class B0  [84.1%]
+
+Rule 33:
+    	a1 = n
+    	a2 > 1
+    	a3 = v
+    	a5 = p
+    	a8 > 1
+    	a9 <= 8
+	->  class B0  [82.3%]
+
+Rule 34:
+    	a1 = '的'
+    	a5 = v
+    	a6 <= 1
+    	a9 <= 2
+	->  class B0  [82.2%]
+
+Rule 35:
+    	a1 = n
+    	a2 > 2
+    	a3 = v
+    	a5 = v
+    	a6 <= 1
+	->  class B0  [82.0%]
+
+Rule 36:
+    	a1 = '中'
+    	a3 = d
+    	a6 <= 1
+	->  class B0  [82.0%]
+
+Rule 37:
+    	a1 = n
+    	a2 > 1
+    	a5 = r
+    	a6 <= 1
+    	a8 <= 1
+    	a9 <= 9
+    	a10 <= 2
+    	a11 <= 1
+	->  class B0  [82.0%]
+
+Rule 38:
+    	a1 = n
+    	a5 = '在'
+    	a11 > 1
+	->  class B0  [81.1%]
+
+Rule 39:
+    	a3 = p
+    	a5 = r
+    	a6 <= 1
+    	a9 > 3
+	->  class B0  [79.4%]
+
+Rule 40:
+    	a1 = a
+    	a3 = v
+    	a5 = a
+    	a6 <= 1
+	->  class B0  [79.4%]
+
+Rule 41:
+    	a1 = '的'
+    	a5 = q
+    	a11 > 1
+	->  class B0  [79.4%]
+
+Rule 42:
+    	a1 = d
+    	a2 <= 1
+    	a3 = v
+    	a6 <= 1
+    	a7 > 0
+    	a10 <= 2
+	->  class B0  [79.0%]
+
+Rule 43:
+    	a1 = u
+    	a3 = d
+    	a6 <= 1
+    	a11 > 1
+	->  class B0  [77.7%]
+
+Rule 44:
+    	a3 = '在'
+    	a5 = t
+    	a11 > 0
+	->  class B0  [77.7%]
+
+Rule 45:
+    	a1 = q
+    	a3 = v
+    	a6 <= 1
+	->  class B0  [76.6%]
+
+Rule 46:
+    	a5 = n
+    	a6 <= 1
+	->  class B0  [75.7%]
+
+Rule 47:
+    	a3 = v
+    	a5 = v
+    	a6 <= 1
+    	a7 <= 1
+    	a9 > 2
+    	a9 <= 3
+	->  class B0  [75.7%]
+
+Rule 48:
+    	a5 = f
+    	a6 <= 1
+	->  class B0  [74.8%]
+
+Rule 49:
+    	a1 = v
+    	a3 = n
+    	a5 = a
+    	a6 <= 1
+    	a8 <= 1
+	->  class B0  [74.0%]
+
+Rule 50:
+    	a1 = '的'
+    	a5 = r
+    	a6 <= 1
+    	a10 <= 2
+	->  class B0  [72.2%]
+
+Rule 51:
+    	a1 = v
+    	a3 = v
+    	a5 = v
+    	a6 <= 1
+    	a7 > 1
+    	a9 <= 2
+	->  class B0  [70.7%]
+
+Rule 52:
+    	a1 = v
+    	a3 = '的'
+    	a5 = v
+    	a6 <= 1
+    	a10 <= 2
+	->  class B0  [70.7%]
+
+Rule 53:
+    	a3 = v
+    	a5 = '在'
+    	a10 > 1
+    	a10 <= 2
+    	a11 <= 0
+	->  class B0  [70.7%]
+
+Rule 54:
+    	a2 > 2
+    	a5 = t
+    	a6 > 2
+    	a10 <= 1
+    	a11 > 1
+	->  class B0  [70.7%]
+
+Rule 55:
+    	a3 = o
+    	a5 = n
+	->  class B0  [70.7%]
+
+Rule 56:
+    	a1 = v
+    	a4 <= 2
+    	a5 = a
+    	a6 <= 1
+    	a7 <= 1
+    	a8 > 1
+	->  class B0  [64.7%]
+
+Rule 57:
+    	a1 = n
+    	a4 > 1
+    	a5 = a
+    	a6 <= 1
+    	a11 <= 0
+	->  class B0  [64.5%]
+
+Rule 58:
+    	a3 = n
+    	a4 <= 2
+    	a5 = '对'
+    	a11 > 1
+	->  class B0  [63.0%]
+
+Rule 59:
+    	a1 = n
+    	a2 > 3
+    	a4 > 1
+    	a4 <= 2
+    	a5 = n
+    	a8 <= 0
+	->  class B0  [63.0%]
+
+Rule 60:
+    	a3 = u
+    	a5 = v
+    	a6 <= 1
+    	a8 > 1
+	->  class B0  [59.4%]
+
+Rule 61:
+    	a3 = '了'
+    	a5 = r
+    	a6 <= 1
+    	a10 > 1
+    	a10 <= 2
+	->  class B0  [54.6%]
+
+Rule 62:
+    	a3 = '有'
+    	a5 = m
+    	a6 > 2
+    	a10 <= 1
+	->  class B0  [45.3%]
+
+Rule 63:
+    	a2 > 3
+    	a3 = e
+	->  class B2  [88.2%]
+
+Rule 64:
+    	a2 > 2
+    	a3 = q
+    	a5 = v
+    	a6 <= 1
+    	a9 > 2
+	->  class B2  [82.0%]
+
+Rule 65:
+    	a5 = c
+    	a6 > 1
+    	a10 > 1
+    	a11 <= 1
+	->  class B2  [79.4%]
+
+Rule 66:
+    	a3 = a
+    	a5 = r
+    	a10 > 1
+    	a11 <= 1
+	->  class B2  [79.4%]
+
+Rule 67:
+    	a1 = n
+    	a3 = n
+    	a5 = m
+    	a6 > 1
+    	a6 <= 2
+    	a9 > 2
+    	a9 <= 6
+	->  class B2  [79.4%]
+
+Rule 68:
+    	a3 = '上'
+    	a5 = v
+    	a8 > 0
+    	a9 > 5
+    	a10 > 2
+	->  class B2  [78.4%]
+
+Rule 69:
+    	a3 = v
+    	a5 = m
+    	a6 <= 1
+    	a9 > 4
+    	a11 <= 0
+	->  class B2  [75.8%]
+
+Rule 70:
+    	a3 = m
+    	a5 = p
+    	a10 > 1
+	->  class B2  [75.8%]
+
+Rule 71:
+    	a1 = '的'
+    	a5 = '不'
+	->  class B2  [75.8%]
+
+Rule 72:
+    	a1 = q
+    	a3 = n
+    	a4 > 1
+    	a5 = q
+    	a8 > 0
+	->  class B2  [75.8%]
+
+Rule 73:
+    	a5 = '要'
+    	a9 > 2
+    	a10 > 1
+	->  class B2  [75.6%]
+
+Rule 74:
+    	a3 = n
+    	a5 = p
+    	a7 > 0
+    	a8 > 0
+    	a10 > 1
+    	a11 <= 1
+	->  class B2  [75.2%]
+
+Rule 75:
+    	a5 = c
+    	a8 > 0
+    	a9 > 4
+    	a10 > 1
+	->  class B2  [74.9%]
+
+Rule 76:
+    	a1 = n
+    	a2 > 1
+    	a5 = p
+    	a10 > 1
+    	a11 <= 1
+	->  class B2  [73.1%]
+
+Rule 77:
+    	a1 = '的'
+    	a3 = n
+    	a5 = a
+    	a8 > 0
+	->  class B2  [73.0%]
+
+Rule 78:
+    	a5 = c
+    	a10 > 2
+	->  class B2  [72.7%]
+
+Rule 79:
+    	a1 = '的'
+    	a5 = v
+    	a6 > 1
+    	a8 > 0
+    	a9 > 5
+    	a10 > 1
+	->  class B2  [72.2%]
+
+Rule 80:
+    	a1 = n
+    	a3 = u
+    	a6 <= 1
+    	a10 > 2
+	->  class B2  [70.8%]
+
+Rule 81:
+    	a3 = m
+    	a5 = r
+    	a8 <= 1
+	->  class B2  [70.7%]
+
+Rule 82:
+    	a3 = n
+    	a4 <= 2
+    	a5 = n
+    	a6 <= 1
+    	a7 <= 1
+    	a9 > 4
+    	a10 > 2
+	->  class B2  [70.7%]
+
+Rule 83:
+    	a1 = n
+    	a2 <= 1
+    	a3 = n
+    	a6 > 2
+    	a8 <= 0
+	->  class B2  [70.7%]
+
+Rule 84:
+    	a1 = v
+    	a3 = q
+    	a5 = v
+    	a7 <= 1
+    	a9 <= 5
+    	a10 > 1
+	->  class B2  [70.7%]
+
+Rule 85:
+    	a3 = d
+    	a4 <= 1
+    	a5 = v
+    	a9 > 5
+    	a10 > 2
+	->  class B2  [70.7%]
+
+Rule 86:
+    	a1 = u
+    	a5 = n
+    	a6 > 1
+    	a10 > 3
+	->  class B2  [70.7%]
+
+Rule 87:
+    	a1 = m
+    	a2 <= 1
+    	a5 = n
+    	a8 > 1
+    	a9 > 5
+	->  class B2  [70.7%]
+
+Rule 88:
+    	a1 = n
+    	a3 = v
+    	a5 = m
+    	a8 > 2
+    	a9 <= 2
+    	a11 <= 1
+	->  class B2  [70.7%]
+
+Rule 89:
+    	a1 = n
+    	a3 = n
+    	a4 > 3
+    	a6 > 1
+    	a8 > 0
+	->  class B2  [70.7%]
+
+Rule 90:
+    	a1 = b
+    	a4 > 2
+    	a6 > 1
+    	a8 > 0
+    	a8 <= 2
+	->  class B2  [70.0%]
+
+Rule 91:
+    	a1 = '的'
+    	a3 = n
+    	a5 = v
+    	a8 > 0
+    	a10 > 1
+    	a11 <= 1
+	->  class B2  [69.3%]
+
+Rule 92:
+    	a5 = p
+    	a6 <= 1
+    	a8 > 2
+    	a9 > 3
+    	a10 > 1
+	->  class B2  [68.8%]
+
+Rule 93:
+    	a2 > 1
+    	a3 = '中'
+    	a6 > 1
+    	a11 <= 0
+	->  class B2  [66.2%]
+
+Rule 94:
+    	a3 = k
+    	a5 = d
+    	a6 > 1
+	->  class B2  [66.2%]
+
+Rule 95:
+    	a1 = '的'
+    	a3 = n
+    	a5 = q
+	->  class B2  [66.2%]
+
+Rule 96:
+    	a2 > 1
+    	a3 = k
+    	a5 = v
+    	a8 > 0
+    	a10 > 1
+	->  class B2  [63.8%]
+
+Rule 97:
+    	a4 > 2
+    	a5 = d
+    	a6 <= 1
+    	a10 > 3
+	->  class B2  [63.4%]
+
+Rule 98:
+    	a3 = n
+    	a5 = i
+	->  class B2  [63.3%]
+
+Rule 99:
+    	a5 = d
+    	a8 > 0
+    	a10 > 1
+    	a11 <= 1
+	->  class B2  [63.1%]
+
+Rule 100:
+    	a1 = n
+    	a3 = '的'
+    	a5 = f
+    	a6 <= 1
+	->  class B2  [63.0%]
+
+Rule 101:
+    	a3 = i
+    	a6 > 1
+    	a9 <= 5
+    	a11 <= 1
+	->  class B2  [63.0%]
+
+Rule 102:
+    	a1 = '不'
+    	a3 = a
+    	a10 > 3
+	->  class B2  [63.0%]
+
+Rule 103:
+    	a3 = t
+    	a5 = n
+    	a10 > 4
+	->  class B2  [63.0%]
+
+Rule 104:
+    	a5 = a
+    	a6 > 1
+    	a8 > 0
+    	a9 > 9
+    	a10 > 1
+	->  class B2  [62.6%]
+
+Rule 105:
+    	a1 = n
+    	a5 = r
+    	a8 > 0
+    	a9 > 5
+    	a10 > 1
+	->  class B2  [62.3%]
+
+Rule 106:
+    	a1 = d
+    	a3 = v
+    	a5 = v
+    	a7 > 1
+    	a9 > 5
+    	a11 > 0
+	->  class B2  [61.2%]
+
+Rule 107:
+    	a1 = v
+    	a4 > 2
+    	a6 > 1
+    	a8 > 2
+    	a9 > 5
+	->  class B2  [61.2%]
+
+Rule 108:
+    	a3 = n
+    	a5 = '不'
+    	a8 > 1
+    	a11 <= 1
+	->  class B2  [57.9%]
+
+Rule 109:
+    	a1 = r
+    	a2 > 1
+    	a3 = n
+    	a6 > 1
+    	a11 <= 0
+	->  class B2  [57.9%]
+
+Rule 110:
+    	a2 > 2
+    	a3 = n
+    	a5 = v
+    	a9 <= 3
+    	a10 > 1
+    	a11 > 0
+    	a11 <= 1
+	->  class B2  [56.6%]
+
+Rule 111:
+    	a3 = n
+    	a5 = v
+    	a8 > 0
+    	a9 > 5
+    	a10 > 1
+	->  class B2  [55.6%]
+
+Rule 112:
+    	a2 > 1
+    	a3 = n
+    	a5 = v
+    	a8 > 0
+    	a10 > 2
+    	a11 <= 1
+	->  class B2  [55.2%]
+
+Rule 113:
+    	a3 = q
+    	a5 = r
+    	a8 > 1
+    	a10 > 1
+    	a10 <= 2
+	->  class B2  [54.6%]
+
+Rule 114:
+    	a1 = q
+    	a5 = l
+	->  class B2  [54.6%]
+
+Rule 115:
+    	a3 = f
+    	a5 = v
+    	a6 <= 1
+    	a8 > 0
+    	a9 > 2
+    	a10 > 1
+	->  class B2  [54.4%]
+
+Rule 116:
+    	a2 > 1
+    	a4 <= 1
+    	a5 = z
+    	a8 > 0
+    	a11 <= 1
+	->  class B2  [54.1%]
+
+Rule 117:
+    	a3 = l
+    	a6 > 1
+    	a8 > 0
+    	a9 <= 9
+	->  class B2  [53.9%]
+
+Rule 118:
+    	a5 = '有'
+    	a10 > 1
+    	a11 <= 1
+	->  class B2  [53.5%]
+
+Rule 119:
+    	a1 = v
+    	a2 > 1
+    	a6 > 1
+    	a8 > 2
+    	a9 > 6
+    	a9 <= 8
+    	a10 > 2
+	->  class B2  [53.4%]
+
+Rule 120:
+    	a3 = u
+    	a6 > 1
+    	a8 > 0
+    	a8 <= 1
+    	a10 > 2
+	->  class B2  [52.3%]
+
+Rule 121:
+    	a5 = '在'
+    	a10 > 1
+    	a11 <= 1
+	->  class B2  [51.6%]
+
+Rule 122:
+    	a5 = b
+    	a6 > 1
+    	a10 > 3
+	->  class B2  [51.5%]
+
+Rule 123:
+    	a3 = n
+    	a5 = v
+    	a6 <= 1
+    	a8 > 2
+    	a9 > 2
+    	a10 > 1
+	->  class B2  [51.4%]
+
+Rule 124:
+    	a5 = '要'
+    	a11 <= 0
+	->  class B2  [51.2%]
+
+Rule 125:
+    	a5 = '有'
+    	a11 <= 0
+	->  class B2  [51.1%]
+
+Rule 126:
+    	a3 = n
+    	a5 = t
+    	a10 > 1
+	->  class B2  [50.8%]
+
+Rule 127:
+    	a1 = v
+    	a2 > 1
+    	a3 = '的'
+    	a5 = n
+    	a8 > 0
+    	a9 > 8
+    	a9 <= 14
+    	a10 > 1
+	->  class B2  [50.7%]
+
+Rule 128:
+    	a5 = m
+    	a8 > 0
+    	a9 > 6
+    	a10 > 1
+	->  class B2  [50.4%]
+
+Rule 129:
+    	a3 = r
+    	a5 = e
+	->  class B2  [50.0%]
+
+Rule 130:
+    	a3 = q
+    	a5 = '不'
+    	a10 > 3
+	->  class B2  [50.0%]
+
+Rule 131:
+    	a1 = b
+    	a5 = f
+    	a6 > 1
+	->  class B2  [50.0%]
+
+Rule 132:
+    	a1 = f
+    	a5 = b
+    	a6 > 1
+	->  class B2  [50.0%]
+
+Rule 133:
+    	a3 = s
+    	a5 = i
+	->  class B2  [50.0%]
+
+Rule 134:
+    	a1 = n
+    	a2 > 1
+    	a2 <= 2
+    	a3 = v
+    	a4 > 1
+    	a5 = n
+    	a6 > 1
+    	a9 <= 3
+    	a11 <= 1
+	->  class B2  [49.6%]
+
+Rule 135:
+    	a3 = '的'
+    	a5 = v
+    	a6 <= 1
+    	a8 > 0
+    	a10 > 1
+	->  class B2  [49.2%]
+
+Rule 136:
+    	a3 = f
+    	a5 = n
+    	a6 > 1
+    	a8 > 1
+    	a10 > 1
+    	a11 <= 1
+	->  class B2  [47.5%]
+
+Rule 137:
+    	a5 = '和'
+    	a7 > 1
+    	a8 > 0
+    	a9 > 2
+    	a10 > 1
+	->  class B2  [46.7%]
+
+Rule 138:
+    	a5 = '对'
+    	a10 > 1
+	->  class B2  [45.9%]
+
+Rule 139:
+    	a1 = '了'
+    	a6 > 3
+	->  class B2  [45.3%]
+
+Rule 140:
+    	a1 = '中'
+    	a3 = '的'
+    	a8 > 0
+    	a9 > 8
+	->  class B2  [45.3%]
+
+Rule 141:
+    	a1 = a
+    	a5 = b
+    	a9 <= 4
+	->  class B2  [45.3%]
+
+Rule 142:
+    	a1 = v
+    	a5 = l
+    	a10 > 1
+    	a11 > 0
+	->  class B2  [45.3%]
+
+Rule 143:
+    	a2 > 1
+    	a3 = a
+    	a5 = n
+    	a7 > 1
+    	a7 <= 2
+    	a8 > 0
+    	a9 <= 7
+    	a10 > 1
+    	a11 <= 1
+	->  class B2  [44.2%]
+
+Rule 144:
+    	a3 = y
+    	a6 > 1
+	->  class B2  [39.8%]
+
+Rule 145:
+    	a3 = j
+    	a5 = v
+    	a8 > 0
+    	a10 > 1
+	->  class B2  [38.8%]
+
+Rule 146:
+    	a1 = d
+    	a4 > 1
+    	a5 = r
+    	a8 > 2
+	->  class B2  [38.8%]
+
+Rule 147:
+    	a5 = o
+    	a6 > 1
+    	a10 > 1
+	->  class B2  [32.3%]
+
+Rule 148:
+    	a3 = '的'
+    	a5 = n
+    	a8 <= 0
+    	a10 > 2
+	->  class B1  [97.0%]
+
+Rule 149:
+    	a5 = '和'
+    	a8 <= 0
+	->  class B1  [96.6%]
+
+Rule 150:
+    	a1 = '在'
+    	a6 > 1
+    	a9 <= 5
+    	a10 > 1
+	->  class B1  [96.0%]
+
+Rule 151:
+    	a6 > 1
+    	a8 <= 0
+    	a10 > 1
+	->  class B1  [95.8%]
+
+Rule 152:
+    	a3 = '了'
+    	a5 = a
+	->  class B1  [93.9%]
+
+Rule 153:
+    	a5 = c
+    	a6 <= 1
+    	a9 <= 3
+    	a10 > 1
+    	a10 <= 2
+	->  class B1  [93.9%]
+
+Rule 154:
+    	a4 > 1
+    	a6 > 1
+    	a7 > 2
+    	a9 <= 8
+    	a10 <= 3
+    	a11 <= 0
+	->  class B1  [93.4%]
+
+Rule 155:
+    	a5 = f
+    	a6 > 1
+    	a10 > 1
+	->  class B1  [92.6%]
+
+Rule 156:
+    	a1 = n
+    	a3 = n
+    	a2 > 1
+    	a5 = v
+    	a8 <= 0
+    	a10 > 1
+	->  class B1  [92.6%]
+
+Rule 157:
+    	a3 = t
+    	a5 = v
+    	a7 > 2
+    	a10 > 1
+	->  class B1  [92.2%]
+
+Rule 158:
+    	a3 = '的'
+    	a5 = n
+    	a8 > 1
+    	a10 > 2
+	->  class B1  [91.8%]
+
+Rule 159:
+    	a6 > 1
+    	a9 <= 2
+    	a10 > 1
+	->  class B1  [91.6%]
+
+Rule 160:
+    	a3 = '的'
+    	a6 > 1
+    	a9 <= 9
+    	a10 > 1
+	->  class B1  [91.5%]
+
+Rule 161:
+    	a1 = n
+    	a5 = s
+    	a8 > 1
+    	a10 > 1
+	->  class B1  [91.2%]
+
+Rule 162:
+    	a5 = m
+    	a10 <= 1
+    	a11 <= 0
+	->  class B1  [90.9%]
+
+Rule 163:
+    	a6 > 1
+    	a7 > 1
+    	a9 <= 5
+    	a10 > 1
+	->  class B1  [90.8%]
+
+Rule 164:
+    	a3 = '的'
+    	a8 > 2
+	->  class B1  [90.4%]
+
+Rule 165:
+    	a1 = p
+    	a6 > 1
+    	a10 > 1
+	->  class B1  [90.3%]
+
+Rule 166:
+    	a3 = '在'
+    	a10 > 1
+	->  class B1  [90.0%]
+
+Rule 167:
+    	a3 = p
+    	a9 <= 6
+    	a10 > 1
+	->  class B1  [89.7%]
+
+Rule 168:
+    	a3 = v
+    	a6 > 1
+    	a7 > 2
+    	a10 > 1
+    	a10 <= 2
+	->  class B1  [89.5%]
+
+Rule 169:
+    	a3 = u
+    	a5 = n
+    	a10 <= 1
+    	a11 <= 0
+	->  class B1  [89.1%]
+
+Rule 170:
+    	a3 = t
+    	a6 > 1
+    	a8 > 0
+    	a9 <= 5
+    	a10 > 1
+	->  class B1  [89.0%]
+
+Rule 171:
+    	a1 = '上'
+    	a6 > 1
+    	a10 > 1
+	->  class B1  [88.7%]
+
+Rule 172:
+    	a1 = d
+    	a2 <= 1
+    	a3 = v
+    	a6 > 1
+    	a10 > 1
+	->  class B1  [88.6%]
+
+Rule 173:
+    	a5 = n
+    	a6 > 1
+    	a10 > 1
+	->  class B1  [88.4%]
+
+Rule 174:
+    	a3 = v
+    	a5 = m
+    	a9 <= 4
+    	a10 > 1
+	->  class B1  [88.4%]
+
+Rule 175:
+    	a5 = d
+    	a8 <= 0
+    	a10 > 1
+	->  class B1  [88.3%]
+
+Rule 176:
+    	a3 = z
+    	a5 = v
+	->  class B1  [88.2%]
+
+Rule 177:
+    	a3 = v
+    	a4 <= 2
+    	a5 = '和'
+    	a7 > 1
+	->  class B1  [88.2%]
+
+Rule 178:
+    	a3 = m
+    	a6 > 1
+    	a10 > 1
+	->  class B1  [88.1%]
+
+Rule 179:
+    	a5 = a
+    	a10 > 1
+    	a11 > 1
+	->  class B1  [88.0%]
+
+Rule 180:
+    	a5 = c
+    	a6 <= 1
+    	a7 > 1
+    	a9 <= 4
+    	a10 <= 2
+	->  class B1  [87.9%]
+
+Rule 181:
+    	a3 = a
+    	a5 = v
+    	a10 > 1
+    	a10 <= 2
+	->  class B1  [87.7%]
+
+Rule 182:
+    	a5 = d
+    	a10 > 1
+    	a10 <= 3
+    	a11 > 1
+	->  class B1  [87.5%]
+
+Rule 183:
+    	a5 = r
+    	a6 > 1
+    	a9 <= 5
+    	a10 > 1
+	->  class B1  [87.3%]
+
+Rule 184:
+    	a3 = r
+    	a5 = v
+    	a6 > 1
+    	a9 > 1
+    	a11 > 0
+	->  class B1  [87.1%]
+
+Rule 185:
+    	a1 = p
+    	a3 = n
+    	a5 = v
+    	a10 > 1
+	->  class B1  [86.4%]
+
+Rule 186:
+    	a3 = m
+    	a5 = m
+    	a8 <= 2
+    	a10 > 1
+	->  class B1  [86.4%]
+
+Rule 187:
+    	a1 = v
+    	a6 > 1
+    	a9 <= 6
+    	a10 > 1
+	->  class B1  [86.3%]
+
+Rule 188:
+    	a3 = p
+    	a6 > 2
+	->  class B1  [86.3%]
+
+Rule 189:
+    	a1 = p
+    	a3 = r
+    	a5 = v
+    	a10 > 1
+	->  class B1  [86.1%]
+
+Rule 190:
+    	a6 > 1
+    	a9 <= 5
+    	a10 <= 2
+    	a11 <= 0
+	->  class B1  [85.9%]
+
+Rule 191:
+    	a5 = '和'
+    	a9 <= 3
+    	a10 > 1
+	->  class B1  [85.8%]
+
+Rule 192:
+    	a3 = q
+    	a6 > 1
+    	a10 > 1
+	->  class B1  [85.8%]
+
+Rule 193:
+    	a2 > 1
+    	a4 <= 2
+    	a5 = a
+    	a6 > 1
+    	a9 <= 9
+    	a10 > 1
+	->  class B1  [85.8%]
+
+Rule 194:
+    	a1 = u
+    	a3 = r
+    	a10 > 1
+    	a10 <= 2
+	->  class B1  [85.7%]
+
+Rule 195:
+    	a3 = r
+    	a5 = m
+    	a10 > 1
+	->  class B1  [85.7%]
+
+Rule 196:
+    	a6 > 2
+    	a11 > 1
+	->  class B1  [85.3%]
+
+Rule 197:
+    	a3 = '的'
+    	a5 = a
+    	a6 <= 1
+	->  class B1  [85.2%]
+
+Rule 198:
+    	a3 = '了'
+    	a6 > 1
+	->  class B1  [85.0%]
+
+Rule 199:
+    	a1 = v
+    	a2 <= 1
+    	a4 <= 1
+    	a6 > 1
+    	a10 > 1
+	->  class B1  [85.0%]
+
+Rule 200:
+    	a5 = v
+    	a7 > 2
+    	a8 <= 0
+    	a10 > 2
+    	a10 <= 3
+	->  class B1  [84.6%]
+
+Rule 201:
+    	a1 = '要'
+    	a6 > 1
+	->  class B1  [84.5%]
+
+Rule 202:
+    	a3 = '了'
+    	a9 <= 6
+	->  class B1  [84.2%]
+
+Rule 203:
+    	a1 = '了'
+    	a6 > 1
+    	a10 > 1
+	->  class B1  [84.2%]
+
+Rule 204:
+    	a3 = n
+    	a5 = a
+    	a8 <= 0
+    	a10 > 1
+	->  class B1  [84.2%]
+
+Rule 205:
+    	a1 = b
+    	a10 <= 1
+    	a11 <= 0
+	->  class B1  [84.1%]
+
+Rule 206:
+    	a3 = d
+    	a5 = '不'
+    	a8 > 2
+	->  class B1  [84.1%]
+
+Rule 207:
+    	a3 = v
+    	a5 = j
+    	a6 <= 1
+    	a9 <= 5
+    	a10 > 1
+	->  class B1  [84.1%]
+
+Rule 208:
+    	a1 = n
+    	a5 = u
+    	a6 > 1
+	->  class B1  [84.1%]
+
+Rule 209:
+    	a1 = n
+    	a3 = v
+    	a4 > 1
+    	a5 = v
+    	a6 > 1
+	->  class B1  [83.7%]
+
+Rule 210:
+    	a3 = v
+    	a6 > 2
+	->  class B1  [83.5%]
+
+Rule 211:
+    	a3 = c
+    	a9 <= 2
+    	a10 > 1
+	->  class B1  [83.4%]
+
+Rule 212:
+    	a1 = n
+    	a3 = n
+    	a5 = a
+    	a8 > 2
+    	a10 > 1
+	->  class B1  [83.1%]
+
+Rule 213:
+    	a5 = v
+    	a10 > 1
+    	a11 > 1
+	->  class B1  [82.4%]
+
+Rule 214:
+    	a2 <= 1
+    	a5 = d
+    	a7 > 1
+    	a9 <= 4
+    	a10 > 1
+	->  class B1  [82.4%]
+
+Rule 215:
+    	a3 = d
+    	a4 > 1
+	->  class B1  [82.3%]
+
+Rule 216:
+    	a1 = r
+    	a5 = d
+    	a10 <= 1
+    	a11 <= 0
+	->  class B1  [82.0%]
+
+Rule 217:
+    	a1 = '不'
+    	a5 = d
+    	a9 <= 6
+	->  class B1  [82.0%]
+
+Rule 218:
+    	a3 = d
+    	a5 = q
+    	a6 > 1
+	->  class B1  [82.0%]
+
+Rule 219:
+    	a5 = b
+    	a6 <= 1
+    	a11 <= 0
+	->  class B1  [81.5%]
+
+Rule 220:
+    	a2 <= 1
+    	a3 = '对'
+	->  class B1  [81.5%]
+
+Rule 221:
+    	a3 = v
+    	a5 = v
+    	a8 <= 0
+    	a10 > 1
+    	a10 <= 2
+	->  class B1  [81.2%]
+
+Rule 222:
+    	a1 = v
+    	a3 = n
+    	a5 = v
+    	a9 <= 4
+    	a10 > 1
+    	a10 <= 3
+	->  class B1  [80.9%]
+
+Rule 223:
+    	a2 > 1
+    	a5 = b
+    	a10 > 1
+	->  class B1  [80.8%]
+
+Rule 224:
+    	a1 = v
+    	a2 > 1
+    	a5 = r
+    	a8 <= 1
+    	a10 > 1
+	->  class B1  [80.6%]
+
+Rule 225:
+    	a3 = n
+    	a5 = c
+    	a8 <= 0
+    	a10 > 1
+	->  class B1  [80.6%]
+
+Rule 226:
+    	a1 = BOS
+    	a5 = r
+    	a10 > 1
+	->  class B1  [80.3%]
+
+Rule 227:
+    	a2 <= 1
+    	a3 = n
+    	a5 = v
+    	a9 <= 2
+    	a10 > 1
+	->  class B1  [80.1%]
+
+Rule 228:
+    	a3 = v
+    	a5 = a
+    	a7 > 2
+    	a10 > 1
+	->  class B1  [80.1%]
+
+Rule 229:
+    	a1 = r
+    	a5 = a
+    	a10 > 1
+	->  class B1  [79.8%]
+
+Rule 230:
+    	a2 <= 3
+    	a3 = u
+    	a5 = v
+    	a6 > 1
+    	a7 <= 2
+    	a10 > 1
+	->  class B1  [79.5%]
+
+Rule 231:
+    	a1 = a
+    	a3 = n
+    	a5 = a
+    	a11 <= 0
+	->  class B1  [79.4%]
+
+Rule 232:
+    	a1 = BOS
+    	a5 = p
+    	a8 <= 2
+    	a10 > 1
+	->  class B1  [79.4%]
+
+Rule 233:
+    	a3 = r
+    	a5 = f
+	->  class B1  [79.4%]
+
+Rule 234:
+    	a3 = n
+    	a5 = p
+    	a8 <= 0
+    	a10 > 1
+	->  class B1  [79.4%]
+
+Rule 235:
+    	a4 <= 2
+    	a5 = q
+    	a6 <= 1
+    	a7 > 2
+    	a10 > 2
+	->  class B1  [79.4%]
+
+Rule 236:
+    	a1 = '的'
+    	a5 = l
+	->  class B1  [79.4%]
+
+Rule 237:
+    	a1 = d
+    	a5 = d
+    	a11 <= 0
+	->  class B1  [78.8%]
+
+Rule 238:
+    	a1 = '有'
+    	a5 = v
+    	a9 > 2
+    	a10 > 1
+	->  class B1  [77.7%]
+
+Rule 239:
+    	a2 <= 1
+    	a3 = q
+    	a5 = a
+    	a6 <= 1
+    	a10 > 1
+	->  class B1  [77.7%]
+
+Rule 240:
+    	a2 <= 1
+    	a3 = c
+    	a6 > 1
+    	a9 > 1
+    	a11 > 0
+	->  class B1  [77.1%]
+
+Rule 241:
+    	a5 = r
+    	a10 <= 1
+    	a11 <= 0
+	->  class B1  [77.0%]
+
+Rule 242:
+    	a2 > 1
+    	a5 = j
+    	a11 <= 0
+	->  class B1  [75.9%]
+
+Rule 243:
+    	a1 = '和'
+    	a4 > 1
+    	a5 = v
+    	a8 > 0
+	->  class B1  [75.9%]
+
+Rule 244:
+    	a2 <= 1
+    	a3 = k
+    	a5 = v
+    	a10 > 1
+	->  class B1  [75.8%]
+
+Rule 245:
+    	a3 = v
+    	a5 = t
+    	a6 <= 1
+    	a10 > 1
+	->  class B1  [75.8%]
+
+Rule 246:
+    	a3 = r
+    	a5 = b
+	->  class B1  [75.8%]
+
+Rule 247:
+    	a3 = u
+    	a5 = p
+    	a8 <= 2
+    	a10 > 1
+	->  class B1  [75.6%]
+
+Rule 248:
+    	a3 = p
+    	a5 = t
+    	a6 > 1
+    	a7 <= 2
+	->  class B1  [75.5%]
+
+Rule 249:
+    	a3 = r
+    	a5 = a
+    	a10 > 1
+	->  class B1  [75.1%]
+
+Rule 250:
+    	a2 > 2
+    	a3 = c
+    	a5 = n
+	->  class B1  [74.3%]
+
+Rule 251:
+    	a1 = v
+    	a3 = n
+    	a5 = v
+    	a11 <= 0
+	->  class B1  [73.9%]
+
+Rule 252:
+    	a3 = n
+    	a4 > 1
+    	a5 = '和'
+    	a9 <= 10
+	->  class B1  [73.5%]
+
+Rule 253:
+    	a1 = c
+    	a3 = n
+    	a5 = d
+    	a6 <= 1
+	->  class B1  [73.1%]
+
+Rule 254:
+    	a5 = g
+    	a8 > 0
+    	a10 > 1
+    	a11 > 0
+	->  class B1  [73.1%]
+
+Rule 255:
+    	a1 = t
+    	a3 = n
+    	a5 = v
+    	a8 <= 2
+    	a10 > 1
+	->  class B1  [73.1%]
+
+Rule 256:
+    	a3 = n
+    	a5 = m
+    	a6 <= 1
+    	a9 <= 9
+    	a10 > 1
+	->  class B1  [71.9%]
+
+Rule 257:
+    	a1 = n
+    	a3 = '在'
+    	a5 = a
+	->  class B1  [70.7%]
+
+Rule 258:
+    	a1 = j
+    	a3 = j
+    	a6 <= 1
+	->  class B1  [70.7%]
+
+Rule 259:
+    	a1 = '的'
+    	a5 = v
+    	a6 <= 1
+    	a10 > 3
+	->  class B1  [70.7%]
+
+Rule 260:
+    	a1 = '了'
+    	a3 = r
+    	a5 = v
+	->  class B1  [70.7%]
+
+Rule 261:
+    	a3 = u
+    	a5 = f
+	->  class B1  [70.7%]
+
+Rule 262:
+    	a1 = r
+    	a5 = v
+    	a6 <= 1
+    	a8 > 0
+    	a8 <= 1
+    	a9 > 2
+    	a10 > 1
+	->  class B1  [70.0%]
+
+Rule 263:
+    	a5 = '不'
+    	a10 > 1
+	->  class B1  [69.1%]
+
+Rule 264:
+    	a3 = '在'
+    	a5 = n
+    	a2 > 4
+	->  class B1  [69.0%]
+
+Rule 265:
+    	a1 = BOS
+    	a3 = p
+	->  class B1  [68.5%]
+
+Rule 266:
+    	a1 = BOS
+    	a3 = c
+    	a5 = d
+	->  class B1  [67.5%]
+
+Rule 267:
+    	a1 = v
+    	a5 = p
+    	a7 > 2
+    	a9 <= 5
+    	a11 <= 1
+	->  class B1  [67.5%]
+
+Rule 268:
+    	a1 = p
+    	a3 = n
+    	a5 = d
+    	a6 <= 1
+	->  class B1  [66.2%]
+
+Rule 269:
+    	a1 = n
+    	a2 <= 1
+    	a5 = r
+    	a10 > 1
+    	a10 <= 2
+	->  class B1  [65.5%]
+
+Rule 270:
+    	a1 = v
+    	a3 = n
+    	a4 > 1
+    	a5 = '在'
+    	a9 <= 6
+	->  class B1  [64.5%]
+
+Rule 271:
+    	a3 = k
+    	a6 <= 1
+    	a10 <= 1
+    	a11 <= 0
+	->  class B1  [61.0%]
+
+Rule 272:
+    	a3 = a
+    	a5 = u
+    	a8 <= 0
+    	a10 > 1
+	->  class B1  [57.9%]
+
+Rule 273:
+    	a3 = n
+    	a5 = r
+    	a6 <= 1
+    	a7 <= 1
+    	a10 > 2
+	->  class B1  [56.6%]
+
+Rule 274:
+    	a5 = '对'
+    	a7 <= 1
+    	a8 <= 2
+    	a10 > 1
+    	a11 <= 1
+	->  class B1  [56.6%]
+
+Default class: B1

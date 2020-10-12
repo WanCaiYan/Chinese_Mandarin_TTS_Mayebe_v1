@@ -1,0 +1,12 @@
+logs-Tacotron/
+back_up_logs-Tacotron/
+tacotron_output/
+training_data/
+Maybe_ObscureMoon3_22050/
+*.pyc
+*logs-*/
+*-output/
+*-tacotron_output/
+*tacotron_output*/
+*synthesis_text_BZNSYP*.txt/
+
